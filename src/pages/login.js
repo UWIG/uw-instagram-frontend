@@ -19,19 +19,19 @@ export default function Login() {
         // Prevent the default behavior of the form submit event
         event.preventDefault();
         const formData = new FormData();
-            formData.append('emailAddress', emailAddress);
-            formData.append('password', password);
-            await axios({
-                method: 'post',
-                url: 'http://localhost:8080/login',
-                data: formData,
-                headers: { 'Content-Type': 'application/json'}
-            }).then((res) => {
-                console.log(res);
-                history.push(ROUTES.DASHBOARD);
-              }).catch((err) => {
-                console.error(err);
-            });
+        formData.append('emailAddress', emailAddress);
+        formData.append('password', password);
+        await axios({
+            method: 'post',
+            url: 'http://localhost:8080/login',
+            data: formData,
+            headers: { 'Content-Type': 'application/json'}
+        }).then((res) => {
+            console.log(res);
+            history.push(ROUTES.DASHBOARD);
+            }).catch((err) => {
+            console.error(err);
+        });
         // try {
         //     await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
         //     // allows the application to navigate to a different page without having to refresh the entire page
