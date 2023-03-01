@@ -1,7 +1,5 @@
 {
   "extends": [
-    "airbnb",
-    "prettier",
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended"
   ],
@@ -49,7 +47,7 @@
       }
     ],
     "no-console": 0,
-    "import/prefer-default-export": 1,
+    "import/prefer-default-export": "off",
     "import": 0,
     "func-names": 0,
     "space-before-function-paren": 0,
@@ -86,12 +84,6 @@
         "allowTemplateLiterals": true
       }
     ],
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto",
-      }
-    ],
     "jsx-a11y/href-no-hash": "off",
     "jsx-a11y/anchor-is-valid": [
       "warn",
@@ -103,7 +95,6 @@
     ]
   },
   "plugins": [
-    "prettier",
     "react",
     "react-hooks"
   ],

@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
+! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -498,23 +498,20 @@ video {
   margin-left: auto;
   margin-right: auto;
 }
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
 .mb-4 {
   margin-bottom: 1rem;
-}
-.mt-2 {
-  margin-top: 0.5rem;
 }
 .mr-3 {
   margin-right: 0.75rem;
 }
-.mb-2 {
-  margin-bottom: 0.5rem;
+.mt-2 {
+  margin-top: 0.5rem;
 }
 .flex {
   display: flex;
-}
-.h-screen {
-  height: 100vh;
 }
 .h-2 {
   height: 0.5rem;
@@ -522,17 +519,20 @@ video {
 .h-8 {
   height: 2rem;
 }
-.w-3\/5 {
-  width: 60%;
+.h-screen {
+  height: 100vh;
 }
 .w-2\/5 {
   width: 40%;
 }
-.w-full {
-  width: 100%;
+.w-3\/5 {
+  width: 60%;
 }
 .w-6\/12 {
   width: 50%;
+}
+.w-full {
+  width: 100%;
 }
 .max-w-screen-md {
   max-width: 768px;
@@ -556,51 +556,51 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(219 219 219 / var(--tw-border-opacity));
 }
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
 .bg-blue-medium {
   --tw-bg-opacity: 1;
   background-color: rgb(0 92 152 / var(--tw-bg-opacity));
 }
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
 .p-4 {
   padding: 1rem;
-}
-.py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
 }
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem;
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
 .font-bold {
   font-weight: 700;
 }
-.text-red-primary {
+.text-blue-medium {
   --tw-text-opacity: 1;
-  color: rgb(237 73 86 / var(--tw-text-opacity));
+  color: rgb(0 92 152 / var(--tw-text-opacity));
 }
 .text-gray-base {
   --tw-text-opacity: 1;
   color: rgb(97 97 97 / var(--tw-text-opacity));
 }
+.text-red-primary {
+  --tw-text-opacity: 1;
+  color: rgb(237 73 86 / var(--tw-text-opacity));
+}
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-.text-blue-medium {
-  --tw-text-opacity: 1;
-  color: rgb(0 92 152 / var(--tw-text-opacity));
 }
 .opacity-50 {
   opacity: 0.5;

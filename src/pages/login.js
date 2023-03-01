@@ -1,11 +1,13 @@
+import axios from 'axios';
 import { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import FirebaseContext from '../context/firebase';
+// import FirebaseContext from '../context/firebase';
 import * as ROUTES from  '../constants/routes';
+
 
 export default function Login() {
     const history = useHistory();
-    const { firebase } = useContext(FirebaseContext);
+    // const { firebase } = useContext(FirebaseContext);
 
     const [emailAddress, setEmailAddress] = useState(''); // an array with two values: the current state and a function to update the state
     const [password, setPassword] = useState('');
@@ -16,16 +18,30 @@ export default function Login() {
     const handleLogin = async (event) => {
         // Prevent the default behavior of the form submit event
         event.preventDefault();
+        const formData = new FormData();
+            formData.append('emailAddress', emailAddress);
+            formData.append('password', password);
+            await axios({
+                method: 'post',
+                url: 'http://localhost:8080/login',
+                data: formData,
+                headers: { 'Content-Type': 'application/json'}
+            }).then((res) => {
+                console.log(res);
+                history.push(ROUTES.DASHBOARD);
+              }).catch((err) => {
+                console.error(err);
+            });
+        // try {
+        //     await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
+        //     // allows the application to navigate to a different page without having to refresh the entire page
+        //     history.push(ROUTES.DASHBOARD);
+        // } catch(error) {
+        //     setEmailAddress('');
+        //     setPassword('');
+        //     setError('Username and password do not match.');
+        // }
 
-        try {
-            await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-            // allows the application to navigate to a different page without having to refresh the entire page
-            history.push(ROUTES.DASHBOARD);
-        } catch(error) {
-            setEmailAddress('');
-            setPassword('');
-            setError('Username and password do not match.');
-        }
     };
     
     useEffect(() => {
