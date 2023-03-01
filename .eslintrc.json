@@ -89,9 +89,7 @@
     "prettier/prettier": [
       "error",
       {
-        "trailingComma": "none",
-        "singleQuote": true,
-        "printWidth": 100
+        "endOfLine": "auto",
       }
     ],
     "jsx-a11y/href-no-hash": "off",
@@ -108,5 +106,13 @@
     "prettier",
     "react",
     "react-hooks"
-  ]
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".json"]
+      }
+    }
+  }  
 }
