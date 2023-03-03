@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-// import FirebaseContext from '../context/firebase';
 import * as ROUTES from  '../constants/routes';
 
 
@@ -18,30 +17,14 @@ export default function Login() {
     const handleLogin = async (event) => {
         // Prevent the default behavior of the form submit event
         event.preventDefault();
-        const formData = new FormData();
-        formData.append('emailAddress', emailAddress);
-        formData.append('password', password);
-        await axios({
-            method: 'post',
-            url: 'http://localhost:8080/login',
-            data: formData,
-            headers: { 'Content-Type': 'application/json'}
-        }).then((res) => {
+        const obj = {'username':emailAddress, 'password':password};
+        await axios.post('http://localhost:8080/login', obj)
+        .then((res) => {
             console.log(res);
             history.push(ROUTES.DASHBOARD);
-            }).catch((err) => {
+          }).catch((err) => {
             console.error(err);
-        });
-        // try {
-        //     await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
-        //     // allows the application to navigate to a different page without having to refresh the entire page
-        //     history.push(ROUTES.DASHBOARD);
-        // } catch(error) {
-        //     setEmailAddress('');
-        //     setPassword('');
-        //     setError('Username and password do not match.');
-        // }
-
+          });
     };
     
     useEffect(() => {
@@ -61,7 +44,7 @@ export default function Login() {
                     </h1>
                     {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
 
-                    <form onSubmit={handleLogin} method="POST">
+                    <form method="POST">
                         <input
                             aria-label="Enter your email address"
                             type="text"
@@ -80,7 +63,7 @@ export default function Login() {
                             onChange={({ target}) => setPassword(target.value)}
                             value={password}
                         />
-                        <button
+                        <button onClick={handleLogin}
                             disabled={isInvalid}
                             type="submit"
                             className={`bg-blue-medium text-white w-full rounded h-8 font-bold

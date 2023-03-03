@@ -18,8 +18,20 @@ export default function SignUp() {
 
     const handleSignup = async (event) => {
         event.preventDefault();
-
-        const usernameExists = await doesUsernameExist(username);
+        const formData = new FormData();
+        formData.append('username', emailAddress);
+        // const usernameExists = await doesUsernameExist(username);
+        const usernameExists = await axios({
+            method: 'post',
+            url: 'http://localhost:8080/register',
+            data: formData,
+            headers: { 'Content-Type': 'multipart/form-data'}
+        }).then((res) => {
+            console.log(res);
+            history.push(ROUTES.DASHBOARD);
+            }).catch((err) => {
+            console.error(err);
+        });
     };
     
     useEffect(() => {
