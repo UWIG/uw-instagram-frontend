@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import FirebaseContext from '../context/firebase';
 import * as ROUTES from  '../constants/routes';
-// import { doesUsernameExist } from '../services/firebase';
 
 export default function SignUp() {
     const navigate = useNavigate();
@@ -15,42 +13,24 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
 
     const [error, setError] = useState('');
+    const [msg, setMessage] = useState('');
     const isInvalid = password === '' || emailAddress === '';
-
-    // const handleSignup: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
-    //     event.preventDefault();
-    //     const formData = new FormData();
-    //     formData.append('username', emailAddress);
-    //     // const usernameExists = await doesUsernameExist(username);
-    //     const usernameExists = await axios({
-    //         method: 'post',
-    //         url: 'http://localhost:8080/register',
-    //         data: formData,
-    //         headers: { 'Content-Type': 'multipart/form-data'}
-    //     }).then((res) => {
-    //         console.log(res);
-    //         navigate(ROUTES.DASHBOARD);
-    //         }).catch((err) => {
-    //         console.error(err);
-    //     });
-    // };
 
     const handleSignup: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
-        const formData = new FormData();
-        formData.append('username', emailAddress);
-        // const usernameExists = await doesUsernameExist(username);
-        const usernameExists = await axios({
-            method: 'post',
-            url: 'http://localhost:8080/register',
-            data: formData,
-            headers: { 'Content-Type': 'multipart/form-data'}
-        }).then((res) => {
-            console.log(res);
-            navigate(ROUTES.DASHBOARD);
-            }).catch((err) => {
-            console.error(err);
-        });
+        // const formData = new FormData();
+        // formData.append('username', emailAddress);
+        const obj = {emailAddress:emailAddress, fullName:fullName, username:username, password:password};
+        try {
+            const response = await axios.post('http://localhost:8080/register', obj);
+            console.log(response);
+            setMessage('Congrats! You have successfully registered.');
+        }
+        catch {
+            console.error(error);
+            // Show a message indicating incorrect login credentials to the user
+            setError('Sorry, this email address is registered already.');
+        }
       }
       
     
@@ -67,7 +47,7 @@ export default function SignUp() {
                 <div className="flex flex-col items-center bg-white p-4 
                 border border-gray-primary mb-4 rounded">
                     <h1 className="flex justify-center w-full">
-                        <img src="/images/logo.png" alt="Instagram" className="mt-2 w-6/12 mb-4"/>
+                        <img src="/images/watig_logo.png" alt="Instagram" className="mt-2 w-full mb-4"/>
                     </h1>
                     {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
 

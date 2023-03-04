@@ -14,29 +14,33 @@ export default function Login() {
     const [error, setError] = useState('');
     const isInvalid = password === '' || emailAddress === '';
 
-    // const handleLogin = async (event: Event) => {
-    //     // Prevent the default behavior of the form submit event
-    //     event.preventDefault();
-    //     const obj = {'username':emailAddress, 'password':password};
-    //     await axios.post('http://localhost:8080/login', obj)
-    //     .then((res) => {
-    //         console.log(res);
-    //         navigate(ROUTES.DASHBOARD);
-    //       }).catch((err) => {
-    //         console.error(err);
-    //       });
-    // };
-
     const handleLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
         event.preventDefault();
-        // const obj = {username:emailAddress, password:password};
-        // await axios.post('http://localhost:8080/login', obj)
+        const obj = {username:emailAddress, password:password};
+        try {
+            const response = await axios.post('http://localhost:8080/login', obj);
+            console.log(response);
+            navigate(ROUTES.DASHBOARD);
+        }
+        catch {
+            console.error(error);
+            // Show a message indicating incorrect login credentials to the user
+            setError('Incorrect login credentials. Please try again.');
+        }
+        
+        // const auth = await axios.post('http://localhost:8080/login', obj)
         // .then((res) => {
         //     console.log(res);
-        //     navigate(ROUTES.DASHBOARD);
         //   }).catch((err) => {
         //     console.error(err);
         //   });
+        // console.log(auth);
+        // if (usernameExists === "login successful556") {
+        //     navigate(ROUTES.DASHBOARD);
+        // }
+        // else {
+
+        // }
     };
       
     
