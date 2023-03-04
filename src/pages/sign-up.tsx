@@ -1,11 +1,12 @@
+import axios from 'axios';
 import { useState, useContext, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import FirebaseContext from '../context/firebase';
 import * as ROUTES from  '../constants/routes';
 // import { doesUsernameExist } from '../services/firebase';
 
 export default function SignUp() {
-    const history = useHistory();
+    const navigate = useNavigate();
     // const { firebase } = useContext(FirebaseContext);
 
     const [username, setUsername] = useState('');
@@ -16,7 +17,25 @@ export default function SignUp() {
     const [error, setError] = useState('');
     const isInvalid = password === '' || emailAddress === '';
 
-    const handleSignup = async (event) => {
+    // const handleSignup: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
+    //     event.preventDefault();
+    //     const formData = new FormData();
+    //     formData.append('username', emailAddress);
+    //     // const usernameExists = await doesUsernameExist(username);
+    //     const usernameExists = await axios({
+    //         method: 'post',
+    //         url: 'http://localhost:8080/register',
+    //         data: formData,
+    //         headers: { 'Content-Type': 'multipart/form-data'}
+    //     }).then((res) => {
+    //         console.log(res);
+    //         navigate(ROUTES.DASHBOARD);
+    //         }).catch((err) => {
+    //         console.error(err);
+    //     });
+    // };
+
+    const handleSignup: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         const formData = new FormData();
         formData.append('username', emailAddress);
@@ -28,11 +47,12 @@ export default function SignUp() {
             headers: { 'Content-Type': 'multipart/form-data'}
         }).then((res) => {
             console.log(res);
-            history.push(ROUTES.DASHBOARD);
+            navigate(ROUTES.DASHBOARD);
             }).catch((err) => {
             console.error(err);
         });
-    };
+      }
+      
     
     useEffect(() => {
         document.title = 'Sign up - Instagram';

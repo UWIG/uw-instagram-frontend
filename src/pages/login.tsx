@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { useState, useContext, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as ROUTES from  '../constants/routes';
 
 
 export default function Login() {
-    const history = useHistory();
+    const navigate = useNavigate();
     // const { firebase } = useContext(FirebaseContext);
 
     const [emailAddress, setEmailAddress] = useState(''); // an array with two values: the current state and a function to update the state
@@ -14,18 +14,31 @@ export default function Login() {
     const [error, setError] = useState('');
     const isInvalid = password === '' || emailAddress === '';
 
-    const handleLogin = async (event) => {
-        // Prevent the default behavior of the form submit event
+    // const handleLogin = async (event: Event) => {
+    //     // Prevent the default behavior of the form submit event
+    //     event.preventDefault();
+    //     const obj = {'username':emailAddress, 'password':password};
+    //     await axios.post('http://localhost:8080/login', obj)
+    //     .then((res) => {
+    //         console.log(res);
+    //         navigate(ROUTES.DASHBOARD);
+    //       }).catch((err) => {
+    //         console.error(err);
+    //       });
+    // };
+
+    const handleLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
         event.preventDefault();
-        const obj = {'username':emailAddress, 'password':password};
-        await axios.post('http://localhost:8080/login', obj)
-        .then((res) => {
-            console.log(res);
-            history.push(ROUTES.DASHBOARD);
-          }).catch((err) => {
-            console.error(err);
-          });
+        // const obj = {username:emailAddress, password:password};
+        // await axios.post('http://localhost:8080/login', obj)
+        // .then((res) => {
+        //     console.log(res);
+        //     navigate(ROUTES.DASHBOARD);
+        //   }).catch((err) => {
+        //     console.error(err);
+        //   });
     };
+      
     
     useEffect(() => {
         document.title = 'Login - Instagram';
@@ -40,7 +53,7 @@ export default function Login() {
                 <div className="flex flex-col items-center bg-white p-4 
                 border border-gray-primary mb-4 rounded">
                     <h1 className="flex justify-center w-full">
-                        <img src="/images/logo.png" alt="Instagram" className="mt-2 w-6/12 mb-4"/>
+                        <img src="/images/watig_logo.png" alt="UW_IG" className="mt-2 w-full mb-4"/>
                     </h1>
                     {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
 
