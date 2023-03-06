@@ -5,7 +5,6 @@ import * as ROUTES from  '../constants/routes';
 
 export default function SignUp() {
     const navigate = useNavigate();
-    // const { firebase } = useContext(FirebaseContext);
 
     const [username, setUsername] = useState('');
     const [fullName, setFullName] = useState('');
