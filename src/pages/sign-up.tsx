@@ -18,8 +18,6 @@ export default function SignUp() {
 
     const handleSignup: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
-        // const formData = new FormData();
-        // formData.append('username', emailAddress);
         const obj = {emailAddress:emailAddress, fullName:fullName, username:username, password:password};
         try {
             const response = await axios.post('http://localhost:8080/register', obj);
