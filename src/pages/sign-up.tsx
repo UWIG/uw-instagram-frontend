@@ -17,14 +17,28 @@ export default function SignUp() {
 
     const handleSignup: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
+        // Email format validation using regular expression
+        const emailRegex = /^[a-zA-Z0-9]+@uwaterloo\.ca$/;
+        if (!emailRegex.test(emailAddress)) {
+            setError('Invalid email address format');
+            return;
+        }
+
+        // Check username length
+        if (username.length < 3 || username.length > 15) {
+            setError('Username must be between 3 and 15 characters');
+            return;
+        }
         const obj = {emailAddress:emailAddress, fullName:fullName, username:username, password:password};
         try {
             const response = await axios.post('http://localhost:8080/register', obj);
             console.log(response);
+            setError('')
             setMessage('Congrats! You have successfully registered.');
         }
         catch {
             console.error(error);
+            setMessage('')
             // Show a message indicating incorrect login credentials to the user
             setError('Sorry, this email address is registered already.');
         }
@@ -70,7 +84,7 @@ export default function SignUp() {
                         <input
                             aria-label="Enter your email address"
                             type="text"
-                            placeholder="Email address"
+                            placeholder="University Email address"
                             className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
                             border-gray-primary rounded mb-2"
                             onChange={({ target}) => setEmailAddress(target.value)}
