@@ -591,9 +591,6 @@ video {
 .z-50 {
   z-index: 50;
 }
-.z-0 {
-  z-index: 0;
-}
 .col-span-2 {
   grid-column: span 2 / span 2;
 }
@@ -1124,9 +1121,6 @@ video {
 }
 .opacity-100 {
   opacity: 1;
-}
-.opacity-90 {
-  opacity: 0.9;
 }
 .shadow-xl {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
