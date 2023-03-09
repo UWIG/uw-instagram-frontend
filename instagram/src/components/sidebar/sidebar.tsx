@@ -1,27 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Modal from './modal';
 import { sidebarType } from './sidebarType';
 import SearchBar from '../search/searchBar'
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../../contexts/user-context';
+import * as ROUTES from '../../constants/routes'
 
 export default function Sidebar(props: sidebarType) {
+    const navigate = useNavigate();
+    const {username, setUsername} = useContext(UserContext);
     const [showMore, setShowMore] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [searchButtonClicked,setSearchButtonClicked] = useState(false);
     const [isCollapsed,setIsCollapsed] = useState(false);
     const [searchBarBuffer,setSearchBarBuffer] = useState<string>("");
+    function handleLogout() {
+        localStorage.clear();
+        setUsername('');
+        navigate(ROUTES.LOGIN);
+    }
 
     return (
         <>
             <Modal open={showModal} onClose={() => setShowModal(false)} onCreatePost={props.onCreatePost} />
-            <div className="container col-span-1 bg-white p-10 border-r border-gray-primary h-screen sticky top-0 z-50">
+            <div className="container col-span-1 bg-white p-10 border-r border-gray-primary h-screen sticky top-0 z-10">
                 <div className="text-gray-700 text-center flex align-items cursor-pointer">
                     <h1 className="flex">
-                        <img src="./images/logo.png" alt="Instagram" className="mt-2 w-6/12" />
+                        <img src="http://localhost:3000/images/logo.png" alt="Instagram" className="mt-2 w-6/12" />
                     </h1>
                 </div>
                 <ul>
                     <div className="pb-6">
-                        <li className="hover:text-custom-blue flex mt-10 cursor-pointer">
+                        <li className="hover:text-custom-blue flex mt-10 cursor-pointer" onClick={() => navigate(ROUTES.DASHBOARD)}>
                             <svg aria-label="Home" className="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M22 23h-6.001a1 1 0 0 1-1-1v-5.455a2.997 2.997 0 1 0-5.993 0V22a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V11.543a1.002 1.002 0 0 1 .31-.724l10-9.543a1.001 1.001 0 0 1 1.38 0l10 9.543a1.002 1.002 0 0 1 .31.724V22a1 1 0 0 1-1 1Z"></path></svg>
                             <span className='ml-3'>Home</span>
                         </li>
@@ -51,8 +61,8 @@ export default function Sidebar(props: sidebarType) {
                             <svg aria-label="New post" className="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path><line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="6.545" x2="17.455" y1="12.001" y2="12.001"></line><line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line></svg>
                             <span className='ml-3'>Create</span>
                         </li>
-                        <li className="flex items-center mt-7 cursor-pointer">
-                            <img className='rounded-full w-6 h-6 flex mr-3' src="./images/avatars/cat.jpg" alt="" />
+                        <li className="flex items-center mt-7 cursor-pointer" onClick={() => {navigate(`/p/${username}`)}}>
+                            <img className='rounded-full w-6 h-6 flex mr-3' src="/images/avatars/cat.jpg" alt="" />
                             Profile
                         </li>
                         <div className='absolute bottom-0 mt-7 py-10 pr-32 '>
@@ -69,7 +79,7 @@ export default function Sidebar(props: sidebarType) {
                                         <li className="flex border-b border-gray-primary py-3 cursor-pointer">
                                             <span className='ml-3'>Switch accounts</span>
                                         </li>
-                                        <li className="flex border-b border-gray-primary py-3 cursor-pointer">
+                                        <li className="flex border-b border-gray-primary py-3 cursor-pointer" onClick={handleLogout}>
                                             <span className='ml-3'>Logout</span>
                                         </li>
                                     </div>}
@@ -81,7 +91,7 @@ export default function Sidebar(props: sidebarType) {
                     </div>
                 </ul>
                 {searchButtonClicked && 
-                    <div className="absolute left-full inset-y-0 duration-100 ease-in-out border-transparent z-50">
+                    <div className="absolute left-full inset-y-0 duration-100 ease-in-out border-transparent z-10">
                         <SearchBar contentBuffer={searchBarBuffer} handleReturnBuffer={setSearchBarBuffer}/>
                     </div>  
                 }

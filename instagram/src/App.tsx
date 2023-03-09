@@ -9,15 +9,23 @@ function App() {
   
   const Login = lazy(() => import('./pages/login'));
   const Dashboard= lazy(() => import('./pages/dashboard'));
+  const UserProfile= lazy(() => import('./pages/userProfile'));
+  const Index = lazy(() => import("./pages/index"));
   const SignUp = lazy(() => import("./pages/sign-up"));
+  const ErrorPage = lazy(() => import("./pages/error-page"));
+  const NotFoundPage = lazy(() => import("./pages/not-found"));
+
   return (
-    <UserContext.Provider value={{username: username}}>
+    <UserContext.Provider value={{username: username, setUsername: setUsername}}>
       <Router>
       <Suspense fallback={<p>Loading...</p>}>
         <Routes>
-          <Route path={ROUTES.LOGIN} element={<Login onLogin={setUsername}/>} />
-          <Route path={ROUTES.SIGN_UP} element={<SignUp/>} />
-          <Route path={ROUTES.DASHBOARD} element={<Dashboard/>} />
+          <Route path={ROUTES.LOGIN} element={<Login onLogin={setUsername}/>} errorElement={<ErrorPage/>}  />
+          <Route path={ROUTES.SIGN_UP} element={<SignUp/>}errorElement={<ErrorPage/>} />
+          {/* <Route path={ROUTES.INDEX} element={<Index/>}/> */}
+          <Route path={ROUTES.DASHBOARD} element={<Dashboard/>}errorElement={<ErrorPage/>} />
+          <Route path={ROUTES.PROFILE} element={<UserProfile/>} errorElement={<ErrorPage/>} />
+          <Route path='*' element={<NotFoundPage/>} />
         </Routes>
       </Suspense>
     </Router>

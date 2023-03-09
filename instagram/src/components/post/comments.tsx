@@ -7,7 +7,7 @@ export default function Comments(props:postComments) {
       <p className="text-sm text-gray-base mb-1 cursor-pointer">View all comments</p>
       {props.comments && props.comments.map((comment:postComment, inx) => {
         if(inx < 3){
-        return <p key={comment.id} className='mb-1'>
+        return <p key={comment.id.date} className='mb-1'>
                   <span className='mr-1 font-bold'>{"conner"}</span>
                   <span>{comment.comment}</span>
               </p>

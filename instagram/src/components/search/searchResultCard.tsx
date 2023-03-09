@@ -30,7 +30,7 @@ export default function SearchResultCard(props:SearchCardProps){
     return (
         
             <div className="flex flex-row h-16 w-full hover:bg-slate-100 p-1">
-                <Link to={`p/${result.userName}`}  className='h-16 w-4/6 no-underline cursor-pointer'>
+                <Link to={`/p/${result.userName}`}  className='h-16 w-4/6 no-underline cursor-pointer'>
                     <div className="flex flex-row p-1 h-full w-full">
                         <img src={result.avatarURL} alt={result.userName} className="w-[40px] h-[40px] rounded-full hover:scale-105"/>
                         <div className="flex flex-col h-full w-[calc(100%-40px)]" >

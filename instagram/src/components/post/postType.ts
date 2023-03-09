@@ -1,5 +1,5 @@
 export type postComment = {
-    id:string,
+    id:object_id,
     username:string,
     comment:string,
     avatar:string,
@@ -78,6 +78,7 @@ export type postModal = {
   comments:postComment[],
   caption: string,
   likes: number,
+  opacity:string,
   onCreateComment: () => void,
 }
 
