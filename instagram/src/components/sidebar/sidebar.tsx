@@ -2,10 +2,7 @@ import React, { useState, useContext } from 'react'
 import Modal from './modal';
 import {Route, useNavigate } from 'react-router-dom';
 import { sidebarType } from './sidebarType';
-import SearchBar from '../search/searchBar'
-import { useNavigate } from 'react-router-dom';
-import UserContext from '../../contexts/user-context';
-import * as ROUTES from '../../constants/routes'
+import SearchBar from '../search/searchBar';
 import * as ROUTES from '../../constants/routes';
 import UserContext from '../../contexts/user-context'
 
