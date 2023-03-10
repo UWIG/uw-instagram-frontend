@@ -1,8 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import Skeleton from "react-loading-skeleton";
+import { useState } from "react";
 import { useState } from "react"
 import { postType, postImage } from "../post/postType";
-import PostModal from "../post/modal"
+import PostModal from "../post/modal";
 
 export default function Photos({
   isUserSelf,
@@ -152,29 +153,12 @@ export default function Photos({
           <span>TAGGED</span>
         </div>
       </div>
-      <div className="">
-        {posts.length == 0 ?
-        <div className="w-full text-center font-bold pt-32">
-          <p>Share Photos</p>
-        </div>
-        :
-        <div className="grid grid-cols-3 gap-8 mt-4 mb-12">
-          {posts.map((post) => (
-            <div>
-              <PostModal
-                id={post.id}
-                open={open}
-                username={post.username}
-                caption={post.caption}
-                likes={post.likes}
-                avatar={post.avatar}
-                time_created={post.time_created}
-                comments={post.comments}
-                mediaList={post.mediaList}
-                onClose={() => setOpen(false)}
-                onCreateComment={post.onCreateComment}
-                opacity="bg-opacity-25"
-              />
+      <div className="grid grid-cols-3 gap-8 mt-4 mb-12">
+        {posts.length === 0 ? (
+          <h1>no posts</h1>
+        ) : (
+          <>
+            {posts.map((post) => (
               <div className="relative group" onClick={() => setOpen(true)}>
                 <img
                   src={"data:image/png;base64," + post.mediaList[0].data.data}
@@ -214,11 +198,23 @@ export default function Photos({
                     {post.comments?.length}
                   </p>
                 </div>
+                <PostModal
+                  id={post.id}
+                  open={open}
+                  username={post.username}
+                  caption={post.caption}
+                  likes={post.likes}
+                  avatar={post.avatar}
+                  time_created={post.time_created}
+                  comments={post.comments}
+                  mediaList={post.mediaList}
+                  onClose={() => setOpen(false)}
+                  onCreateComment={post.onCreateComment}
+                />
               </div>
-            </div>
-          ))}
-        </div>
-        }
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

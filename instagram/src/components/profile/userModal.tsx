@@ -5,10 +5,12 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 export default function UserModal({
   isOpen,
   isUserSelf,
+  username,
   onClose,
 }: {
   isOpen: boolean;
   isUserSelf: boolean;
+  username: string
   onClose: () => void;
 }) {
   const cancelButtonRef = useRef(null);
@@ -17,7 +19,7 @@ export default function UserModal({
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10"
+        className="relative z-50"
         initialFocus={cancelButtonRef}
         onClose={onClose}
       >
