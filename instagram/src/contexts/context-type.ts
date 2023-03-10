@@ -1,4 +1,6 @@
 export interface UserContextType{
-    username:string
-    setUsername: (username: string) => void;
+    username:string,
+    avatar:string,
+    fullname:string
+    setUser: (user:any) => void;
 }

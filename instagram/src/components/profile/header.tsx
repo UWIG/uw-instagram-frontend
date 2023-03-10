@@ -1,39 +1,28 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect} from "react";
 import UserModal from "./userModal";
 import AvatarModal from "./avatarModal";
+import { useParams } from "react-router-dom";
 import axios from "axios";
+
 
 export default function UserProfile({
   isUserSelf,
   postCount,
-  username
+  username,
+  avatar,
+  fullname,
+  setAvatar
 }: {
   isUserSelf: boolean;
   postCount: number;
-  username: string
+  avatar:string,
+  fullname:string,
+  username:string | undefined,
+  setAvatar:(avatar:string) => void,
 }) {
   const [isAvatarOpen, setAvatarOpen] = useState(false);
   const [isUserOpen, setUserOpen] = useState(false);
-  const [avatar, setAvatar] = useState("");
-
-  useEffect(() => {
-    getAvatar();
-  }, []);
-  
-  async function getAvatar() {
-    const formData = new FormData();
-    formData.append("username",username);
-    await axios({
-      method:"post",
-      url:"http://www.localhost:8080/user/getAva",
-      data:formData,
-      headers:{ "Content-Type": "multipart/form-data" }
-    }).then((res)=>{
-      console.log(res);
-      setAvatar(res.data.res.data.data)
-    })
-  }
 
   return (
     <>
@@ -134,22 +123,21 @@ export default function UserProfile({
             </p>
           </div>
           <div className="container mt-4">
-            <p className="font-medium">fullName</p>
+            <p className="font-medium">{fullname}</p>
           </div>
         </div>
       </div>
       <UserModal
         isOpen={isUserOpen}
         isUserSelf={isUserSelf}
-        username={username}
         onClose={() => setUserOpen(false)}
       ></UserModal>
       <AvatarModal
         isOpen={isAvatarOpen}
         isUserSelf={isUserSelf}
-        username={username}
+        setAvatar = {setAvatar}
         onClose={() => setAvatarOpen(false)}
-        getAvatar={()=>getAvatar()}
+        
       ></AvatarModal>
     </>
   );

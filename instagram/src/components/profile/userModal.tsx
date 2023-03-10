@@ -5,12 +5,10 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 export default function UserModal({
   isOpen,
   isUserSelf,
-  username,
   onClose,
 }: {
   isOpen: boolean;
   isUserSelf: boolean;
-  username: string
   onClose: () => void;
 }) {
   const cancelButtonRef = useRef(null);

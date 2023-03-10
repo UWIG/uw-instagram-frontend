@@ -8,7 +8,7 @@ import UserContext from '../../contexts/user-context'
 
 export default function Sidebar(props: sidebarType) {
     const navigate = useNavigate();
-    const {username, setUsername} = useContext(UserContext);
+    const {username,avatar, setUser} = useContext(UserContext);
     const [showMore, setShowMore] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [searchButtonClicked,setSearchButtonClicked] = useState(false);
@@ -16,7 +16,7 @@ export default function Sidebar(props: sidebarType) {
     const [searchBarBuffer,setSearchBarBuffer] = useState<string>("");
     function handleLogout() {
         localStorage.clear();
-        setUsername('');
+        setUser({});
         navigate(ROUTES.LOGIN);
     }
 

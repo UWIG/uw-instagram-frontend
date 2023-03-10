@@ -2,45 +2,50 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export default function UserModal({
   isOpen,
   isUserSelf,
-  username,
   onClose,
-  getAvatar,
+  setAvatar
 }: {
   isOpen: boolean;
   isUserSelf: boolean;
-  username: string;
   onClose: () => void;
-  getAvatar: () => void;
+  setAvatar:any;
 }) {
   const cancelButtonRef = useRef(null);
   // const [imgs, setImgs] = useState<string[]>([]);
   const [imgFile, setImgFile] = useState<File>();
+  const {username} = useParams();
+
+  useEffect(() => {
+    if(imgFile !== undefined){
+      onClose();
+      updateAvatar();
+    }
+ }, [imgFile]);
 
   const HandleFileChange = async (e: any) => {
-    setImgFile((imgFile) => e.target.files[0]);
-    console.log(e.target.files[0]);
-    console.log(imgFile);
-    updateAvatar();
+    setImgFile(e.target.files[0]);
   };
 
   async function updateAvatar() {
     const formData = new FormData();
+    if(username !== undefined)
     formData.append("username", username);
     if (imgFile) {
-      formData.append("avatar", imgFile);
+    formData.append("avatar", imgFile);
     }
     await axios({
       method: "post",
       url: "http://www.localhost:8080/user/changeAva",
       data: formData,
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       console.log(res);
-      getAvatar();
+      setAvatar(res.data.res.data.data);
     });
   }
 
@@ -89,7 +94,6 @@ export default function UserModal({
                       className="absolute w-full opacity-0 -z-10"
                       onChange={HandleFileChange}
                       accept="image/*"
-                      multiple
                     ></input>
                   </label>
                   <span className="flex items-center justify-center h-10 border-t-2 cursor-pointer text-red-500 font-bold">

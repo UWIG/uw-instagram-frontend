@@ -3,7 +3,9 @@ import { UserContextType } from './context-type';
 
 const defaultState = {
     username: "",
-    setUsername: (username: string) => {},
+    avatar:"",
+    fullname:"",
+    setUser: () => {},
   };
 
 const UserContext = createContext<UserContextType>(defaultState);

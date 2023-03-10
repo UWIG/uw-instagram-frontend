@@ -33,7 +33,7 @@ export default function Actions(props: postActions) {
             }`} stroke="currentColor" strokeWidth="2" fill="none" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M20 22a.999.999 0 0 1-.687-.273L12 14.815l-7.313 6.912A1 1 0 0 1 3 21V3a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1Z"></path></svg>    
        </div>
       <div className='p-4 py-0'>
-        <p className='font-bold' data-testid="num-likes">{likes} likes</p>
+        <p className='font-bold' data-testid="num-likes">{likes === null ? 0 : likes} likes</p>
       </div>
       </>
   )
