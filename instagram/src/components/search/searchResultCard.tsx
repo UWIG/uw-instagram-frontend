@@ -1,28 +1,52 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+interface SearchCardProps{
+    result:SearchResult;
+}
+
 export interface SearchResult{
-    userID : string;
-    userName: string;
-    userDescription: string;
+    userName : string;
     avatarURL:string;
-    userURL:string;
     isFollowing:boolean;
 }
 
-interface SearchCardProps{
-    result:SearchResult;
+export interface followPair{
+    currentUserName:string;
+    targetUserName:string;
 }
 
 export default function SearchResultCard(props:SearchCardProps){
     const result:SearchResult = props.result;
     const [isFollowed,setIsFollowed] = useState(result.isFollowing);
     const handleFollowingClicked = async ()=>{
-
-        setIsFollowed(false);
+        let cancelFollowPair:followPair = {currentUserName:"",targetUserName:""}; 
+        await axios.post("/cancelFollow",cancelFollowPair)
+        .then(function(response){
+            let {res,msg} = response.data;
+            console.log(msg);
+            if(res === 1){
+                setIsFollowed(false);
+            }
+        })
+        .catch(function(err){
+            console.error(err);
+        }); 
     };
     const handleFollowClicked= async ()=>{
-        setIsFollowed(true);
+        let setFollowPair:followPair = {currentUserName:"",targetUserName:""}; 
+        await axios.post("/setFollow",setFollowPair)
+        .then(function(response){
+            let {res,msg} = response.data;
+            console.log(msg);
+            if(res === 1){
+                setIsFollowed(true);
+            }
+        })
+        .catch(function(err){
+            console.error(err);
+        }); 
     };
 
     useEffect(()=>{console.log(result.userName)});
@@ -35,7 +59,7 @@ export default function SearchResultCard(props:SearchCardProps){
                         <img src={result.avatarURL} alt={result.userName} className="w-[40px] h-[40px] rounded-full hover:scale-105"/>
                         <div className="flex flex-col h-full w-[calc(100%-40px)]" >
                             <p className="h-1/2 w-full pl-3 pb-0 mb-0 font-semibold text-sm overflow-hidden">{result.userName}</p>
-                            <p className="h-1/2 w-full pl-3 pb-3 font-light text-sm overflow-hidden">{result.userDescription}</p>
+                            <p className="h-1/2 w-full pl-3 pb-3 font-light text-sm overflow-hidden"></p>
                         </div>
                     </div>
                 </Link>
