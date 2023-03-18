@@ -38,31 +38,42 @@ export default function SearchBar(props:searchBarParas){
         const delayHandleSearchRequest = setTimeout(async ()=>{
             resultCards.length=0;
             let keyWords:string[] = inputValue.trim().replace(/\s\s+/g, ' ').split(' ');
-            console.log("handle key words confirmed")
-            
-            const formData = new FormData();
-            for(const keyWord of keyWords){
-                formData.append("keywords",keyWord);
+            let indexOfEmpty = keyWords.indexOf("");
+            while(indexOfEmpty!==-1){
+                keyWords.splice(indexOfEmpty,1);
+                indexOfEmpty = keyWords.indexOf("");
             }
-            await axios({
-                method : "post",
-                url : "/search",
-                data: formData,
-                headers : {"Content-Type" : "multipart/form-data"},
-            }).then(function (res){
-                let results = res.data;
-                if(Array.isArray(results)){
-                    setResultCards(results);
+            console.log("handle key words confirmed, keywords: "+keyWords+"; keywords number: "+keyWords.length);
+            if(keyWords.length > 0){
+                const formData = new FormData();
+                for(const keyWord of keyWords){
+                    formData.append("keywords[]",keyWord);
                 }
-                else{//res.data is not array
-                    throw new Error("incorrect reponse of search: not an array of results");
-                }
-            }).catch(function (err){
-                console.error(err);
-                setResultCards([]);
-            });
-            
-
+                console.log("prepare to send post request by axios");
+                await axios({
+                    method : "post",
+                    url : "http://localhost:8080/search",
+                    data: formData,
+                    headers : {"Content-Type" : "application/json;charset=utf-8"},
+                }).then(function (res){
+                    let results = res.data;
+                    let tempResultCards:SearchResult[]=[];
+                    if(Array.isArray(results)){
+                        results.map((result)=>{
+                            let tempCard:SearchResult = {userName:result.username,avatarURL:"/images/avatars/default_avatar.jpg",isFollowing:true};
+                            if(result.avatar!==null) tempCard.avatarURL="data:image/png;base64, "+result.avatar.data.data;
+                            tempResultCards.push(tempCard);
+                        })
+                        setResultCards(tempResultCards);
+                    }
+                    else{//res.data is not array
+                        throw new Error("incorrect reponse of search: not an array of results");
+                    }
+                }).catch(function (err){
+                    console.error(err);
+                    setResultCards([]);
+                });
+            }
             /*
             sampleCards.map((result)=>{
                 const userName = result.userName;

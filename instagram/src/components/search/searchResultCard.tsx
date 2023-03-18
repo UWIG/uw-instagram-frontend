@@ -25,7 +25,7 @@ export default function SearchResultCard(props:SearchCardProps){
         await axios.post("/cancelFollow",cancelFollowPair)
         .then(function(response){
             let {res,msg} = response.data;
-            console.log(msg);
+            console.log("result of cancelFollow: "+msg);
             if(res === 1){
                 setIsFollowed(false);
             }
@@ -39,7 +39,7 @@ export default function SearchResultCard(props:SearchCardProps){
         await axios.post("/setFollow",setFollowPair)
         .then(function(response){
             let {res,msg} = response.data;
-            console.log(msg);
+            console.log("result of setFollow: "+msg);
             if(res === 1){
                 setIsFollowed(true);
             }
@@ -49,7 +49,6 @@ export default function SearchResultCard(props:SearchCardProps){
         }); 
     };
 
-    useEffect(()=>{console.log(result.userName)});
 
     return (
         

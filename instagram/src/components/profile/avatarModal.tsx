@@ -1,8 +1,9 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import UserContext from "../../contexts/user-context";
 
 export default function UserModal({
   isOpen,
@@ -19,6 +20,7 @@ export default function UserModal({
   // const [imgs, setImgs] = useState<string[]>([]);
   const [imgFile, setImgFile] = useState<File>();
   const {username} = useParams();
+  const {user,setUser} = useContext(UserContext);
 
   useEffect(() => {
     if(imgFile !== undefined){
@@ -45,7 +47,13 @@ export default function UserModal({
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       console.log(res);
-      setAvatar(res.data.res.data.data);
+      setAvatar("data:image/png;base64, " + res.data.res.data.data);
+      if(isUserSelf){
+        setUser({
+          ...user,
+          avatar:"data:image/png;base64, " + res.data.res.data.data,
+        })
+      }
     });
   }
 

@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { postAddComment } from './postType';
 import axios from 'axios';
+import UserContext from '../../contexts/user-context';
 
 export default function AddComment(props: postAddComment) {
   const [comment, setComment] = useState("");
+  const {user} = useContext(UserContext);
   const formData = new FormData();
   formData.append("comment", comment);
   const newComment = {
+    username: user.username,
     id: props.id,
     comment: comment,
   }

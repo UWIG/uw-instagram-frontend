@@ -2,9 +2,11 @@ import { createContext } from 'react';
 import { UserContextType } from './context-type';
 
 const defaultState = {
-    username: "",
-    avatar:"",
-    fullname:"",
+    user:{
+      username: "",
+      avatar:"",
+      fullname:"",
+    },
     setUser: () => {},
   };
 

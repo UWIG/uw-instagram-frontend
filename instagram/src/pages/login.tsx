@@ -20,10 +20,13 @@ export default function Login(props: loginType) {
         try {
             const response = await axios.post('http://localhost:8080/login', obj);
             console.log(response);
-            const user = {
+            let user = {
                 username: response.data.username,
                 fullname: response.data.fullname,
-                avatar: response.data.avatar.data.data,
+                avatar: "/images/avatars/default_avatar.jpg",
+            }
+            if(response.data.avatar!==null){
+                user.avatar = "data:image/png;base64, "+response.data.avatar.data.data;
             }
             props.onLogin(user);
             navigate(ROUTES.DASHBOARD);

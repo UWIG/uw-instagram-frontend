@@ -22,7 +22,7 @@ function App() {
   const NotFoundPage = lazy(() => import("./pages/not-found"));
 
   return (
-    <UserContext.Provider value={{username: user.username, avatar: user.avatar, fullname:user?.fullname, setUser: setUser}}>
+    <UserContext.Provider value={{ user:user , setUser: setUser}}>
       <Router>
       <Suspense fallback={<p>Loading...</p>}>
         <Routes>

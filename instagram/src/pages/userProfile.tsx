@@ -10,17 +10,18 @@ import * as ROUTES from '../constants/routes';
 import UserContext from '../contexts/user-context'
 
 export default function Profile(props: any) {
-  // let isUserSelf:boolean = false;
   const { username } = useParams();
   const [isUserSelf, setIsUserSelf] = useState(false);
   const [avatar, setAvatar] = useState("");
   const [fullname, setFullname] = useState("");
   const [posts, setPosts] = useState<postType[]>([]);
+  const {user} = useContext(UserContext);
 
   async function getUserPosts() {
     try{
       const response = await axios.get(`http://localhost:8080/${username}`);
-      setAvatar(response.data.avatar.data.data);
+      if(response.data.avatar!==null) setAvatar("data:image/png;base64, "+response.data.avatar.data.data);
+      else setAvatar("/images/avatars/default_avatar.jpg");
       setFullname(response.data.fullname);
       setPosts(response.data.posts);
       console.log(response.data);
@@ -44,6 +45,9 @@ async function getPosts() {
 useEffect(
   () => {
     getUserPosts();
+    if(user.username === username){
+      setIsUserSelf(true);
+    }
   }
   ,[]);
 
@@ -56,7 +60,7 @@ useEffect(
           </div>
           <div className="col-span-4 flex flex-col">
             <button onClick={() => setIsUserSelf(!isUserSelf)}>set user</button>
-            <Header isUserSelf={isUserSelf} postCount={posts.length} username={username}  avatar={avatar} fullname = {fullname} setAvatar={setAvatar} />
+            <Header isUserSelf={isUserSelf} postCount={0} username={username}  avatar={avatar} fullname = {fullname} setAvatar={setAvatar} />
             <Photos isUserSelf={isUserSelf} posts={posts} onCreateComment={getUserPosts} />
           </div>
         </div>
