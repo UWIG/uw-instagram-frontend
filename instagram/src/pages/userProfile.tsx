@@ -49,7 +49,7 @@ useEffect(
       setIsUserSelf(true);
     }
   }
-  ,[]);
+  ,[username]);
 
   return (
     <>

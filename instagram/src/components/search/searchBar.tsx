@@ -26,12 +26,14 @@ const sampleCards: SearchResult[] = [
 export interface searchBarParas{
     contentBuffer : string;
     handleReturnBuffer : (arg0:string)=>void;
+    currentUser:string;
 }
 
 export default function SearchBar(props:searchBarParas){
     const [inputValue,setInputValue] = useState<string>(props.contentBuffer);
     const [resultCards,setResultCards] = useState<SearchResult[]>([]);
-    
+    const [currentUser,setCurrentUser]=useState<string>(props.currentUser);
+
     const handleReturnBuffer = props.handleReturnBuffer;
     
     useEffect(()=>{
@@ -50,9 +52,10 @@ export default function SearchBar(props:searchBarParas){
                     formData.append("keywords[]",keyWord);
                 }
                 console.log("prepare to send post request by axios");
+                let searchURL = `http://localhost:8080/search/${currentUser}`;
                 await axios({
                     method : "post",
-                    url : "http://localhost:8080/search",
+                    url : searchURL,
                     data: formData,
                     headers : {"Content-Type" : "application/json;charset=utf-8"},
                 }).then(function (res){
@@ -60,7 +63,7 @@ export default function SearchBar(props:searchBarParas){
                     let tempResultCards:SearchResult[]=[];
                     if(Array.isArray(results)){
                         results.map((result)=>{
-                            let tempCard:SearchResult = {userName:result.username,avatarURL:"/images/avatars/default_avatar.jpg",isFollowing:true};
+                            let tempCard:SearchResult = {userName:result.username,avatarURL:"/images/avatars/default_avatar.jpg",isFollowing:result.following};
                             if(result.avatar!==null) tempCard.avatarURL="data:image/png;base64, "+result.avatar.data.data;
                             tempResultCards.push(tempCard);
                         })
@@ -112,7 +115,7 @@ export default function SearchBar(props:searchBarParas){
             <div className="overflow-y-scroll w-full border-t-2 border-slate-150">
                 {resultCards.map((result)=>{
                     return (
-                        <SearchResultCard result={result}/>                  
+                        <SearchResultCard result={result} currentUser={currentUser}/>                  
                     );
                 })}
             </div>
