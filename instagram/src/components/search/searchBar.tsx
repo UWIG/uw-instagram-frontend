@@ -26,12 +26,14 @@ const sampleCards: SearchResult[] = [
 export interface searchBarParas{
     contentBuffer : string;
     handleReturnBuffer : (arg0:string)=>void;
+    currentUser:string;
 }
 
 export default function SearchBar(props:searchBarParas){
     const [inputValue,setInputValue] = useState<string>(props.contentBuffer);
     const [resultCards,setResultCards] = useState<SearchResult[]>([]);
-    
+    const [currentUser,setCurrentUser]=useState<string>(props.currentUser);
+
     const handleReturnBuffer = props.handleReturnBuffer;
     
     useEffect(()=>{
@@ -112,7 +114,7 @@ export default function SearchBar(props:searchBarParas){
             <div className="overflow-y-scroll w-full border-t-2 border-slate-150">
                 {resultCards.map((result)=>{
                     return (
-                        <SearchResultCard result={result}/>                  
+                        <SearchResultCard result={result} currentUser={currentUser}/>                  
                     );
                 })}
             </div>

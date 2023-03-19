@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 interface SearchCardProps{
     result:SearchResult;
+    currentUser:string;
 }
 
 export interface SearchResult{
@@ -20,8 +21,11 @@ export interface followPair{
 export default function SearchResultCard(props:SearchCardProps){
     const result:SearchResult = props.result;
     const [isFollowed,setIsFollowed] = useState(result.isFollowing);
+    const [targetUser,setTargetUser]=useState(result.userName);
+    const [currentUser,setCurrentUser]=useState(props.currentUser);
+    const [isMyself,setIsMySelf]=useState(targetUser===currentUser);
     const handleFollowingClicked = async ()=>{
-        let cancelFollowPair:followPair = {currentUserName:"",targetUserName:""}; 
+        let cancelFollowPair:followPair = {currentUserName:currentUser,targetUserName:targetUser}; 
         await axios.post("/cancelFollow",cancelFollowPair)
         .then(function(response){
             let {res,msg} = response.data;
@@ -35,7 +39,7 @@ export default function SearchResultCard(props:SearchCardProps){
         }); 
     };
     const handleFollowClicked= async ()=>{
-        let setFollowPair:followPair = {currentUserName:"",targetUserName:""}; 
+        let setFollowPair:followPair = {currentUserName:currentUser,targetUserName:targetUser}; 
         await axios.post("/setFollow",setFollowPair)
         .then(function(response){
             let {res,msg} = response.data;
@@ -62,11 +66,19 @@ export default function SearchResultCard(props:SearchCardProps){
                         </div>
                     </div>
                 </Link>
-                {isFollowed ? (
-                    <button className="w-2/6 border-transparent bg-transparent text-gray-500 text-sm font-semibold" onClick={handleFollowingClicked}>Following</button> 
-                ):(
-                    <button className="w-2/6 border-transparent bg-transparent text-blue-600 text-sm font-semibold" onClick={handleFollowClicked}>Follow</button>
-                )}
+                {isMyself ? (<button className="w-2/6 border-transparent bg-transparent text-gray-500 text-sm font-semibold">Myself</button>)
+                    :(
+                        <>
+                            {isFollowed ? (
+                                <button className="w-2/6 border-transparent bg-transparent text-gray-500 text-sm font-semibold" onClick={handleFollowingClicked}>Following</button> 
+                            ):(
+                                <button className="w-2/6 border-transparent bg-transparent text-blue-600 text-sm font-semibold" onClick={handleFollowClicked}>Follow</button>
+                            )}
+                        </>
+
+                    )
+                }
+                
             </div>
        
     );
