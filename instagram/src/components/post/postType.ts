@@ -2,7 +2,8 @@ export type postComment = {
     id:object_id,
     username:string,
     comment:string,
-    avatar:string,
+    avatar:media,
+    time_created:string,
 }
 
 export type object_id = {
@@ -29,13 +30,13 @@ export type postType = {
     time_modified?:string,
     type?:string,
     onCreateComment?:any;
-    avatar:string,
+    avatar:media,
     mediaList: media[],
   }
 
 export type postHeader = {
     username:string,
-    avatar:string,
+    avatar:media,
     time_created:string,
   }
 
@@ -59,7 +60,7 @@ export type postAddComment = {
   username:string,
   comment?:string,
   onCreateComment?:any,
-  avatar:string,
+  avatar:media,
 }
 
 export type postImage = {
@@ -70,7 +71,7 @@ export type postImage = {
 export type postModal = {
   id:string,
   username:string,
-  avatar:string,
+  avatar:media,
   time_created:string,
   open:boolean,
   onClose: () => void,
@@ -84,7 +85,7 @@ export type postModal = {
 
 export type postModalComment = {
   username:string,
-  avatar:string,
+  avatar:media,
   caption: string,
   time_created: string,
   comments: postComment[],

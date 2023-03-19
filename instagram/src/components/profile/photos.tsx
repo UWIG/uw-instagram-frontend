@@ -155,13 +155,13 @@ export default function Photos({
         </div>
       </div>
       <div className="">
-        {posts.length == 0 ?
+        {posts === null ?
         <div className="w-full text-center font-bold pt-32">
           <p>Share Photos</p>
         </div>
         :
         <div className="grid grid-cols-3 gap-8 mt-4 mb-12">
-          {posts.map((post) => (
+          {posts !== null && posts.map((post) => (
             <div key={post.id}>
               <PostModal
                 id={post.id}
