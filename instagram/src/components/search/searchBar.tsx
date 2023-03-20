@@ -52,7 +52,7 @@ export default function SearchBar(props:searchBarParas){
                     formData.append("keywords[]",keyWord);
                 }
                 console.log("prepare to send post request by axios");
-                await axiosAPI.post('/search/${currentUser}',formData,{
+                await axiosAPI.post(`/search/${currentUser}`,formData,{
                     headers : {"Content-Type" : "application/json;charset=utf-8"}
                 }).then(function (res){
                     let results = res.data;

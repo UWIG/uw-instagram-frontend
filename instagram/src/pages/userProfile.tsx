@@ -42,10 +42,9 @@ useEffect(
     <>
       <div className="bg-gray-background">
         <div className="grid grid-cols-5 gap-12 max-w-screen-2xl">
-          <div className="col-span-1">
-            <Sidebar onCreatePost={() => getUserPosts()} />
-          </div>
-          <div className="col-span-4 flex flex-col">
+          
+          <Sidebar onCreatePost={() => getUserPosts()} />
+          <div className="col-span-4 flex flex-col overflow-y-scroll">
             <button onClick={() => setIsUserSelf(!isUserSelf)}>set user</button>
             <Header isUserSelf={isUserSelf} postCount={0} username={username}  avatar={avatar} fullname = {fullname} setAvatar={setAvatar} />
             <Photos isUserSelf={isUserSelf} posts={posts} onCreateComment={getUserPosts} />
