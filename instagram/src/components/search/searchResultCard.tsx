@@ -1,9 +1,11 @@
 import axiosAPI from "../../config/axiosConfig"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {Route, useNavigate } from 'react-router-dom';
 
 interface SearchCardProps{
     result:SearchResult;
+    currentUser:string;
 }
 
 export interface SearchResult{
@@ -12,21 +14,23 @@ export interface SearchResult{
     isFollowing:boolean;
 }
 
-export interface followPair{
-    currentUserName:string;
-    targetUserName:string;
-}
+
 
 export default function SearchResultCard(props:SearchCardProps){
     const result:SearchResult = props.result;
     const [isFollowed,setIsFollowed] = useState(result.isFollowing);
+    const [targetUser,setTargetUser]=useState(result.userName);
+    const [currentUser,setCurrentUser]=useState(props.currentUser);
+    const [isMyself,setIsMySelf]=useState(targetUser===currentUser);
+    const navigate = useNavigate();
     const handleFollowingClicked = async ()=>{
-        let cancelFollowPair:followPair = {currentUserName:"",targetUserName:""}; 
+        let cancelFollowPair = {currentUserName:currentUser,targetUserName:targetUser}; 
+        console.log("currentUser: " + currentUser + " targetUser: "+targetUser+" ; send request")
         await axiosAPI.post("/cancelFollow",cancelFollowPair)
         .then(function(response){
-            let {res,msg} = response.data;
-            console.log("result of cancelFollow: "+msg);
-            if(res === 1){
+            let res = response.data;
+            console.log("result of cancelFollow: "+res);
+            if(res === "successful"){
                 setIsFollowed(false);
             }
         })
@@ -35,12 +39,12 @@ export default function SearchResultCard(props:SearchCardProps){
         }); 
     };
     const handleFollowClicked= async ()=>{
-        let setFollowPair:followPair = {currentUserName:"",targetUserName:""}; 
-        await axiosAPI.post("/setFollow",setFollowPair)
+        let setFollowPair = {currentUserName:currentUser,targetUserName:targetUser}; 
+        await axiosAPI.post("http://localhost:8080/setFollow",setFollowPair)
         .then(function(response){
-            let {res,msg} = response.data;
-            console.log("result of setFollow: "+msg);
-            if(res === 1){
+            let res = response.data;
+            console.log("result of setFollow: "+res);
+            if(res === "successful"){
                 setIsFollowed(true);
             }
         })
@@ -53,6 +57,7 @@ export default function SearchResultCard(props:SearchCardProps){
     return (
         
             <div className="flex flex-row h-16 w-full hover:bg-slate-100 p-1">
+                
                 <Link to={`/p/${result.userName}`}  className='h-16 w-4/6 no-underline cursor-pointer'>
                     <div className="flex flex-row p-1 h-full w-full">
                         <img src={result.avatarURL} alt={result.userName} className="w-[40px] h-[40px] rounded-full hover:scale-105"/>
@@ -62,11 +67,19 @@ export default function SearchResultCard(props:SearchCardProps){
                         </div>
                     </div>
                 </Link>
-                {isFollowed ? (
-                    <button className="w-2/6 border-transparent bg-transparent text-gray-500 text-sm font-semibold" onClick={handleFollowingClicked}>Following</button> 
-                ):(
-                    <button className="w-2/6 border-transparent bg-transparent text-blue-600 text-sm font-semibold" onClick={handleFollowClicked}>Follow</button>
-                )}
+                {isMyself ? (<button className="w-2/6 border-transparent bg-transparent text-gray-500 text-sm font-semibold">Myself</button>)
+                    :(
+                        <>
+                            {isFollowed ? (
+                                <button className="w-2/6 border-transparent bg-transparent text-gray-500 text-sm font-semibold" onClick={handleFollowingClicked}>Following</button> 
+                            ):(
+                                <button className="w-2/6 border-transparent bg-transparent text-blue-600 text-sm font-semibold" onClick={handleFollowClicked}>Follow</button>
+                            )}
+                        </>
+
+                    )
+                }
+                
             </div>
        
     );

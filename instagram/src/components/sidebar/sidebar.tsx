@@ -92,8 +92,8 @@ export default function Sidebar(props: sidebarType) {
                     </div>
                 </ul>
                 {searchButtonClicked && 
-                    <div className="absolute left-full inset-y-0 duration-100 ease-in-out border-transparent z-20">
-                        <SearchBar contentBuffer={searchBarBuffer} handleReturnBuffer={setSearchBarBuffer}/>
+                    <div className="absolute left-full inset-y-0 duration-100 ease-in-out border-transparent z-10">
+                        <SearchBar contentBuffer={searchBarBuffer} handleReturnBuffer={setSearchBarBuffer} currentUser={user.username}/>
                     </div>  
                 }
             </div>
