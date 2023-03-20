@@ -10,7 +10,7 @@ export default function Comments(props:postComments) {
         if(inx < 3){
         return (
           <div>
-              <p key={comment.id.date} className='mb-1'>
+              <p key={comment.id.date + comment.id.timestamp} className='mb-1'>
                   <span className='mr-1 font-bold'>{comment.username}</span>
                   <span>{comment.comment}</span>
               </p>

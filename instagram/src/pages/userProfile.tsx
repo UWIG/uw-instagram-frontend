@@ -29,17 +29,6 @@ export default function Profile(props: any) {
     }
 };
 
-async function getPosts() {
-  try{
-    const response = await axiosAPI.get("/api/posts");
-    setPosts(response.data);
-    console.log(response.data);
-  }
-  catch(err){
-    console.error(err);
-  }
-};
-
 useEffect(
   () => {
     getUserPosts();
@@ -54,7 +43,7 @@ useEffect(
       <div className="bg-gray-background">
         <div className="grid grid-cols-5 gap-12 max-w-screen-2xl">
           <div className="col-span-1">
-            <Sidebar onCreatePost={() => getPosts()} />
+            <Sidebar onCreatePost={() => getUserPosts()} />
           </div>
           <div className="col-span-4 flex flex-col">
             <button onClick={() => setIsUserSelf(!isUserSelf)}>set user</button>
