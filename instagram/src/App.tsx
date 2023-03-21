@@ -20,6 +20,7 @@ function App() {
   const SignUp = lazy(() => import("./pages/sign-up"));
   const ErrorPage = lazy(() => import("./pages/error-page"));
   const NotFoundPage = lazy(() => import("./pages/not-found"));
+  const Setting = lazy(() => import("./pages/setting"));
 
   return (
     <UserContext.Provider value={{ user:user , setUser: setUser}}>
@@ -30,6 +31,7 @@ function App() {
           <Route path={ROUTES.SIGN_UP} element={<SignUp/>}errorElement={<ErrorPage/>} />
           <Route path={ROUTES.DASHBOARD} element={<Dashboard/>}errorElement={<ErrorPage/>} />
           <Route path={ROUTES.PROFILE} element={<UserProfile/>} errorElement={<ErrorPage/>} />
+          <Route path={ROUTES.SETTING} element={<Setting/>} errorElement={<ErrorPage/>} />
           <Route path='*' element={<NotFoundPage/>} />
         </Routes>
       </Suspense>
