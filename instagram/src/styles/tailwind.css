@@ -111,3 +111,13 @@
     border-color: transparent;
     background-color: transparent;
   }
+
+  .text-red-primary {
+    --tw-text-opacity: 1;
+    color: rgb(237 73 86 / var(--tw-text-opacity));
+  }
+
+  .text-blue-medium {
+    --tw-text-opacity: 1;
+    color: rgb(65 147 239 / var(--tw-text-opacity));
+  }
