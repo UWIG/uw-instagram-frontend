@@ -20,7 +20,7 @@ export default function SignUp() {
         // Email format validation using regular expression
         const emailRegex = /^[a-zA-Z0-9]+@uwaterloo\.ca$/;
         if (!emailRegex.test(emailAddress)) {
-            setError('Invalid email address format');
+            setError('Email address must be in the format personal_id@uwaterloo.ca');
             return;
         }
 
@@ -37,11 +37,15 @@ export default function SignUp() {
             setMessage('Congrats! You have successfully registered.');
             navigate(ROUTES.LOGIN);
         }
-        catch {
+        catch (error: any){
             console.error(error);
             setMessage('')
             // Show a message indicating incorrect login credentials to the user
-            setError('Sorry, this email address is registered already.');
+            if (error.response && error.response.data) {
+                setError(error.response.data);
+            } else {
+                setError('Sorry, this email address has been registered.');
+            }
         }
       }
       
@@ -106,6 +110,8 @@ export default function SignUp() {
                             style={{ "backgroundColor": "rgb(0, 149, 246)" }}
                             className={`text-white w-full rounded h-8 font-bold
                         ${isInvalid && 'opacity-50'}`}
+                            onMouseOver={(e: any) => !isInvalid && (e.target.style.backgroundColor = "rgb(57, 117, 234)")}
+                            onMouseLeave={(e: any) => !isInvalid && (e.target.style.backgroundColor = "rgb(0, 149, 246)")}
                         >
                             Sign up
                         </button>
