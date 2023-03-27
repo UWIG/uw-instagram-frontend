@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './styles/app.css';
 import './styles/custom.css';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

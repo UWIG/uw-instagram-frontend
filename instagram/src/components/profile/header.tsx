@@ -1,7 +1,7 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import UserModal from "./userModal";
 import AvatarModal from "./avatarModal";
-
+import Skeleton from "react-loading-skeleton";
 
 export default function UserProfile({
   isUserSelf,
@@ -9,28 +9,40 @@ export default function UserProfile({
   username,
   avatar,
   fullname,
-  setAvatar
+  setAvatar,
 }: {
   isUserSelf: boolean;
   postCount: number;
-  avatar:string,
-  fullname:string,
-  username:string | undefined,
-  setAvatar:(avatar:string) => void,
+  avatar: string;
+  fullname: string;
+  username: string | undefined;
+  setAvatar: (avatar: string) => void;
 }) {
   const [isAvatarOpen, setAvatarOpen] = useState(false);
   const [isUserOpen, setUserOpen] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (avatar !== "") {
+      setLoading(false);
+    }
+  },[avatar])
+
 
   return (
     <>
       <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
         <div className="container flex justify-center items-center">
-          <img
-            className="rounded-full h-40 w-40 flex cursor-pointer"
-            src={avatar}
-            alt="profile pic"
-            onClick={()=>setAvatarOpen(true)}
-          />
+          {loading ? (
+            <Skeleton circle height={160} width={160}  />
+          ) : (
+            <img
+              className="rounded-full h-40 w-40 flex cursor-pointer"
+              src={avatar}
+              alt="profile pic"
+              onClick={() => setAvatarOpen(true)}
+            />
+          )}
         </div>
         <div className="flex items-center justify-center flex-col col-span-2">
           <div className="container flex items-center">
@@ -132,9 +144,8 @@ export default function UserProfile({
       <AvatarModal
         isOpen={isAvatarOpen}
         isUserSelf={isUserSelf}
-        setAvatar = {setAvatar}
+        setAvatar={setAvatar}
         onClose={() => setAvatarOpen(false)}
-        
       ></AvatarModal>
     </>
   );

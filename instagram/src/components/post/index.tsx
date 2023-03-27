@@ -18,7 +18,7 @@ export default function Post(props:postType) {
         <Image mediaList={props.mediaList} caption="images" />
         <Actions likes = {props.likes} onComment={() => setOpen(true)}/>
         <Footer username={props.username} caption={props.caption} />
-        <Comments comments={props.comments}/>
+        <Comments comments={props.comments} onExpandComments={() => setOpen(true)}/>
         <AddComment id={props.id} username={props.username} onCreateComment={props.onCreateComment} avatar={props.avatar}/>
         <Modal id={props.id} open={open} username = {props.username} caption={props.caption} likes={props.likes} avatar={props.avatar} time_created={props.time_created} comments={props.comments} mediaList={props.mediaList} onClose={() => setOpen(false)} onCreateComment={props.onCreateComment} opacity="bg-opacity-75"/>
         </div>

@@ -45,7 +45,7 @@ useEffect(
           <div className="col-span-1">
             <Sidebar onCreatePost={() => getUserPosts()} />
           </div>
-          <div className="col-span-4 flex flex-col">
+          <div className="col-span-4 flex flex-col overflow-y-scroll">
             <button onClick={() => setIsUserSelf(!isUserSelf)}>set user</button>
             <Header isUserSelf={isUserSelf} postCount={0} username={username}  avatar={avatar} fullname = {fullname} setAvatar={setAvatar} />
             <Photos isUserSelf={isUserSelf} posts={posts} onCreateComment={getUserPosts} />

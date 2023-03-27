@@ -5,20 +5,17 @@ import { formatDistanceToNowStrict } from 'date-fns'
 export default function Comments(props:postComments) {
   return (
     <div className="p-4 pt-1 pb-4">
-      <p className="text-sm text-gray-base mb-1 cursor-pointer">View all comments</p>
-      {props.comments && props.comments.map((comment:postComment, inx) => {
-        if(inx < 3){
+      {props.comments && props.comments.slice(0,3).map((comment:postComment, inx) => {
         return (
-          <div>
-              <p key={comment.id.date + comment.id.timestamp} className='mb-1'>
+          <div key={comment.id.date}>
+              <p className='mb-1'>
                   <span className='mr-1 font-bold'>{comment.username}</span>
                   <span>{comment.comment}</span>
               </p>
           </div>
         )
- 
-        }
       })}
+      <p className="text-sm text-gray mb-1 cursor-pointer" onClick={props.onExpandComments}>View all {props.comments?.length} comments</p>
     </div>
   )
 }

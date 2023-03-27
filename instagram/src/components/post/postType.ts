@@ -47,7 +47,8 @@ export type postActions = {
 }
 
 export type postComments = {
-  comments: postComment[]
+  comments: postComment[],
+  onExpandComments: () => void,
 }
 
 export type postFooter = {
@@ -83,10 +84,23 @@ export type postModal = {
   onCreateComment: () => void,
 }
 
-export type postModalComment = {
+export type postModalComments = {
   username:string,
   avatar:media,
   caption: string,
   time_created: string,
   comments: postComment[],
+}
+
+export type postModalComment = {
+  comment: postComment
+}
+
+export type postEmoji = {
+  open: boolean,
+  setOpen: (open: boolean) => void,
+  comment: string,
+  setComment: (comment: string) => void,
+  pos_x: number | undefined,
+  pos_y: number | undefined,
 }

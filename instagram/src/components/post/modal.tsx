@@ -2,7 +2,7 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { postModal } from './postType'
 import Header from './header';
-import ModalComment from './modal-comments';
+import ModalComments from './modal-comments';
 import Actions from './actions';
 import AddComment from './add-comment';
 
@@ -58,7 +58,7 @@ export default function Modal(props:postModal) {
                 </div>
                 <div className='container col-span-1 max-h-[60vh]'>
                   <Header username = {props.username} avatar={props.avatar} time_created={props.time_created}/>
-                  <ModalComment username = {props.username} caption={props.caption} avatar={props.avatar} time_created={props.time_created} comments={props.comments}/>
+                  <ModalComments username = {props.username} caption={props.caption} avatar={props.avatar} time_created={props.time_created} comments={props.comments}/>
                   <Actions likes={props.likes} />
                   <AddComment id={props.id} username={props.username} avatar={props.avatar} onCreateComment={props.onCreateComment} />
                 </div>

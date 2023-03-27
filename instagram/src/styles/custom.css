@@ -85,5 +85,43 @@
 }
 
 .text-gray {
+  color: rgb(142,142,142);
+}
+
+.custom-blue {
+  color: rgb(0,149,246);
+}
+
+.hashtag{
+  color: rgb(0,55,107);
+}
+
+[contentEditable=false]:empty:before {
+  content: attr(data-text);
   color: rgba(142,142,142,1);
 }
+
+.highLite{
+  position: relative;
+}
+
+
+/* THE UNDERLAYING ONE WITH COLORS */
+.highLite_colors {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; 
+  user-select: none;
+}
+
+/* THE OVERLAYING CONTENTEDITABLE WITH TRANSPARENT TEXT */
+.highLite_editable {
+  position: relative;
+  color: transparent; /* Make text invisible */
+  caret-color: black; /* But keep caret visible */
+}
+
+.hl_angled{ color: turquoise; }
+.hl_curly{ color: fuchsia; }

@@ -8,7 +8,7 @@ export default function SuggestedProfile() {
             <p className="font-bold text-sm">Duke Olivia</p>
         </div>
         <div>
-            <button className="text-xs font-bold text-blue-medium" type='button'>Follow</button>
+            <button className="text-xs font-bold text-blue-medium custom-blue" type='button'>Follow</button>
         </div>
 
     </div>
