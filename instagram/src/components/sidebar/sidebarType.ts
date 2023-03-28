@@ -19,4 +19,5 @@ export type thumbnailType = {
 export type modelFormType = {
     caption:string,
     setCaption: any,
+    setHashtags: any,
 }

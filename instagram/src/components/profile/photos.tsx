@@ -1,23 +1,21 @@
 /* eslint-disable no-nested-ternary */
 import Skeleton from "react-loading-skeleton";
-import { useState } from "react";
 import { postType, postImage } from "../post/postType";
-import PostModal from "../post/modal";
+import Photo from "./photo";
 
 export default function Photos({
   isUserSelf,
   posts,
-  onCreateComment
+  onCreateComment,
 }: {
   isUserSelf: boolean;
-  posts: postType[],
+  posts: postType[];
   onCreateComment: () => {};
 }) {
   // var photos: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  const [open, setOpen] = useState(false);
 
   return (
-    <div className="h-16 border-t border-gray-primary mt-12 pt-4">
+    <div className="h-full border-t border-gray-primary mt-12 pt-4">
       <div className="flex items-center justify-center flex-row">
         <div className="flex items-center justify-center flex-row cursor-pointer">
           <svg
@@ -154,73 +152,19 @@ export default function Photos({
           <span>TAGGED</span>
         </div>
       </div>
-      <div className="">
-        {posts === null ?
-        <div className="w-full text-center font-bold pt-32">
-          <p>Share Photos</p>
-        </div>
-        :
-        <div className="grid grid-cols-3 gap-8 mt-4 mb-12">
-          {posts !== undefined && posts.map((post) => (
-            <div key={post.id}>
-              <PostModal
-                id={post.id}
-                open={open}
-                username={post.username}
-                caption={post.caption}
-                likes={post.likes}
-                avatar={post.avatar}
-                time_created={post.time_created}
-                comments={post.comments}
-                mediaList={post.mediaList}
-                onClose={() => setOpen(false)}
-                onCreateComment={onCreateComment}
-                opacity="bg-opacity-25"
-              />
-              <div className="relative group" onClick={() => setOpen(true)}>
-                <img
-                  src={"data:image/png;base64," + post.mediaList[0].data.data}
-                  alt="profile pic"
-                />
 
-                <div className="absolute bottom-0 left-0  z-10 w-full justify-evenly items-center h-full bg-neutral-800/50 group-hover:flex hidden">
-                  <p className="flex items-center text-white font-bold">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="w-8 mr-4"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {post.likes}
-                  </p>
-
-                  <p className="flex items-center text-white font-bold">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="w-8 mr-4"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {post.comments?.length}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        }
+      <div>
+        {posts === null ? (
+          <div className="w-full text-center font-bold pt-32">
+            <p>Share Photos</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-8 mt-4 mb-12">
+            { posts.map((post) => (
+                  <Photo key={post.id} post={post} onCreateComment={onCreateComment} />
+                ))}
+          </div>
+        )}
       </div>
     </div>
   );

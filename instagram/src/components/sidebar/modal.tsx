@@ -14,6 +14,7 @@ export default function Modal(props: modalType) {
   const [caption, setCaption] = useState("");
   const [imgFiles, setImgFiles] = useState<Blob[]>([]);
   const [thumbnail, setThumbnail] = useState(false);
+  const [hashtags, setHashtags] = useState([]);
   const cancelButtonRef = useRef(null);
 
 
@@ -34,9 +35,8 @@ export default function Modal(props: modalType) {
     setImgIdx(0);
     setImgFiles([]);
     setThumbnail(false);
+    setHashtags([]);
   }
-
-
 
   const handleDelete = () => {
     setImgs(imgs.filter((img, idx) => idx !== imgIdx));
@@ -53,6 +53,8 @@ export default function Modal(props: modalType) {
       console.log(imgFiles);
       const formData = new FormData();
       formData.append("caption", caption);
+      const tags = hashtags !== null ? hashtags.join(",") : "";
+      formData.append("hashtags", tags );
       for (const imgFile of imgFiles) {
         formData.append("media", imgFile);
       }
@@ -131,7 +133,7 @@ export default function Modal(props: modalType) {
                                   <input type="file" className='absolute top-0 left-0 opacity-0 w-full h-full' onChange={handleFileChange} accept="image/*" multiple />
                                 </button> </>}
                           </div>
-                          {showForm && <ModalForm caption={caption} setCaption={setCaption} />}
+                          {showForm && <ModalForm caption={caption} setCaption={setCaption} setHashtags={setHashtags} />}
                         </div>
                         <div>
                         </div>

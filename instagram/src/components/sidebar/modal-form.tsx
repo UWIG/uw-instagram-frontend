@@ -17,11 +17,11 @@ export default function ModalForm(props: modelFormType) {
   const handleKeyUp = () => {
     if (textDisplayRef.current !== null && textEdiableRef.current !== null) {
       textDisplayRef.current.innerHTML = textEdiableRef.current.innerHTML.replace(
-        /(?<=^| )#\p{L}+/gu,
+        /#\p{L}+/gu,
         "<span class='hashtag'>$&</span>"
       );
-      console.log(textDisplayRef.current.innerText);
       props.setCaption(textEdiableRef.current.innerText);
+      props.setHashtags(textEdiableRef.current.innerHTML.match(/#\p{L}+/gu));
     }
   };
 

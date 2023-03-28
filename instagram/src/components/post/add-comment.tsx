@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { postAddComment } from "./postType";
 import axiosAPI from "../../config/axiosConfig";
 import UserContext from "../../contexts/user-context";
@@ -11,12 +11,20 @@ export default function AddComment(props: postAddComment) {
 
   const positionRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if(props.replyUser !== ""){
+      setComment("@" + props.replyUser + " ");
+    }
+  }, [props.replyUser]);
+
   const formData = new FormData();
   formData.append("comment", comment);
   const newComment = {
     username: user.username,
     id: props.id,
     comment: comment,
+    reply: props.replyUser,
+    commentId: props.commentId,
   };
 
   const handleSubmit = (e: any) => {
@@ -35,7 +43,7 @@ export default function AddComment(props: postAddComment) {
   }
 
   return (
-    <div className="border-t border-gray-primary relative" ref={positionRef}>
+    <div className="border-b border-gray-primary relative" ref={positionRef}>
       <form
         className="flex justify-between pl-0 pr-5"
         method="POST"
@@ -47,7 +55,7 @@ export default function AddComment(props: postAddComment) {
             type="text"
             aria-label="Add a comment"
             autoComplete="off"
-            className="text-sm text-gray-base w-full mr-3 py-5 px-4 focus:outline-none"
+            className="text-sm text-gray-base w-full mr-3 py-4 px-4 focus:outline-none"
             name="add-comment"
             placeholder="Add a comment"
             value={comment}

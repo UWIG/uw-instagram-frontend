@@ -1,9 +1,10 @@
 export type postComment = {
-    id:object_id,
+    id:string,
     username:string,
     comment:string,
     avatar:media,
     time_created:string,
+    replies: postComment[],
 }
 
 export type object_id = {
@@ -62,6 +63,8 @@ export type postAddComment = {
   comment?:string,
   onCreateComment?:any,
   avatar:media,
+  replyUser:string,
+  commentId:string,
 }
 
 export type postImage = {
@@ -80,7 +83,6 @@ export type postModal = {
   comments:postComment[],
   caption: string,
   likes: number,
-  opacity:string,
   onCreateComment: () => void,
 }
 
@@ -90,10 +92,14 @@ export type postModalComments = {
   caption: string,
   time_created: string,
   comments: postComment[],
+  setReplyUser: any,
+  setCommentId: any,
 }
 
 export type postModalComment = {
-  comment: postComment
+  comment: postComment,
+  setReplyUser: any,
+  setCommentId: any,
 }
 
 export type postEmoji = {
@@ -103,4 +109,11 @@ export type postEmoji = {
   setComment: (comment: string) => void,
   pos_x: number | undefined,
   pos_y: number | undefined,
+}
+
+export type postModalCommentReply = {
+  comment: postComment,
+  commentId?: string,
+  setReplyUser: any,
+  setCommentId: any,
 }

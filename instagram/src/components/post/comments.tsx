@@ -4,10 +4,10 @@ import { formatDistanceToNowStrict } from 'date-fns'
 
 export default function Comments(props:postComments) {
   return (
-    <div className="p-4 pt-1 pb-4">
+    <div className="px-4 pt-1">
       {props.comments && props.comments.slice(0,3).map((comment:postComment, inx) => {
         return (
-          <div key={comment.id.date}>
+          <div key={comment.id}>
               <p className='mb-1'>
                   <span className='mr-1 font-bold'>{comment.username}</span>
                   <span>{comment.comment}</span>

@@ -9,12 +9,20 @@ import AddComment from './add-comment';
 export default function Modal(props:postModal) {
   const [imgIdx, setImgIdx] = useState(0);
   const media = props.mediaList[imgIdx].data.data;
+  const [replyUser, setReplyUser] = useState("");
+  const [commentId, setCommentId] = useState("");
 
   const cancelButtonRef = useRef(null)
 
+  const handleClose = () => {
+    props.onClose();
+    setReplyUser("");
+    setCommentId("");
+  }
+
   return (
     <Transition.Root show={props.open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={props.onClose}>
+      <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -24,7 +32,7 @@ export default function Modal(props:postModal) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className={`fixed inset-0 bg-gray-500 ${props.opacity} transition-opacity`}/>
+          <div className={`fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity`}/>
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -58,9 +66,9 @@ export default function Modal(props:postModal) {
                 </div>
                 <div className='container col-span-1 max-h-[60vh]'>
                   <Header username = {props.username} avatar={props.avatar} time_created={props.time_created}/>
-                  <ModalComments username = {props.username} caption={props.caption} avatar={props.avatar} time_created={props.time_created} comments={props.comments}/>
+                  <ModalComments username = {props.username} caption={props.caption} avatar={props.avatar} time_created={props.time_created} comments={props.comments} setReplyUser={setReplyUser} setCommentId={setCommentId}/>
                   <Actions likes={props.likes} />
-                  <AddComment id={props.id} username={props.username} avatar={props.avatar} onCreateComment={props.onCreateComment} />
+                  <AddComment id={props.id} username={props.username} avatar={props.avatar} onCreateComment={props.onCreateComment} replyUser={replyUser} commentId={commentId} />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

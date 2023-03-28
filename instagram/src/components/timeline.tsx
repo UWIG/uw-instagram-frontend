@@ -5,7 +5,6 @@ import { timelineType } from "./types";
 import PostSkeleton from "./post/postSkeleton";
 export default function Timeline(props: timelineType) {
   const [loading, setLoading] = useState<boolean>(true);
-  console.log(loading);
   useEffect(() => {
     if (props.posts.length > 0) {
       setLoading(false);
