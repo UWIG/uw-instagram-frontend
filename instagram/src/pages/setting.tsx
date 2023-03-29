@@ -4,16 +4,42 @@ import axios from "axios";
 import EditProfile from "../components/setting/editProfile";
 import ChangePassword from "../components/setting/changePassword";
 import Sidebar from "../components/sidebar/sidebar";
+import UserContext from "../contexts/user-context";
 
 export default function Profile(props: any) {
   const [option, setOption] = useState("edit");
+  const { user } = useContext(UserContext);
+  let userdata;
 
-  function switchOption () {
-    switch(option){
-      case "edit": return <EditProfile/>;
-      case "change": return <ChangePassword/>;
-      case "email": return "email";
-      default: return "wrong option";
+  function switchOption() {
+    switch (option) {
+      case "edit":
+        return <EditProfile />;
+      case "change":
+        return <ChangePassword />;
+      case "email":
+        return "email";
+      default:
+        return "wrong option";
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  async function getUser() {
+    try {
+      const response = await axios.get(`http://localhost:8080/${user}`);
+      // if (response.data.avatar !== null)
+      //   setAvatar("data:image/png;base64, " + response.data.avatar.data.data);
+      // else setAvatar("/images/avatars/default_avatar.jpg");
+      // setFullname(response.data.fullname);
+      // setPosts(response.data.posts);
+      console.log(response.data);
+      userdata = response.data;
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -33,7 +59,7 @@ export default function Profile(props: any) {
                 <div className="row-span-5">
                   <label
                     className="cursor-pointer inline-block h-10 w-full"
-                    onClick={()=>setOption("edit")}
+                    onClick={() => setOption("edit")}
                   >
                     <input
                       type="radio"
@@ -48,7 +74,7 @@ export default function Profile(props: any) {
 
                   <label
                     className="cursor-pointer inline-block h-10 w-full"
-                    onClick={()=>setOption("change")}
+                    onClick={() => setOption("change")}
                   >
                     <input
                       type="radio"
@@ -63,7 +89,7 @@ export default function Profile(props: any) {
 
                   <label
                     className="cursor-pointer inline-block h-10 w-full"
-                    onClick={()=>setOption("email")}
+                    onClick={() => setOption("email")}
                   >
                     <input
                       type="radio"
@@ -77,9 +103,7 @@ export default function Profile(props: any) {
                   </label>
                 </div>
               </div>
-              <div className="col-span-8">
-                {switchOption()}
-              </div>
+              <div className="col-span-8">{switchOption()}</div>
             </div>
           </div>
         </div>
