@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import Modal from './modal';
 import {Route, useNavigate } from 'react-router-dom';
 import { sidebarType } from './sidebarType';
@@ -12,7 +12,6 @@ export default function Sidebar(props: sidebarType) {
     const [showMore, setShowMore] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [searchButtonClicked,setSearchButtonClicked] = useState(false);
-    const [isCollapsed,setIsCollapsed] = useState(false);
     const [searchBarBuffer,setSearchBarBuffer] = useState<string>("");
     function handleLogout() {
         localStorage.clear();
@@ -20,8 +19,25 @@ export default function Sidebar(props: sidebarType) {
         navigate(ROUTES.LOGIN);
     }
 
+    
+    const clickOutsideRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+          if (clickOutsideRef.current && !clickOutsideRef.current.contains(event.target as Node)) {
+            setSearchButtonClicked(false);
+          }
+        };
+      
+        document.addEventListener("mousedown", handleClickOutside);
+      
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, [clickOutsideRef]);
+      
+
     return (
-        <>
+        <div ref={clickOutsideRef}>
             <Modal open={showModal} onClose={() => setShowModal(false)} onCreatePost={props.onCreatePost} />
             <div className="container col-span-1 bg-white p-10 border-r border-gray-primary h-screen sticky top-0 z-10">
                 <div className="text-gray-700 text-center flex align-items cursor-pointer">
@@ -37,10 +53,7 @@ export default function Sidebar(props: sidebarType) {
                         </li>
                         <li className="hover:text-custom-blue flex mt-7 cursor-pointer" 
                             onClick={()=>{
-                                setSearchButtonClicked(!searchButtonClicked);
-                                if(!searchButtonClicked){
-                                    
-                                }
+                                setSearchButtonClicked(!searchButtonClicked);                               
                             }}>
                             <svg aria-label="Search" className="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path><line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="16.511" x2="22" y1="16.511" y2="22"></line></svg>
                             <span className='ml-3'>Search</span>
@@ -96,6 +109,6 @@ export default function Sidebar(props: sidebarType) {
                     </div>  
                 }
             </div>
-        </>
+        </div>
     )
 }
