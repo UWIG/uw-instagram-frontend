@@ -29,6 +29,18 @@ export default function Profile(props: any) {
     }
   }
 
+  async function getSavedPosts() {
+    await axiosAPI
+      .get(`/api/save/${username}`)
+      .then((response) => {
+        setPosts(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   useEffect(() => {
     getUserPosts();
     if (user.username === username) {
@@ -56,6 +68,7 @@ export default function Profile(props: any) {
               isUserSelf={isUserSelf}
               posts={posts}
               onCreateComment={getUserPosts}
+              onClickSave = {() => getSavedPosts()}
             />
           </div>
         </div>

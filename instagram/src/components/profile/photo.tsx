@@ -12,7 +12,7 @@ export default function Photo({ post, onCreateComment }: { post: postType, onCre
       <img
         src={"data:image/png;base64," + post.mediaList[0].data.data}
         alt="profile pic"
-        className="absolute object-cover h-full w-full"
+        className="absolute object-cover h-full w-full cursor-pointer"
         onClick={() => setOpen(true)}
       />
       <div className="absolute bottom-0 left-0  z-10 w-full justify-evenly items-center h-full bg-neutral-800/50 group-hover:flex hidden">
@@ -29,7 +29,7 @@ export default function Photo({ post, onCreateComment }: { post: postType, onCre
               clipRule="evenodd"
             />
           </svg>
-          {post?.likes}
+          {/* {post?.likes} */}
         </p>
 
         <p className="flex items-center text-white font-bold">
@@ -54,6 +54,9 @@ export default function Photo({ post, onCreateComment }: { post: postType, onCre
         username={post.username}
         caption={post.caption}
         likes={post.likes}
+        whether_liked={post.whether_liked}
+        whether_saved={post.whether_saved}
+        whether_followed_post_user={post.whether_followed_post_user}
         avatar={post.avatar}
         time_created={post.time_created}
         comments={post.comments}

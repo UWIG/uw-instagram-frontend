@@ -23,7 +23,7 @@ export type media = {
 export type postType = {
     id:string,
     username:string,
-    likes:number,
+    likes:object_id[],
     comments: postComment[],
     caption:string,
     location?:string,
@@ -33,17 +33,24 @@ export type postType = {
     onCreateComment?:any;
     avatar:media,
     mediaList: media[],
+    whether_liked: boolean,
+    whether_followed_post_user: boolean,
+    whether_saved:boolean,
   }
 
 export type postHeader = {
     username:string,
     avatar:media,
     time_created:string,
+    whether_followed_post_user:boolean,
   }
 
 
 export type postActions = {
-  likes:number,
+  likes:object_id[],
+  whether_liked: boolean,
+  whether_saved:boolean,
+  post_id:string,
   onComment?: () => void,
 }
 
@@ -82,7 +89,10 @@ export type postModal = {
   mediaList:media[],
   comments:postComment[],
   caption: string,
-  likes: number,
+  likes: object_id[],
+  whether_liked: boolean,
+  whether_followed_post_user:boolean,
+  whether_saved:boolean,
   onCreateComment: () => void,
 }
 

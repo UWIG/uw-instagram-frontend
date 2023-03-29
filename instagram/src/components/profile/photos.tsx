@@ -7,17 +7,19 @@ export default function Photos({
   isUserSelf,
   posts,
   onCreateComment,
+  onClickSave,
 }: {
   isUserSelf: boolean;
   posts: postType[];
   onCreateComment: () => {};
+  onClickSave: any;
 }) {
   // var photos: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   return (
     <div className="h-full border-t border-gray-primary mt-12 pt-4">
       <div className="flex items-center justify-center flex-row">
-        <div className="flex items-center justify-center flex-row cursor-pointer">
+        <div className="flex items-center justify-center flex-row cursor-pointer" onClick={onCreateComment}>
           <svg
             aria-label=""
             color="rgb(38, 38, 38)"
@@ -87,7 +89,7 @@ export default function Photos({
         </div>
         <div className="flex items-center justify-center flex-row cursor-pointer">
           {isUserSelf ? (
-            <>
+            <div onClick={onClickSave} className="inline flex items-center">
               <svg
                 aria-label=""
                 color="rgb(142, 142, 142)"
@@ -107,7 +109,7 @@ export default function Photos({
                 ></polygon>
               </svg>
               <span className="mr-10">SAVED</span>
-            </>
+            </div>
           ) : (
             <></>
           )}

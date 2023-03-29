@@ -65,9 +65,9 @@ export default function Modal(props:postModal) {
                   </div>
                 </div>
                 <div className='container col-span-1 max-h-[60vh]'>
-                  <Header username = {props.username} avatar={props.avatar} time_created={props.time_created}/>
+                  <Header username = {props.username} avatar={props.avatar} time_created={props.time_created} whether_followed_post_user={props.whether_followed_post_user}/>
                   <ModalComments username = {props.username} caption={props.caption} avatar={props.avatar} time_created={props.time_created} comments={props.comments} setReplyUser={setReplyUser} setCommentId={setCommentId}/>
-                  <Actions likes={props.likes} />
+                  <Actions post_id={props.id} likes={props.likes} whether_liked={props.whether_liked} whether_saved={props.whether_saved}/>
                   <AddComment id={props.id} username={props.username} avatar={props.avatar} onCreateComment={props.onCreateComment} replyUser={replyUser} commentId={commentId} />
                 </div>
               </Dialog.Panel>
