@@ -70,6 +70,7 @@ export default function Hashtag() {
                 isUserSelf={false}
                 posts={posts}
                 onCreateComment={getHashtagPosts}
+                onClickSave = {() => {}}
               />
         </div>
       </div>

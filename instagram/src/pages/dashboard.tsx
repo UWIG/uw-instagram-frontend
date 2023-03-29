@@ -26,7 +26,7 @@ export default function Dashboard() {
   
   async function getPosts() {
         try{
-          const response = await axiosAPI.get("/api/posts");
+          const response = await axiosAPI.get(`/api/posts/home/${user.username}`);
           setPosts(response.data);
           console.log(response.data);
         }

@@ -19,7 +19,7 @@ export default function Timeline(props: timelineType) {
           <PostSkeleton />
         </div>
       ) : (
-        props.posts.map((post: postType, inx) => (
+        props.posts.map((post: postType, inx: number) => (
           <Post
             key={post.id}
             username={post.username}
@@ -30,6 +30,9 @@ export default function Timeline(props: timelineType) {
             avatar={post.avatar}
             mediaList={post.mediaList}
             time_created={post.time_created}
+            whether_liked={post.whether_liked}
+            whether_saved={post.whether_saved}
+            whether_followed_post_user={post.whether_followed_post_user}
             onCreateComment={props.onCreateComment}
           />
         ))
