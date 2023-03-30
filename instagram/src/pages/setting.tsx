@@ -8,8 +8,9 @@ import UserContext from "../contexts/user-context";
 
 export default function Profile(props: any) {
   const [option, setOption] = useState("edit");
-  const { user } = useContext(UserContext);
-  let userdata;
+  // const { user } = useContext(UserContext);
+  const user = "alex";
+  
 
   function switchOption() {
     switch (option) {
@@ -20,26 +21,7 @@ export default function Profile(props: any) {
       case "email":
         return "email";
       default:
-        return "wrong option";
-    }
-  }
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  async function getUser() {
-    try {
-      const response = await axios.get(`http://localhost:8080/${user}`);
-      // if (response.data.avatar !== null)
-      //   setAvatar("data:image/png;base64, " + response.data.avatar.data.data);
-      // else setAvatar("/images/avatars/default_avatar.jpg");
-      // setFullname(response.data.fullname);
-      // setPosts(response.data.posts);
-      console.log(response.data);
-      userdata = response.data;
-    } catch (err) {
-      console.error(err);
+        return "";
     }
   }
 
@@ -110,4 +92,8 @@ export default function Profile(props: any) {
       </div>
     </>
   );
+}
+
+export type userdata = {
+  email:string,
 }

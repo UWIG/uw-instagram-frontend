@@ -5,7 +5,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import UserContext from "../../contexts/user-context";
 
-export default function UserModal({
+export default function AvatarModal({
   isOpen,
   isUserSelf,
   onClose,
