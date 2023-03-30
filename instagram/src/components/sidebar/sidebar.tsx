@@ -5,6 +5,7 @@ import { sidebarType } from './sidebarType';
 import SearchBar from '../search/searchBar';
 import * as ROUTES from '../../constants/routes';
 import UserContext from '../../contexts/user-context'
+import SwitchModal from './SwitchModal';
 
 export default function Sidebar(props: sidebarType) {
     const navigate = useNavigate();
@@ -13,12 +14,37 @@ export default function Sidebar(props: sidebarType) {
     const [showModal, setShowModal] = useState(false);
     const [searchButtonClicked,setSearchButtonClicked] = useState(false);
     const [searchBarBuffer,setSearchBarBuffer] = useState<string>("");
-    function handleLogout() {
-        localStorage.clear();
-        setUser({});
-        navigate(ROUTES.LOGIN);
-    }
+    const [isLoginOpen, setLoginOpen] = useState(false);
+    useEffect(() => {
+        const data = window.localStorage.getItem("username");
+        if (data !== null) {
+          user.username = JSON.parse(data);
+        }
+      },[])
+    
+      useEffect(() => {
+        window.localStorage.setItem("username", JSON.stringify(user.username));
+      },[user.username])
 
+    function handleLogout() {
+        const confirmed = window.confirm("Are you sure you want to log out?");
+        if (confirmed) {
+            localStorage.clear();
+            setUser({});
+            navigate(ROUTES.LOGIN);
+        }
+    }
+    function handleSwitchAccount() {
+        const confirmed = window.confirm("Are you sure you want to switch account?");
+        if (confirmed) {
+            localStorage.clear();
+            setUser({});
+            navigate(ROUTES.LOGIN);
+        }
+        // return (
+        //     <p>hello</p>
+        // )
+    }
     
     const clickOutsideRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
@@ -37,6 +63,7 @@ export default function Sidebar(props: sidebarType) {
       
 
     return (
+        <>
         <div ref={clickOutsideRef}>
             <Modal open={showModal} onClose={() => setShowModal(false)} onCreatePost={props.onCreatePost} />
             <div className="container col-span-1 bg-white p-10 border-r border-gray-primary h-screen sticky top-0 z-10">
@@ -89,7 +116,7 @@ export default function Sidebar(props: sidebarType) {
                                             <span className='ml-3'>Saved</span>
                                             <svg aria-label="Saved" className="" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"><polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></polygon></svg>
                                         </li>
-                                        <li className="flex border-b border-gray-primary py-3 cursor-pointer">
+                                        <li className="flex border-b border-gray-primary py-3 cursor-pointer" onClick={() => setLoginOpen(true)}>
                                             <span className='ml-3'>Switch accounts</span>
                                         </li>
                                         <li className="flex border-b border-gray-primary py-3 cursor-pointer" onClick={handleLogout}>
@@ -110,5 +137,10 @@ export default function Sidebar(props: sidebarType) {
                 }
             </div>
         </div>
+        <SwitchModal
+        isOpen={isLoginOpen}
+        onClose={() => setLoginOpen(false)}
+      ></SwitchModal>
+      </>
     )
 }
