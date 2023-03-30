@@ -21,13 +21,13 @@ export default function UserProfile({
   const [isAvatarOpen, setAvatarOpen] = useState(false);
   const [isUserOpen, setUserOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
+  // const [username, setUsername] = useState("");
 
   useEffect(() => {
     if (avatar !== "") {
       setLoading(false);
     }
   },[avatar])
-
 
   return (
     <>
