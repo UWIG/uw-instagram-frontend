@@ -1,15 +1,63 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { Link, useNavigate } from 'react-router-dom';
+import axiosAPI from "../../config/axiosConfig"
+import { loginType } from "../../pages/pageType";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import * as ROUTES from  '../../constants/routes';
+
+interface userType {
+  username: string,
+  avatar: string,
+  fullname: string
+};
 
 export default function SwitchModal({
   isOpen,
   onClose,
+  // props,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  // props : loginType;
 }) {
+  const [user, setUser] = useState<userType>({username:"", avatar:"", fullname:""});
+  const navigate = useNavigate();
+  const [emailAddress, setEmailAddress] = useState(''); // an array with two values: the current state and a function to update the state
+  const [password, setPassword] = useState('');
   const cancelButtonRef = useRef(null);
+  const [error, setError] = useState('');
+  const isInvalid = password === '' || emailAddress === '';
+  const handleLogin: React.MouseEventHandler<HTMLButtonElement> = async (event) => {
+    event.preventDefault();
+    const obj = {username:emailAddress, password:password};
+    try {
+        const response = await axiosAPI.post('/login', obj);
+        console.log(response);
+        let user = {
+            username: response.data.username,
+            fullname: response.data.fullname,
+            avatar: "/images/avatars/default_avatar.jpg",
+        }
+        if(response.data.avatar!==null){
+            user.avatar = "data:image/png;base64, "+response.data.avatar.data.data;
+        }
+        // props.onLogin(user);
+        localStorage.clear();
+        setUser(user);
+        navigate(ROUTES.DASHBOARD);
+    }
+    catch (error: any) {
+        console.error(error);
+        // Show a message indicating incorrect login credentials to the user
+        // setError('Incorrect login credentials. Please try again.');
+        if (error.response && error.response.data) {
+            setError(error.response.data);
+        } else {
+            setError('Incorrect login credentials. Please try again.');
+        }
+    }
+};
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -43,79 +91,58 @@ export default function SwitchModal({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm">
-                {/* <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <ExclamationTriangleIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
-                    </div>
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                        Deactivate account
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All of your data will be permanently
-                          removed. This action cannot be undone.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={onClose}
-                  >
-                    Deactivate
-                  </button>
-                  <button
-                    type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={onClose}
-                    ref={cancelButtonRef}
-                  >
-                    Cancel
-                  </button>
-                </div> */}
                 {(
                   <div className="bg-white">
-                    <span className="flex items-center justify-center h-10 cursor-pointer">
-                      Change password
-                    </span>
-                    <span className="flex items-center justify-center h-10 border-t-2 cursor-pointer">
-                      QR code
-                    </span>
-                    <span className="flex items-center justify-center h-10 border-t-2 cursor-pointer">
-                      Apps and Websites
-                    </span>
-                    <span className="flex items-center justify-center h-10 border-t-2 cursor-pointer">
-                      Notifications
-                    </span>
-                    <span className="flex items-center justify-center h-10 border-t-2 cursor-pointer">
-                      Privacy and security
-                    </span>
-                    <span className="flex items-center justify-center h-10 border-t-2 cursor-pointer">
-                      Supervision
-                    </span>
-                    <span className="flex items-center justify-center h-10 border-t-2 cursor-pointer">
-                      Login activity
-                    </span>
-                    <span className="flex items-center justify-center h-10 border-t-2 cursor-pointer">
-                      Emails from Instagram
-                    </span>
-                    <span className="flex items-center justify-center h-10 border-t-2 cursor-pointer">
-                      Report a problem
-                    </span>
-                    <span className="flex items-center justify-center h-10 border-t-2 cursor-pointer">
-                      Log Out
-                    </span>
-                    <span
-                      className="flex items-center justify-center h-10 border-t-2 cursor-pointer"
-                      onClick={onClose}
-                    >
-                      Cancel
-                    </span>
+                                <div className="flex flex-col">
+                <div className="flex flex-col items-center bg-white p-4 
+                border border-gray-primary mb-4 rounded">
+                    <h1 className="flex justify-center w-full">
+                        <img src="/images/watig_logo.png" alt="UW_IG" className="mt-2 w-full mb-4"/>
+                    </h1>
+                    {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
+
+                    <form method="POST">
+                        <input
+                            aria-label="Enter your email address"
+                            type="text"
+                            placeholder="Email address"
+                            className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
+                            border-gray-primary rounded mb-2"
+                            onChange={({ target}) => setEmailAddress(target.value)}
+                            value={emailAddress}
+                        />
+                        <input
+                            aria-label="Enter your password"
+                            type="password"
+                            placeholder="Password"
+                            className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
+                            border-gray-primary rounded mb-2"
+                            onChange={({ target}) => setPassword(target.value)}
+                            value={password}
+                        />
+                        <button onClick={handleLogin}
+                            disabled={isInvalid}
+                            type="submit"
+                            style={{ "backgroundColor": "rgb(0, 149, 246)" }}
+                            className={`text-white w-full rounded h-8 font-bold
+                            ${isInvalid && 'opacity-50'}`}
+                            onMouseOver={(e: any) => !isInvalid && (e.target.style.backgroundColor = "rgb(57, 117, 234)")}
+                            onMouseLeave={(e: any) => !isInvalid && (e.target.style.backgroundColor = "rgb(0, 149, 246)")}
+                        >
+                            Login
+                        </button>
+                    </form>
+                </div>
+                {/* <div className="flex justify-center items-center flex-col w-full bg-white p-4 
+                rounded border border-gray-primary">
+                    <p className="text-sm">
+                        Don't have an account?{` `}
+                        <Link to={ROUTES.SIGN_UP} className="font-bold text-blue-medium">
+                            Sign up
+                        </Link>
+                    </p>
+                </div> */}
+            </div>
                   </div>
                 )}
               </Dialog.Panel>
