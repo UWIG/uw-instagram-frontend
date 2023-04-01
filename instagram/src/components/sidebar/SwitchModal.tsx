@@ -50,12 +50,12 @@ export default function SwitchModal({
     catch (error: any) {
         console.error(error);
         // Show a message indicating incorrect login credentials to the user
-        // setError('Incorrect login credentials. Please try again.');
-        if (error.response && error.response.data) {
-            setError(error.response.data);
-        } else {
-            setError('Incorrect login credentials. Please try again.');
-        }
+        setError('Incorrect login credentials. Please try again.');
+        // if (error.response && error.response.data) {
+        //     setError(error.response.data);
+        // } else {
+        //     setError('Incorrect login credentials. Please try again.');
+        // }
     }
 };
 
