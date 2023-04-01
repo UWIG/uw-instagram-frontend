@@ -18,7 +18,7 @@ export default function SignUp() {
     const handleSignup: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         // Email format validation using regular expression
-        const emailRegex = /^[a-zA-Z0-9]+@uwaterloo\.ca$/;
+        const emailRegex = /^[a-zA-Z0-9_.]+@uwaterloo\.ca$/;
         if (!emailRegex.test(emailAddress)) {
             setError('Email address must be in the format personal_id@uwaterloo.ca');
             return;

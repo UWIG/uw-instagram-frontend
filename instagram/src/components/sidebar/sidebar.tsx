@@ -6,6 +6,13 @@ import SearchBar from '../search/searchBar';
 import * as ROUTES from '../../constants/routes';
 import UserContext from '../../contexts/user-context'
 import SwitchModal from './SwitchModal';
+import { loginType } from "../../pages/pageType";
+
+interface userType {
+    username: string,
+    avatar: string,
+    fullname: string
+  };
 
 export default function Sidebar(props: sidebarType) {
     const navigate = useNavigate();
@@ -15,16 +22,34 @@ export default function Sidebar(props: sidebarType) {
     const [searchButtonClicked,setSearchButtonClicked] = useState(false);
     const [searchBarBuffer,setSearchBarBuffer] = useState<string>("");
     const [isLoginOpen, setLoginOpen] = useState(false);
+    const [switch_user, setSwitchUser] = useState<userType>({username:"", avatar:"", fullname:""});
     useEffect(() => {
         const data = window.localStorage.getItem("username");
-        if (data !== null) {
-          user.username = JSON.parse(data);
+        const expiry = window.localStorage.getItem("expiry");
+        if (data !== null && expiry !== null) {
+        //   const item = JSON.parse(data);
+          const expiry_time = JSON.parse(expiry);
+          const now = new Date();
+          if (now.getTime() > expiry_time) {
+            window.localStorage.removeItem("username");
+            window.localStorage.removeItem("expiry");
+          } else {
+            user.username = JSON.parse(data);
+          }
         }
-      },[])
-    
+        else {
+            window.localStorage.removeItem("username");
+            window.localStorage.removeItem("expiry");
+        }
+      }, []);
+      
       useEffect(() => {
+        const now = new Date();
+        const ttl = 1800 * 1000;
+
         window.localStorage.setItem("username", JSON.stringify(user.username));
-      },[user.username])
+        window.localStorage.setItem("expiry", JSON.stringify(now.getTime() + ttl));
+      }, [user.username]);
 
     function handleLogout() {
         const confirmed = window.confirm("Are you sure you want to log out?");
@@ -140,6 +165,7 @@ export default function Sidebar(props: sidebarType) {
         <SwitchModal
         isOpen={isLoginOpen}
         onClose={() => setLoginOpen(false)}
+        // onLogin={() => setSwitchUser()}
       ></SwitchModal>
       </>
     )
