@@ -10,19 +10,14 @@ import { postType } from '../components/post/postType';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const {user} = useContext(UserContext);
+  const {user, setUser} = useContext(UserContext);
   const [posts, setPosts] = useState<postType[]>([]);
-  
-
-  useEffect(() => {
-    if(user.username === ""){
-      navigate(ROUTES.LOGIN);
-    }
-    else{
-      getPosts();
-    }
-  },[]
-  );
+  if(user.username === ""){
+    navigate(ROUTES.LOGIN);
+  }
+  else{
+    getPosts();
+  }
   
   async function getPosts() {
         try{
