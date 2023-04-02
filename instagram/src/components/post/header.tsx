@@ -14,6 +14,7 @@ export default function Header(props: postHeader) {
 
     const handleFollowClicked= async ()=>{
         const setFollowPair = {currentUserName:user.username,targetUserName:props.username}; 
+        const notificationPair = {username_from:user.username,username_to:props.username}; 
         await axiosAPI.post("setFollow",setFollowPair)
         .then(function(response){
             let res = response.data;
@@ -25,6 +26,9 @@ export default function Header(props: postHeader) {
         .catch(function(err){
             console.error(err);
         }); 
+        await axiosAPI.post("/api/notification/add/follow",notificationPair).then().catch(function(err){
+          console.error(err);
+      }); 
     };
   return (
     <div className="flex border-b border-gray-primary h-4 p-4 py-8">

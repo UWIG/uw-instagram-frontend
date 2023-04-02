@@ -39,8 +39,9 @@ export default function SearchResultCard(props:SearchCardProps){
         }); 
     };
     const handleFollowClicked= async ()=>{
-        let setFollowPair = {currentUserName:currentUser,targetUserName:targetUser}; 
-        await axiosAPI.post("http://localhost:8080/setFollow",setFollowPair)
+        let setFollowPair = {currentUserName:currentUser,targetUserName:targetUser};
+        let notificationPair={username_from:currentUser,username_to:targetUser}; 
+        await axiosAPI.post("/setFollow",setFollowPair)
         .then(function(response){
             let res = response.data;
             console.log("result of setFollow: "+res);
@@ -51,6 +52,10 @@ export default function SearchResultCard(props:SearchCardProps){
         .catch(function(err){
             console.error(err);
         }); 
+        await axiosAPI.post("/api/notification/add/follow",notificationPair).then().catch(function(err){
+            console.error(err);
+        }); 
+
     };
 
 
