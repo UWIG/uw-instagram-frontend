@@ -14,25 +14,24 @@ export default function Header(props: postHeader) {
       ? "/images/avatars/default_avatar.jpg"
       : "data:image/png;base64, " + props.avatar.data;
 
-  const handleFollowClicked = async () => {
-    const setFollowPair = {
-      currentUserName: user.username,
-      targetUserName: props.username,
+    const handleFollowClicked= async ()=>{
+        const setFollowPair = {currentUserName:user.username,targetUserName:props.username}; 
+        const notificationPair = {username_from:user.username,username_to:props.username}; 
+        await axiosAPI.post("setFollow",setFollowPair)
+        .then(function(response){
+            let res = response.data;
+            console.log("result of setFollow: "+res);
+            if(res === "successful"){
+                setFollowed(true);
+            }
+        })
+        .catch(function(err){
+            console.error(err);
+        }); 
+        await axiosAPI.post("/api/notification/add/follow",notificationPair).then().catch(function(err){
+          console.error(err);
+      }); 
     };
-    await axiosAPI
-      .post("setFollow", setFollowPair)
-      .then(function (response) {
-        let res = response.data;
-        console.log("result of setFollow: " + res);
-        if (res === "successful") {
-          setFollowed(true);
-        }
-      })
-      .catch(function (err) {
-        console.error(err);
-      });
-  };
-
   return (
     <div className="flex justify-between border-b border-gray-primary h-4 p-4 py-8">
       <div className="flex items-center">
