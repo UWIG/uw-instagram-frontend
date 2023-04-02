@@ -19,7 +19,7 @@ export default function AvatarModal({
   const cancelButtonRef = useRef(null);
   // const [imgs, setImgs] = useState<string[]>([]);
   const [imgFile, setImgFile] = useState<File>();
-  const { username } = useParams();
+  // const { username } = useParams();
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -35,8 +35,8 @@ export default function AvatarModal({
 
   async function updateAvatar() {
     const formData = new FormData();
-    if (username !== undefined)
-      formData.append("username", username);
+    if (user.username !== undefined)
+      formData.append("username", user.username);
     if (imgFile) {
       formData.append("avatar", imgFile);
     }

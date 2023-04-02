@@ -1,18 +1,21 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import axiosAPI from "../../config/axiosConfig";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import AvatarModal from "../profile/avatarModal";
+import UserContext from "../../contexts/user-context";
 
 export default function EditProfile() {
   const [isAvatarOpen, setAvatarOpen] = useState(false);
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState("/images/avatars/default_avatar.jpg");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [gender, setGender] = useState("");
-  const [originUsername, setOriginUsername] = useState("");
+  const [gender, setGender] = useState("privacy");
+  const [isAlert, setIsAlert] = useState<Boolean>(false); 
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     getUser();
@@ -20,18 +23,21 @@ export default function EditProfile() {
 
   async function getUser() {
     try {
-      await axios({
+      await axiosAPI({
         method: "get",
-        url: `http://localhost:8080/alex`, //need to change
+        url: `/${user.username}`,
       }).then((res) => {
         console.log(res.data);
-        setAvatar(res.data.avatar.data);
+        if (res.data.avatar !== null)
+          setAvatar("data:image/png;base64, " + res.data.avatar.data);
+        else setAvatar("/images/avatars/default_avatar.jpg");
         setName(res.data.fullname);
-        setOriginUsername(res.data.username);
         setUsername(res.data.username);
         setEmail(res.data.email);
-        setPhone(res.data.phoneNumber);
-        setGender(res.data.gender);
+        if (res.data.phoneNumber === null) setPhone("");
+        else setPhone(res.data.phoneNumber);
+        if (res.data.gender === null) setGender("privacy");
+        else setGender(res.data.gender);
       });
     } catch (err) {
       console.error(err);
@@ -41,24 +47,23 @@ export default function EditProfile() {
   async function updateUser() {
     const formData = new FormData();
     formData.append("fullname", name);
-    formData.append("username", username);
+    formData.append("username", user.username);
     formData.append("email", email);
     formData.append("phone", phone);
     formData.append("gender", gender);
-    console.log(name);
-    console.log(username);
-    console.log(email);
-    console.log(phone);
-    console.log(gender);
-    console.log(originUsername);
-    await axios({
+    await axiosAPI({
       method: "post",
-      url: `http://www.localhost:8080/user/update/${originUsername}`,
+      url: `/user/update/${user.username}`,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       console.log(res);
-      setOriginUsername(username);
+      setIsAlert(true);
+      setUser({
+        ...user,
+        username: username,
+      });
+      console.log(user);
     });
   }
 
@@ -80,7 +85,7 @@ export default function EditProfile() {
             />
           </div>
           <div className="col-span-3 grid grid-flow-row">
-            <span>{originUsername}</span>
+            <span>{user.username}</span>
             <span
               onClick={() => setAvatarOpen(true)}
               className="  text-blue-600 cursor-pointer"
@@ -96,7 +101,7 @@ export default function EditProfile() {
           <input
             type={"text"}
             defaultValue={name}
-            onChange={(event)=>setName(event.target.value)}
+            onChange={(event) => setName(event.target.value)}
             className="  col-span-3 border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 border"
           />
         </div>
@@ -107,7 +112,8 @@ export default function EditProfile() {
           <input
             type={"text"}
             defaultValue={username}
-            onChange={(event)=>setUsername(event.target.value)}
+            disabled={true}
+            onChange={(event) => setUsername(event.target.value)}
             className="  col-span-3 border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 border"
           />
         </div>
@@ -118,7 +124,7 @@ export default function EditProfile() {
           <input
             type={"text"}
             defaultValue={email}
-            onChange={(event)=>setEmail(event.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
             className="  col-span-3 border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 border"
           />
         </div>
@@ -129,7 +135,7 @@ export default function EditProfile() {
           <input
             type={"text"}
             defaultValue={phone}
-            onChange={(event)=>setPhone(event.target.value)}
+            onChange={(event) => setPhone(event.target.value)}
             className="  col-span-3 border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 border"
           />
         </div>
@@ -174,9 +180,49 @@ export default function EditProfile() {
           </div>
         </div>
         <div className="mt-5 flex">
-          <button className=" h-8 w-28 mx-auto bg-sky-500 hover:bg-sky-700 rounded-full text-sm font-medium text-slate-200" onClick={()=>updateUser()}>
+          <button
+            className=" h-8 w-28 mx-auto bg-sky-500 hover:bg-sky-700 rounded-full text-sm font-medium text-slate-200"
+            onClick={() => updateUser()}
+          >
             Save changes
           </button>
+        </div>
+
+        <div
+          className={`bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md  mt-5 ${
+            isAlert ? "" : "hidden"
+          }`}
+          role="alert"
+        >
+          <div className="grid grid-flow-col grid-cols-7">
+            <div className="py-1 col-span-1">
+              <svg
+                className="fill-current h-6 w-6 text-teal-500 mr-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+              </svg>
+            </div>
+            <div className=" col-span-5">
+              <p className="font-bold">The user profile has changed</p>
+              <p className="text-sm">
+                Make sure you know how these changes affect you.
+              </p>
+            </div>
+            <div>
+              <svg
+                className="fill-current h-6 w-6 text-red-500 float-right"
+                role="button"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                onClick={()=>{setIsAlert(false)}}
+              >
+                <title>Close</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </>
