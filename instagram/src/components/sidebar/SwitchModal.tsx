@@ -1,10 +1,11 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef, useState, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Link, useNavigate } from 'react-router-dom';
 import axiosAPI from "../../config/axiosConfig"
 import { loginType } from "../../pages/pageType";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import * as ROUTES from  '../../constants/routes';
+import UserContext from '../../contexts/user-context';
 
 interface userType {
   username: string,
@@ -21,7 +22,8 @@ export default function SwitchModal({
   onClose: () => void;
   // props : loginType;
 }) {
-  const [user, setUser] = useState<userType>({username:"", avatar:"", fullname:""});
+  // const [user, setUser] = useState<userType>({username:"", avatar:"", fullname:""});
+  const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
   const [emailAddress, setEmailAddress] = useState(''); // an array with two values: the current state and a function to update the state
   const [password, setPassword] = useState('');
@@ -34,17 +36,20 @@ export default function SwitchModal({
     try {
         const response = await axiosAPI.post('/login', obj);
         console.log(response);
-        let user = {
+        let user_new = {
             username: response.data.username,
             fullname: response.data.fullname,
             avatar: "/images/avatars/default_avatar.jpg",
         }
         if(response.data.avatar!==null){
-            user.avatar = "data:image/png;base64, "+response.data.avatar.data.data;
+          user_new.avatar = "data:image/png;base64, "+response.data.avatar.data.data;
         }
         // props.onLogin(user);
         localStorage.clear();
-        setUser(user);
+        setUser(user_new);
+        window.localStorage.setItem("username", JSON.stringify(user.username));
+        window.localStorage.setItem("avartar", JSON.stringify(user.avatar));
+        window.localStorage.setItem("fullname", JSON.stringify(user.fullname));
         navigate(ROUTES.DASHBOARD);
     }
     catch (error: any) {
