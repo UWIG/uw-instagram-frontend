@@ -1,12 +1,11 @@
-import axios from 'axios';
 import { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as ROUTES from  '../constants/routes';
 import { loginType } from './pageType';
+import axiosAPI from "../config/axiosConfig"
 
 export default function Login(props: loginType) {
     const navigate = useNavigate();
-    // const { firebase } = useContext(FirebaseContext);
 
     const [emailAddress, setEmailAddress] = useState(''); // an array with two values: the current state and a function to update the state
     const [password, setPassword] = useState('');
@@ -18,7 +17,7 @@ export default function Login(props: loginType) {
         event.preventDefault();
         const obj = {username:emailAddress, password:password};
         try {
-            const response = await axios.post('http://localhost:8080/login', obj);
+            const response = await axiosAPI.post('/login', obj);
             console.log(response);
             let user = {
                 username: response.data.username,
@@ -26,20 +25,27 @@ export default function Login(props: loginType) {
                 avatar: "/images/avatars/default_avatar.jpg",
             }
             if(response.data.avatar!==null){
-                user.avatar = "data:image/png;base64, "+response.data.avatar.data.data;
+                user.avatar = "data:image/png;base64, "+response.data.avatar.data;
             }
             props.onLogin(user);
             navigate(ROUTES.DASHBOARD);
         }
-        catch {
+        catch (error: any) {
             console.error(error);
             // Show a message indicating incorrect login credentials to the user
             setError('Incorrect login credentials. Please try again.');
+            console.log(error.response.data);
+            // if (error.response && error.response.data) {
+            //     setError(error.response.data);
+            // } else {
+            //     setError('Incorrect login credentials. Please try again.');
+            // }
         }
     };
       
     
     useEffect(() => {
+        localStorage.clear();
         document.title = 'Login - Instagram';
     }, []);
 
@@ -81,6 +87,8 @@ export default function Login(props: loginType) {
                             style={{ "backgroundColor": "rgb(0, 149, 246)" }}
                             className={`text-white w-full rounded h-8 font-bold
                             ${isInvalid && 'opacity-50'}`}
+                            onMouseOver={(e: any) => !isInvalid && (e.target.style.backgroundColor = "rgb(57, 117, 234)")}
+                            onMouseLeave={(e: any) => !isInvalid && (e.target.style.backgroundColor = "rgb(0, 149, 246)")}
                         >
                             Login
                         </button>

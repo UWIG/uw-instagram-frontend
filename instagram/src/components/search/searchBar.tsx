@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 import SearchResultCard,{SearchResult} from './searchResultCard'
-import axios from "axios";
+import axiosAPI from "../../config/axiosConfig"
 
 const sampleCards: SearchResult[] = [
     {userName:'user1',avatarURL:'/images/avatars/role11.jpg',isFollowing:true},
@@ -52,19 +52,16 @@ export default function SearchBar(props:searchBarParas){
                     formData.append("keywords[]",keyWord);
                 }
                 console.log("prepare to send post request by axios");
-                let searchURL = `http://localhost:8080/search/${currentUser}`;
-                await axios({
-                    method : "post",
-                    url : searchURL,
-                    data: formData,
-                    headers : {"Content-Type" : "application/json;charset=utf-8"},
+                await axiosAPI.post(`/search/${currentUser}`,formData,{
+                    headers : {"Content-Type" : "application/json;charset=utf-8"}
                 }).then(function (res){
+                    console.log(res.data);
                     let results = res.data;
                     let tempResultCards:SearchResult[]=[];
                     if(Array.isArray(results)){
                         results.map((result)=>{
                             let tempCard:SearchResult = {userName:result.username,avatarURL:"/images/avatars/default_avatar.jpg",isFollowing:result.following};
-                            if(result.avatar!==null) tempCard.avatarURL="data:image/png;base64, "+result.avatar.data.data;
+                            if(result.avatar!==null) tempCard.avatarURL="data:image/png;base64, "+result.avatar.data;
                             tempResultCards.push(tempCard);
                         })
                         setResultCards(tempResultCards);

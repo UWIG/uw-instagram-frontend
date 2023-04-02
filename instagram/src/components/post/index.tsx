@@ -14,13 +14,13 @@ export default function Post(props:postType) {
   return (
     <div>
         <div className="rounded col-span-4 border bg-white border-gray-primary mb-12">
-        <Header username = {props.username} avatar={props.avatar} time_created={props.time_created}/>
+        <Header username = {props.username} avatar={props.avatar} time_created={props.time_created} whether_followed_post_user={props.whether_followed_post_user}/>
         <Image mediaList={props.mediaList} caption="images" />
-        <Actions likes = {props.likes} onComment={() => setOpen(true)}/>
+        <Actions post_id={props.id} whether_liked={props.whether_liked} whether_saved={props.whether_saved} likes={props.likes} onComment={() => setOpen(true)}/>
         <Footer username={props.username} caption={props.caption} />
-        <Comments comments={props.comments}/>
-        <AddComment id={props.id} username={props.username} onCreateComment={props.onCreateComment} avatar={props.avatar}/>
-        <Modal id={props.id} open={open} username = {props.username} caption={props.caption} likes={props.likes} avatar={props.avatar} time_created={props.time_created} comments={props.comments} mediaList={props.mediaList} onClose={() => setOpen(false)} onCreateComment={props.onCreateComment} opacity="bg-opacity-75"/>
+        <Comments comments={props.comments} onExpandComments={() => setOpen(true)}/>
+        <AddComment id={props.id} username={props.username} onCreateComment={props.onCreateComment} avatar={props.avatar} replyUser="" commentId=""/>
+        <Modal id={props.id} open={open} username = {props.username} caption={props.caption} whether_liked={props.whether_liked} whether_saved={props.whether_saved} whether_followed_post_user={props.whether_followed_post_user} likes={props.likes} avatar={props.avatar} time_created={props.time_created} comments={props.comments} mediaList={props.mediaList} onClose={() => setOpen(false)} onCreateComment={props.onCreateComment}/>
         </div>
     </div>
   )

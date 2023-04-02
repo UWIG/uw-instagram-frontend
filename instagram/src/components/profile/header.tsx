@@ -1,42 +1,71 @@
-import React from "react";
-import { useState, useEffect} from "react";
-import {Route, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
 import UserModal from "./userModal";
 import AvatarModal from "./avatarModal";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import Skeleton from "react-loading-skeleton";
+import { userType } from "../../pages/pageType";
+import FollowModal from "./followModal";
+import {Route, useNavigate } from 'react-router-dom';
 import * as ROUTES from "../../constants/routes"
 
-
-export default function UserProfileHeader({
+export default function Header({
   isUserSelf,
   postCount,
   username,
   avatar,
   fullname,
-  setAvatar
+  setAvatar,
+  followers,
+  following,
 }: {
+  
   isUserSelf: boolean;
   postCount: number;
-  avatar:string,
-  fullname:string,
-  username:string | undefined,
-  setAvatar:(avatar:string) => void,
+  avatar: string;
+  fullname: string;
+  username: string | undefined;
+  setAvatar: (avatar: string) => void;
+  followers: userType[];
+  following: userType[];
 }) {
   const [isAvatarOpen, setAvatarOpen] = useState(false);
   const [isUserOpen, setUserOpen] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [followerModalOpen, setFollowerModalOpen] = useState(false);
+  const [followingModalOpen, setFollowingModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (avatar !== "") {
+      setLoading(false);
+    }
+  }, [avatar]);
+
+  const handleClickFollower = () => {
+    if(followers !== null && followers.length > 0){
+      setFollowerModalOpen(true)
+    }
+  }
+
+  const handleClickFollowing = () => {
+    if(following !== null && following.length > 0){
+      setFollowingModalOpen(true)
+    }
+  }
 
   return (
     <>
       <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
         <div className="container flex justify-center items-center">
-          <img
-            className="rounded-full h-40 w-40 flex cursor-pointer"
-            src={avatar}
-            alt="profile pic"
-            onClick={()=>setAvatarOpen(true)}
-          />
+          {loading ? (
+            <Skeleton circle height={160} width={160} />
+          ) : (
+            <img
+              className="rounded-full h-40 w-40 flex cursor-pointer"
+              src={avatar}
+              alt="profile pic"
+              onClick={() => setAvatarOpen(true)}
+            />
+          )}
         </div>
         <div className="flex items-center justify-center flex-col col-span-2">
           <div className="container flex items-center">
@@ -116,14 +145,23 @@ export default function UserProfileHeader({
             <p className="mr-10">
               <span className="font-bold">{postCount}</span> posts
             </p>
-            <p className="mr-10 cursor-pointer">
-              <span className="font-bold">followerCount</span>
-              {` `}
-              {/* {followerCount === 1 ? `follower` : `followers`} */}
-              follower
+            <p
+              className="mr-10 cursor-pointer"
+              onClick={handleClickFollower}
+            >
+              <span className="font-bold">
+                {followers !== null ? followers.length : 0}{" "}
+              </span>
+              <span className="text-blue">follower</span>
             </p>
-            <p className="mr-10 cursor-pointer">
-              <span className="font-bold">following num</span> following
+            <p
+              className="mr-10 cursor-pointer"
+              onClick={handleClickFollowing}
+            >
+              <span className="font-bold">
+                {following != null ? following.length : 0}
+              </span>{" "}
+              <span className="text-blue">following</span>
             </p>
           </div>
           <div className="container mt-4">
@@ -139,10 +177,21 @@ export default function UserProfileHeader({
       <AvatarModal
         isOpen={isAvatarOpen}
         isUserSelf={isUserSelf}
-        setAvatar = {setAvatar}
+        setAvatar={setAvatar}
         onClose={() => setAvatarOpen(false)}
-        
       ></AvatarModal>
+      <FollowModal
+        open={followerModalOpen}
+        onClose={() => setFollowerModalOpen(false)}
+        users = {followers}
+        followingType={false}
+      />
+      <FollowModal
+        open={followingModalOpen}
+        followingType={true}
+        onClose={() => setFollowingModalOpen(false)}
+        users = {following}
+      />
     </>
   );
 }

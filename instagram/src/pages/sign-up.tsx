@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosAPI from "../config/axiosConfig"
 import { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as ROUTES from  '../constants/routes';
@@ -18,9 +18,9 @@ export default function SignUp() {
     const handleSignup: React.FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault();
         // Email format validation using regular expression
-        const emailRegex = /^[a-zA-Z0-9]+@uwaterloo\.ca$/;
+        const emailRegex = /^[a-zA-Z0-9_.]+@uwaterloo\.ca$/;
         if (!emailRegex.test(emailAddress)) {
-            setError('Invalid email address format');
+            setError('Email address must be in the format personal_id@uwaterloo.ca');
             return;
         }
 
@@ -31,17 +31,21 @@ export default function SignUp() {
         }
         const obj = {emailAddress:emailAddress, fullName:fullName, username:username, password:password};
         try {
-            const response = await axios.post('http://localhost:8080/register', obj);
+            const response = await axiosAPI.post('/register', obj);
             console.log(response);
             setError('')
             setMessage('Congrats! You have successfully registered.');
             navigate(ROUTES.LOGIN);
         }
-        catch {
+        catch (error: any){
             console.error(error);
             setMessage('')
             // Show a message indicating incorrect login credentials to the user
-            setError('Sorry, this email address is registered already.');
+            if (error.response && error.response.data) {
+                setError(error.response.data);
+            } else {
+                setError('Sorry, this email address has been registered.');
+            }
         }
       }
       
@@ -106,6 +110,8 @@ export default function SignUp() {
                             style={{ "backgroundColor": "rgb(0, 149, 246)" }}
                             className={`text-white w-full rounded h-8 font-bold
                         ${isInvalid && 'opacity-50'}`}
+                            onMouseOver={(e: any) => !isInvalid && (e.target.style.backgroundColor = "rgb(57, 117, 234)")}
+                            onMouseLeave={(e: any) => !isInvalid && (e.target.style.backgroundColor = "rgb(0, 149, 246)")}
                         >
                             Sign up
                         </button>

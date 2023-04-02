@@ -3,7 +3,7 @@ import {Route, useNavigate } from 'react-router-dom';
 import Suggestions from '../components/suggestions/suggestions'
 import Timeline from '../components/timeline'
 import Sidebar from '../components/sidebar/sidebar'
-import axios from 'axios'
+import axiosAPI from "../config/axiosConfig"
 import UserContext from '../contexts/user-context'
 import * as ROUTES from '../constants/routes';
 import { postType } from '../components/post/postType';
@@ -26,7 +26,7 @@ export default function Dashboard() {
   
   async function getPosts() {
         try{
-          const response = await axios.get("http://www.localhost:8080/api/posts");
+          const response = await axiosAPI.get(`/api/posts/home/${user.username}`);
           setPosts(response.data);
           console.log(response.data);
         }

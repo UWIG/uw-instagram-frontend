@@ -3,6 +3,7 @@ import { lazy, Suspense, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate} from 'react-router-dom';
 import * as ROUTES from './constants/routes'
 import UserContext from './contexts/user-context';
+import Hashtag from './pages/hashtag';
 
 interface userType {
   username: string,
@@ -16,7 +17,6 @@ function App() {
   const Login = lazy(() => import('./pages/login'));
   const Dashboard= lazy(() => import('./pages/dashboard'));
   const UserProfile= lazy(() => import('./pages/userProfile'));
-  const Index = lazy(() => import("./pages/index"));
   const SignUp = lazy(() => import("./pages/sign-up"));
   const ErrorPage = lazy(() => import("./pages/error-page"));
   const NotFoundPage = lazy(() => import("./pages/not-found"));
@@ -32,6 +32,7 @@ function App() {
           <Route path={ROUTES.DASHBOARD} element={<Dashboard/>}errorElement={<ErrorPage/>} />
           <Route path={ROUTES.PROFILE} element={<UserProfile/>} errorElement={<ErrorPage/>} />
           <Route path={ROUTES.SETTING} element={<Setting/>} errorElement={<ErrorPage/>} />
+          <Route path={ROUTES.HASHTAG} element={<Hashtag/>} errorElement={<ErrorPage/>} />
           <Route path='*' element={<NotFoundPage/>} />
         </Routes>
       </Suspense>

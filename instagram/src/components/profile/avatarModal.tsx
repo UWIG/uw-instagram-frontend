@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState, useContext } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import axios from "axios";
+import axiosAPI from "../../config/axiosConfig"
 import { useParams } from "react-router-dom";
 import UserContext from "../../contexts/user-context";
 
@@ -14,20 +14,20 @@ export default function AvatarModal({
   isOpen: boolean;
   isUserSelf: boolean;
   onClose: () => void;
-  setAvatar:any;
+  setAvatar: any;
 }) {
   const cancelButtonRef = useRef(null);
   // const [imgs, setImgs] = useState<string[]>([]);
   const [imgFile, setImgFile] = useState<File>();
-  const {username} = useParams();
-  const {user,setUser} = useContext(UserContext);
+  const { username } = useParams();
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    if(imgFile !== undefined){
+    if (imgFile !== undefined) {
       onClose();
       updateAvatar();
     }
- }, [imgFile]);
+  }, [imgFile]);
 
   const HandleFileChange = async (e: any) => {
     setImgFile(e.target.files[0]);
@@ -35,23 +35,20 @@ export default function AvatarModal({
 
   async function updateAvatar() {
     const formData = new FormData();
-    if(username !== undefined)
-    formData.append("username", username);
+    if (username !== undefined)
+      formData.append("username", username);
     if (imgFile) {
-    formData.append("avatar", imgFile);
+      formData.append("avatar", imgFile);
     }
-    await axios({
-      method: "post",
-      url: "http://www.localhost:8080/user/changeAva",
-      data: formData,
+    await axiosAPI.post("/user/changeAva", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       console.log(res);
-      setAvatar("data:image/png;base64, " + res.data.res.data.data);
-      if(isUserSelf){
+      setAvatar("data:image/png;base64, " + res.data.res.data);
+      if (isUserSelf) {
         setUser({
           ...user,
-          avatar:"data:image/png;base64, " + res.data.res.data.data,
+          avatar: "data:image/png;base64, " + res.data.res.data,
         })
       }
     });

@@ -1,19 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import Skeleton from 'react-loading-skeleton'
-import Post from './post'
-import { postType } from './post/postType';
-import { timelineType } from './types';
-// import api from '../api/axiosConfig'
+import { useState, useEffect } from "react";
+import Post from "./post";
+import { postType } from "./post/postType";
+import { timelineType } from "./types";
+import PostSkeleton from "./post/postSkeleton";
+export default function Timeline(props: timelineType) {
+  const [loading, setLoading] = useState<boolean>(true);
+  useEffect(() => {
+    if (props.posts.length > 0) {
+      setLoading(false);
+    }
+  }, [props.posts]);
 
-export default function Timeline(props:timelineType) {
-
-  
   return (
-    <div className="container col-span-2 mx-20 z-1">
-    <Skeleton count={2} width={640} height={500} className="mb-5"/>
-    {/* <p className='text-center text-2xl'>Follow people to see photos!</p> */}
-    {props.posts && props.posts.map((post:postType, inx ) => <Post key={post.id} username={post.username} id={post.id} likes={post.likes} caption={post.caption} comments={post.comments} avatar={post.avatar} mediaList={post.mediaList} time_created={post.time_created} onCreateComment={props.onCreateComment} />)}
+    <div className="container col-span-2 mx-20 z-1 mt-10">
+      {loading ? (
+        <div>
+          <PostSkeleton />
+          <PostSkeleton />
+        </div>
+      ) : (
+        props.posts.map((post: postType, inx: number) => (
+          <Post
+            key={post.id}
+            username={post.username}
+            id={post.id}
+            likes={post.likes}
+            caption={post.caption}
+            comments={post.comments}
+            avatar={post.avatar}
+            mediaList={post.mediaList}
+            time_created={post.time_created}
+            whether_liked={post.whether_liked}
+            whether_saved={post.whether_saved}
+            whether_followed_post_user={post.whether_followed_post_user}
+            onCreateComment={props.onCreateComment}
+          />
+        ))
+      )}
     </div>
-  )
+  );
 }
-
