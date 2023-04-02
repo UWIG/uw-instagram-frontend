@@ -26,31 +26,38 @@ export default function Sidebar(props: sidebarType) {
     const [switch_user, setSwitchUser] = useState<userType>({username:"", avatar:"", fullname:""});
     useEffect(() => {
         const data = window.localStorage.getItem("username");
-        const expiry = window.localStorage.getItem("expiry");
-        if (data !== null && expiry !== null) {
-        //   const item = JSON.parse(data);
-          const expiry_time = JSON.parse(expiry);
-          const now = new Date();
-          if (now.getTime() > expiry_time) {
-            window.localStorage.removeItem("username");
-            window.localStorage.removeItem("expiry");
-          } else {
-            user.username = JSON.parse(data);
+        const avartar = window.localStorage.getItem("avartar");
+        const fullname = window.localStorage.getItem("fullname");
+        // const expiry = window.localStorage.getItem("expiry");
+        if (data !== null) {
+            var ava = "";
+            if (avartar !== null) {
+                ava = JSON.parse(avartar);
+            }
+            var f_name = "";
+            if (fullname !== null) {
+                f_name = JSON.parse(fullname);
+            }
+
+            let user_new = {username: JSON.parse(data), avatar: ava, fullname: f_name};
+            setUser(user_new);
+            // user.username = JSON.parse(data);
+            // user.avatar = ava;
+            // user.fullname = f_name;
+            // user.avatar = user_new.avatar;
+            // user.fullname = user_new.fullname;
           }
-        }
-        else {
-            window.localStorage.removeItem("username");
-            window.localStorage.removeItem("expiry");
-        }
       }, []);
       
       useEffect(() => {
-        const now = new Date();
-        const ttl = 1800 * 1000;
-
-        window.localStorage.setItem("username", JSON.stringify(user.username));
-        window.localStorage.setItem("expiry", JSON.stringify(now.getTime() + ttl));
-      }, [user.username]);
+        // const now = new Date();
+        // const ttl = 1800 * 1000;
+        if (user.username != "") {
+            window.localStorage.setItem("username", JSON.stringify(user.username));
+            window.localStorage.setItem("avartar", JSON.stringify(user.avatar));
+            window.localStorage.setItem("fullname", JSON.stringify(user.fullname));
+        }
+      }, [user]);
 
     function handleLogout() {
         const confirmed = window.confirm("Are you sure you want to log out?");
