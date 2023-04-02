@@ -4,16 +4,23 @@ import axios from "axios";
 import EditProfile from "../components/setting/editProfile";
 import ChangePassword from "../components/setting/changePassword";
 import Sidebar from "../components/sidebar/sidebar";
+import UserContext from "../contexts/user-context";
 
 export default function Profile(props: any) {
   const [option, setOption] = useState("edit");
+  // const { user } = useContext(UserContext);
+  const user = "alex";
 
-  function switchOption () {
-    switch(option){
-      case "edit": return <EditProfile/>;
-      case "change": return <ChangePassword/>;
-      case "email": return "email";
-      default: return "wrong option";
+  function switchOption() {
+    switch (option) {
+      case "edit":
+        return <EditProfile />;
+      case "change":
+        return <ChangePassword />;
+      case "email":
+        return "email";
+      default:
+        return "";
     }
   }
 
@@ -29,11 +36,17 @@ export default function Profile(props: any) {
           <div className="col-span-4 grid grid-cols-5 mt-10 mb-10">
             <div className="col-start-2 col-span-4 border grid grid-cols-11">
               <div className=" border-r col-span-3 grid grid-rows-6">
-                <div className=" border-b row-span-1">abc</div>
-                <div className="row-span-5">
+                <div className="flex">
+                  <img
+                    src="/images/logo.png"
+                    alt="Instagram"
+                    className=" m-auto"
+                  />
+                </div>
+                <div className="row-span-5 border-t">
                   <label
                     className="cursor-pointer inline-block h-10 w-full"
-                    onClick={()=>setOption("edit")}
+                    onClick={() => setOption("edit")}
                   >
                     <input
                       type="radio"
@@ -48,7 +61,7 @@ export default function Profile(props: any) {
 
                   <label
                     className="cursor-pointer inline-block h-10 w-full"
-                    onClick={()=>setOption("change")}
+                    onClick={() => setOption("change")}
                   >
                     <input
                       type="radio"
@@ -63,7 +76,7 @@ export default function Profile(props: any) {
 
                   <label
                     className="cursor-pointer inline-block h-10 w-full"
-                    onClick={()=>setOption("email")}
+                    onClick={() => setOption("email")}
                   >
                     <input
                       type="radio"
@@ -71,15 +84,13 @@ export default function Profile(props: any) {
                       className="peer/email hidden"
                       checked={option === "email"}
                     />
-                    <div className="flex pl-5 h-full w-full peer-checked/email:font-medium peer-checked/email:border-l-2 peer-checked/email:border-l-black border-l-2 border-l-transparent hover:bg-gray-100 hover:border-l-2 hover:border-l-gray-200">
+                    {/* <div className="flex pl-5 h-full w-full peer-checked/email:font-medium peer-checked/email:border-l-2 peer-checked/email:border-l-black border-l-2 border-l-transparent hover:bg-gray-100 hover:border-l-2 hover:border-l-gray-200">
                       <p className="my-auto">Email notifications</p>
-                    </div>
+                    </div> */}
                   </label>
                 </div>
               </div>
-              <div className="col-span-8">
-                {switchOption()}
-              </div>
+              <div className="col-span-8">{switchOption()}</div>
             </div>
           </div>
         </div>
@@ -87,3 +98,7 @@ export default function Profile(props: any) {
     </>
   );
 }
+
+export type userdata = {
+  email: string;
+};

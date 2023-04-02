@@ -161,7 +161,7 @@ export default function Photos({
             <p>Share Photos</p>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-8 mt-4 mb-12">
+          <div className="grid grid-cols-3 gap-8 mt-4 mb-12 auto-rows-[minmax(0,_300px)]">
             { posts.map((post) => (
                   <Photo key={post.id} post={post} onCreateComment={onCreateComment} />
                 ))}
