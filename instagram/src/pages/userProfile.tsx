@@ -7,6 +7,7 @@ import Sidebar from "../components/sidebar/sidebar";
 import { useParams } from "react-router-dom";
 import UserContext from "../contexts/user-context";
 import { userType } from "./pageType";
+import { tr } from "date-fns/locale";
 
 export default function UserProfile(props: any) {
   const { username } = useParams();
@@ -73,6 +74,7 @@ export default function UserProfile(props: any) {
             />
             <Photos
               isUserSelf={isUserSelf}
+              isProfilePage={true}
               posts={posts}
               onCreateComment={getUserPosts}
               onClickSave = {() => getSavedPosts()}

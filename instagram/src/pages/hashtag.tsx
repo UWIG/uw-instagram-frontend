@@ -71,6 +71,7 @@ export default function Hashtag() {
           </div>
           <Photos
             isUserSelf={false}
+            isProfilePage={false}
             posts={posts}
             onCreateComment={getHashtagPosts}
             onClickSave={() => {}}
