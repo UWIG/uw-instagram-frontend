@@ -27,7 +27,7 @@ export default function ModalComments(props: postModalComments) {
       </>
     );
 
-  const imgsrc = props.avatar === undefined ? "/images/avatars/default_avatar.jpg" : "data:image/png;base64, " + props.avatar.data.data;
+  const imgsrc = props.avatar === null ? "/images/avatars/default_avatar.jpg" : "data:image/png;base64, " + props.avatar.data;
 
   return (
     <div className="p-4 py-8 h-[95%] overflow-y-auto">

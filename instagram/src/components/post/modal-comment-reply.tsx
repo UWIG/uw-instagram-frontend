@@ -5,9 +5,9 @@ import { formatDistanceToNowStrict } from "date-fns";
 export default function ModalCommentReply(props: postModalCommentReply) {
   const [toggleLiked, setToggleLiked] = useState(false);
   const commentAvatar =
-    props.comment.avatar === undefined
+    props.comment.avatar === null
       ? "/images/avatars/default_avatar.jpg"
-      : "data:image/png;base64, " + props.comment.avatar.data.data;
+      : "data:image/png;base64, " + props.comment.avatar.data;
 
   const handleToggleLiked = () => {
     setToggleLiked(!toggleLiked);

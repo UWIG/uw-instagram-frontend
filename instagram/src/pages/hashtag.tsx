@@ -2,28 +2,24 @@ import Photos from "../components/profile/photos";
 import Skeleton from "react-loading-skeleton";
 import axiosAPI from "../config/axiosConfig";
 import { useEffect, useState, useContext } from "react";
-import { postType } from "../components/post/postType";
+import { postType, mediaType } from "../components/post/postType";
 import Sidebar from "../components/sidebar/sidebar";
 import { useParams } from "react-router-dom";
 
 export default function Hashtag() {
   const [loading, setLoading] = useState(true);
-  const [avatar, setAvatar] = useState<string>(
-    "/images/avatars/default_avatar.jpg"
-  );
   const [posts, setPosts] = useState<postType[]>([]);
+  const [avatar, setAvatar] = useState<mediaType>();
   const { hashtag } = useParams();
 
   async function getHashtagPosts() {
     try {
-      const response = await axiosAPI.get(`/hashtags/${hashtag}`);
+      const response = await axiosAPI.get(`api/posts/hashtags/${hashtag}`);
       if (response.data !== null) {
-        setAvatar(
-          "data:image/png;base64, " + response.data[0].avatar.data.data
-        );
-        setPosts(response.data);
-        setLoading(false);
         console.log(response.data);
+        setPosts(response.data);
+        setAvatar(response.data[0].mediaList[0]);
+        setLoading(false);
       }
     } catch (err) {
       console.error(err);
@@ -45,12 +41,19 @@ export default function Hashtag() {
             <div className="col-span-1">
               {loading ? (
                 <Skeleton circle height={160} width={160} />
-              ) : (
+              ) : avatar?.type === "image" ? (
                 <img
-                  className="rounded-full h-40 w-40 flex cursor-pointer"
-                  src={avatar}
+                  className="rounded-full h-40 w-40 flex cursor-pointer object-cover"
+                  src={"data:image/png;base64," + avatar?.data}
                   alt="Hashtag"
                 />
+              ) : (
+                <video
+                  controls={false}
+                  className="rounded-full h-40 w-40 flex cursor-pointer object-cover"
+                >
+                  <source src={"data:video/mp4;base64," + avatar?.data} />
+                </video>
               )}
             </div>
             <div className="col-span-3">
@@ -67,11 +70,11 @@ export default function Hashtag() {
             </div>
           </div>
           <Photos
-                isUserSelf={false}
-                posts={posts}
-                onCreateComment={getHashtagPosts}
-                onClickSave = {() => {}}
-              />
+            isUserSelf={false}
+            posts={posts}
+            onCreateComment={getHashtagPosts}
+            onClickSave={() => {}}
+          />
         </div>
       </div>
     </div>

@@ -14,10 +14,15 @@ export type object_id = {
 
 export type media = {
   id: object_id,
-  data:{
-    data:string,
-    type:number
-  }
+  filename:string,
+  data:string,
+  type:string,
+}
+
+export type mediaType = {
+  data:string,
+  type:string,
+  controls:boolean,
 }
 
 export type postType = {
@@ -42,7 +47,11 @@ export type postHeader = {
     username:string,
     avatar:media,
     time_created:string,
+    onClose?:any,
     whether_followed_post_user:boolean,
+    post_id? :string,
+    deleteButton?: boolean,
+    onDelete?: () => void,
   }
 
 
@@ -126,4 +135,12 @@ export type postModalCommentReply = {
   commentId?: string,
   setReplyUser: any,
   setCommentId: any,
+}
+
+export type modalDelete = {
+  post_id: string,
+  open:boolean,
+  setOpen: (open: boolean) => void,
+  onDelete: () => void,
+  onClose:any,
 }
