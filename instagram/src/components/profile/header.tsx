@@ -1,12 +1,14 @@
 import React from "react";
 import { useState, useEffect} from "react";
+import {Route, useNavigate } from 'react-router-dom';
 import UserModal from "./userModal";
 import AvatarModal from "./avatarModal";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import * as ROUTES from "../../constants/routes"
 
 
-export default function UserProfile({
+export default function UserProfileHeader({
   isUserSelf,
   postCount,
   username,
@@ -23,6 +25,7 @@ export default function UserProfile({
 }) {
   const [isAvatarOpen, setAvatarOpen] = useState(false);
   const [isUserOpen, setUserOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -43,6 +46,7 @@ export default function UserProfile({
                 <button
                   className=" bg-gray-100 font-bold text-sm rounded w-28 h-8"
                   type="button"
+                  onClick={()=>navigate(ROUTES.SETTING)}
                 >
                   Edit Profile
                 </button>

@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import UserContext from "../contexts/user-context";
 
-export default function Profile(props: any) {
+export default function UserProfile(props: any) {
   const { username } = useParams();
   const [isUserSelf, setIsUserSelf] = useState(false);
   const [avatar, setAvatar] = useState("");

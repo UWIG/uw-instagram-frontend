@@ -12,7 +12,6 @@ export default function EditProfile() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
-  const [id, setUserID] = useState("");
   const [originUsername, setOriginUsername] = useState("");
 
   useEffect(() => {
