@@ -2,14 +2,17 @@ import { useState, useEffect } from "react";
 import UserModal from "./userModal";
 import AvatarModal from "./avatarModal";
 import Skeleton from "react-loading-skeleton";
-
-export default function UserProfile({
+import { userType } from "../../pages/pageType";
+import FollowModal from "./followModal";
+export default function Header({
   isUserSelf,
   postCount,
   username,
   avatar,
   fullname,
   setAvatar,
+  followers,
+  following,
 }: {
   isUserSelf: boolean;
   postCount: number;
@@ -17,24 +20,39 @@ export default function UserProfile({
   fullname: string;
   username: string | undefined;
   setAvatar: (avatar: string) => void;
+  followers: userType[];
+  following: userType[];
 }) {
   const [isAvatarOpen, setAvatarOpen] = useState(false);
   const [isUserOpen, setUserOpen] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [followerModalOpen, setFollowerModalOpen] = useState(false);
+  const [followingModalOpen, setFollowingModalOpen] = useState(false);
 
   useEffect(() => {
     if (avatar !== "") {
       setLoading(false);
     }
-  },[avatar])
+  }, [avatar]);
 
+  const handleClickFollower = () => {
+    if(followers !== null && followers.length > 0){
+      setFollowerModalOpen(true)
+    }
+  }
+
+  const handleClickFollowing = () => {
+    if(following !== null && following.length > 0){
+      setFollowingModalOpen(true)
+    }
+  }
 
   return (
     <>
       <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
         <div className="container flex justify-center items-center">
           {loading ? (
-            <Skeleton circle height={160} width={160}  />
+            <Skeleton circle height={160} width={160} />
           ) : (
             <img
               className="rounded-full h-40 w-40 flex cursor-pointer"
@@ -121,14 +139,23 @@ export default function UserProfile({
             <p className="mr-10">
               <span className="font-bold">{postCount}</span> posts
             </p>
-            <p className="mr-10 cursor-pointer">
-              <span className="font-bold">followerCount</span>
-              {` `}
-              {/* {followerCount === 1 ? `follower` : `followers`} */}
-              follower
+            <p
+              className="mr-10 cursor-pointer"
+              onClick={handleClickFollower}
+            >
+              <span className="font-bold">
+                {followers !== null ? followers.length : 0}{" "}
+              </span>
+              <span className="text-blue">follower</span>
             </p>
-            <p className="mr-10 cursor-pointer">
-              <span className="font-bold">following num</span> following
+            <p
+              className="mr-10 cursor-pointer"
+              onClick={handleClickFollowing}
+            >
+              <span className="font-bold">
+                {following != null ? following.length : 0}
+              </span>{" "}
+              <span className="text-blue">following</span>
             </p>
           </div>
           <div className="container mt-4">
@@ -147,6 +174,18 @@ export default function UserProfile({
         setAvatar={setAvatar}
         onClose={() => setAvatarOpen(false)}
       ></AvatarModal>
+      <FollowModal
+        open={followerModalOpen}
+        onClose={() => setFollowerModalOpen(false)}
+        users = {followers}
+        followingType={false}
+      />
+      <FollowModal
+        open={followingModalOpen}
+        followingType={true}
+        onClose={() => setFollowingModalOpen(false)}
+        users = {following}
+      />
     </>
   );
 }

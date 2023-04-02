@@ -1,20 +1,23 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { postType } from "../post/postType";
 import PostModal from "../post/modal";
+import Media from "../post/media";
 
-export default function Photo({ post, onCreateComment }: { post: postType, onCreateComment: () => void}) {
+export default function Photo({
+  post,
+  onCreateComment,
+}: {
+  post: postType;
+  onCreateComment: () => void;
+}) {
   const [open, setOpen] = useState(false);
+  const media = post.mediaList[0];
+
   return (
-    <div
-      className="relative bg-black pb-[100%] col-span-1"
-      key={post.id}
-    >
-      <img
-        src={"data:image/png;base64," + post.mediaList[0].data.data}
-        alt="profile pic"
-        className="absolute object-cover h-full w-full cursor-pointer"
-        onClick={() => setOpen(true)}
-      />
+    <div className="relative bg-black pb-[100%] col-span-1" key={post.id}>
+      <div onClick={() => setOpen(true)}>
+        <Media type={media.type} data={media.data} controls={false} />
+      </div>
       <div className="absolute bottom-0 left-0  z-10 w-full justify-evenly items-center h-full bg-neutral-800/50 group-hover:flex hidden">
         <p className="flex items-center text-white font-bold">
           <svg

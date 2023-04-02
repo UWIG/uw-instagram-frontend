@@ -40,7 +40,7 @@ export default function SearchResultCard(props:SearchCardProps){
     };
     const handleFollowClicked= async ()=>{
         let setFollowPair = {currentUserName:currentUser,targetUserName:targetUser}; 
-        await axiosAPI.post("http://localhost:8080/setFollow",setFollowPair)
+        await axiosAPI.post("/setFollow",setFollowPair)
         .then(function(response){
             let res = response.data;
             console.log("result of setFollow: "+res);

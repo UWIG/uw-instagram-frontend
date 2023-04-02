@@ -44,11 +44,11 @@ export default function UserModal({
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {
       console.log(res);
-      setAvatar("data:image/png;base64, " + res.data.res.data.data);
+      setAvatar("data:image/png;base64, " + res.data.res.data);
       if (isUserSelf) {
         setUser({
           ...user,
-          avatar: "data:image/png;base64, " + res.data.res.data.data,
+          avatar: "data:image/png;base64, " + res.data.res.data,
         })
       }
     });

@@ -88,6 +88,10 @@
   color: rgb(142,142,142);
 }
 
+.text-blue {
+  color: rgb(0,55,107);
+}
+
 .border-gray{
   border-color: rgb(142,142,142);
 }
@@ -98,6 +102,10 @@
 
 .custom-background-blue {
   background-color: rgb(0, 149, 246);
+}
+
+.custom-background-gray {
+  background-color: rgb(239, 239, 239);
 }
 
 .hashtag{

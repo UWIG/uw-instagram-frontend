@@ -9,9 +9,10 @@ export type sidebarType = {
 }
 
 export type thumbnailType = {
-    imgs: string[],
-    imgIdx: number,
-    setImgIdx: any,
+    media: string[],
+    mediaType:string[],
+    mediaIdx: number,
+    setMediaIdx: any,
     handleFileChange: any,
     handleDelete: () => void,
 }

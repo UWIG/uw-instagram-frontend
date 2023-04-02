@@ -6,6 +6,7 @@ import { postType } from "../components/post/postType";
 import Sidebar from "../components/sidebar/sidebar";
 import { useParams } from "react-router-dom";
 import UserContext from "../contexts/user-context";
+import { userType } from "./pageType";
 
 export default function Profile(props: any) {
   const { username } = useParams();
@@ -13,16 +14,20 @@ export default function Profile(props: any) {
   const [avatar, setAvatar] = useState("");
   const [fullname, setFullname] = useState("");
   const [posts, setPosts] = useState<postType[]>([]);
+  const [followers, setFollowers] = useState<userType[]>([]);
+  const [following, setFollowing] = useState<userType[]>([]);
   const { user } = useContext(UserContext);
 
   async function getUserPosts() {
     try {
       const response = await axiosAPI.get(`/${username}`);
       if (response.data.avatar !== null)
-        setAvatar("data:image/png;base64, " + response.data.avatar.data.data);
+        setAvatar("data:image/png;base64, " + response.data.avatar.data);
       else setAvatar("/images/avatars/default_avatar.jpg");
       setFullname(response.data.fullname);
       setPosts(response.data.posts);
+      setFollowers(response.data.followers);
+      setFollowing(response.data.following);
       console.log(response.data);
     } catch (err) {
       console.error(err);
@@ -58,11 +63,13 @@ export default function Profile(props: any) {
           <div className="container col-span-4 flex flex-col">
             <Header
               isUserSelf={isUserSelf}
-              postCount={0}
+              postCount={posts !== null ? posts.length : 0}
               username={username}
               avatar={avatar}
               fullname={fullname}
               setAvatar={setAvatar}
+              followers={followers}
+              following={following}
             />
             <Photos
               isUserSelf={isUserSelf}

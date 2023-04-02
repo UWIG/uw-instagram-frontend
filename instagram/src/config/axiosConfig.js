@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseURL = {
     dev: "http://www.localhost:8080/",
-    production: "http://instagramapp-env-1.eba-qehpazzb.ca-central-1.elasticbeanstalk.com/"
+    production: "http://instagramappbackend-env.eba-zqmnsdju.ca-central-1.elasticbeanstalk.com/"
 }
 
 export default axios.create({
