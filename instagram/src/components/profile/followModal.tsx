@@ -53,7 +53,7 @@ export default function FollowModal({
                   <div className="font-bold text-center border-b-2 items-center py-3">
                     <span>{followingType ? "Following" : "Followers"}</span>
                   </div>
-                  {users.map((user,inx) =>  <UserItem key={user.avatar.id.date} {...user} followingType={followingType} onClose={onClose} />)}
+                  {users.map((user,inx) =>  <UserItem key={inx} {...user} followingType={followingType} onClose={onClose} />)}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

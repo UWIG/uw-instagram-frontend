@@ -64,13 +64,15 @@ export default function UserItem(props: userItemType) {
       props.onClose();
       navigate(`/p/${props.username}`);
   }
+  
+  const avatar = props.avatar ? "data:image/png;base64," + props.avatar.data : "/images/avatars/default_avatar.jpg";
 
   return (
     <div className="flex justify-between px-6 py-4">
       <div className="flex items-center">
         <img
           className="rounded-full h-10 w-10 mr-3 object-cover"
-          src={"data:image/png;base64," + props.avatar.data}
+          src={avatar}
           onClick={handleNavigate}
         />
         <div>
