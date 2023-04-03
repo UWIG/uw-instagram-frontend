@@ -4,9 +4,8 @@ import NotificationBlock,{notificationData} from "./notificationInfo";
 
 
 export default function NotificationBar(props:{currentUser:string}){
-    const [readList,setReadList]=useState<string[]>([])
-    const [deleteList,setDeleteList]=useState<string[]>([])
-    const [infos,setInfos]=useState<notificationData[]>([])
+    const [readList,setReadList]=useState<string[]>([]);
+    const [infos,setInfos]=useState<notificationData[]>([]);
     const [currentUser,setCurrentUser]=useState<string>(props.currentUser);
 
     
@@ -15,6 +14,7 @@ export default function NotificationBar(props:{currentUser:string}){
         .then(function (res){
             let results = res.data;
             let infosData:notificationData[] = []; 
+            let counterRead = 0;
             results.map((result:any)=>{
                 if(result.type==="follow"){
                     let tempInfo:notificationData = {notificationId:result.idString,
@@ -25,8 +25,12 @@ export default function NotificationBar(props:{currentUser:string}){
                                                     comment:result.comment,
                                                     postId:result.postId};
                     infosData.push(tempInfo);
+                    if(result.whether_read){
+                        counterRead+=1;
+                    }
                 }
             });
+            console.log(`get ${results.length} notifications, ${counterRead} were read`);
             setInfos(infosData);
         }).catch(function (err){
             console.error(err);            
@@ -34,29 +38,30 @@ export default function NotificationBar(props:{currentUser:string}){
     }
 
     const handleChangeRead = (id:string)=>{
-        setReadList([...readList,id]);
+        if(!readList.includes(id)){
+            setReadList([...readList,id]);
+        }
     }
 
-    const handleUnmount = async ()=>{
-        const formData = new FormData();
-        for(const id of readList){
-            formData.append("notificationId[]",id);
+    const handleUnmount = ()=>{
+        if(readList.length>0){
+            const formData = new FormData();
+            for(const id of readList){
+                formData.append("notificationId[]",id);
+            }
+            axiosAPI.post("/api/notification/change",formData,{
+                headers : {"Content-Type" : "application/json;charset=utf-8"}
+            });
         }
-        await axiosAPI.post("/api/notification/change",formData,{
-            headers : {"Content-Type" : "application/json;charset=utf-8"}
-        }).then(function (res){
-        }).catch(function (err){
-            console.error(err);
-        });
+        
     }
+
 
     useEffect(()=>{
         handleGetNotification();
 
-        return ()=>{
-
-        }
-    });
+        return handleUnmount;
+    },[]);
 
     return (
         <div className='flex flex-col pl-2 pr-2 bg-white border-gray-primary h-screen w-96 border-r border-l rounded-r-[1rem]'>
@@ -64,15 +69,11 @@ export default function NotificationBar(props:{currentUser:string}){
             <div className="pt-6 pb-8">
                 <p className="font-medium text-2xl font-sans">Notification</p>
             </div> 
-            
-            <div className="flex,flex-row w-full">
 
-            </div>
-
-            <div className="overflow-y-scroll w-full border-t-2 border-slate-150">
+            <div className="overflow-y-scroll w-full border-t-2 pt-6 border-slate-150">
                 {infos.map((info)=>{
                     return (
-                        <NotificationBlock data={info} currentUser={currentUser} isSelected={false} handleChange={handleChangeRead}/>                  
+                        <NotificationBlock data={info} currentUser={currentUser} isRead={info.whether_read} handleChange={handleChangeRead}/>                  
                     );
                 })}
             </div>
