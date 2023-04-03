@@ -5,11 +5,13 @@ import Photo from "./photo";
 
 export default function Photos({
   isUserSelf,
+  isProfilePage,
   posts,
   onCreateComment,
   onClickSave,
 }: {
   isUserSelf: boolean;
+  isProfilePage: boolean;
   posts: postType[];
   onCreateComment: () => {};
   onClickSave: any;
@@ -18,7 +20,7 @@ export default function Photos({
 
   return (
     <div className="h-full border-t border-gray-primary mt-12 pt-4">
-      <div className="flex items-center justify-center flex-row">
+      <div className={`flex items-center justify-center flex-row ${isProfilePage?"":"hidden"}`}>
         <div className="flex items-center justify-center flex-row cursor-pointer" onClick={onCreateComment}>
           <svg
             aria-label=""
@@ -161,7 +163,7 @@ export default function Photos({
             <p>Share Photos</p>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-8 mt-4 mb-12">
+          <div className="grid grid-cols-3 gap-8 mt-4 mb-12 auto-rows-[minmax(0,_300px)]">
             { posts.map((post) => (
                   <Photo key={post.id} post={post} onCreateComment={onCreateComment} />
                 ))}

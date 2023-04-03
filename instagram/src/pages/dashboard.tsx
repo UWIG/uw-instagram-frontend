@@ -10,38 +10,59 @@ import { postType } from '../components/post/postType';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const {user} = useContext(UserContext);
+  const {user, setUser} = useContext(UserContext);
   const [posts, setPosts] = useState<postType[]>([]);
-  
-
   useEffect(() => {
-    if(user.username === ""){
-      navigate(ROUTES.LOGIN);
-    }
-    else{
+    const data = window.localStorage.getItem("username");
+    const avartar = window.localStorage.getItem("avartar");
+    const fullname = window.localStorage.getItem("fullname");
+    if (data !== null) {
+      var ava = "";
+      if (avartar !== null) {
+          ava = JSON.parse(avartar);
+      }
+      var f_name = "";
+      if (fullname !== null) {
+          f_name = JSON.parse(fullname);
+      }
+
+      let user_new = {username: JSON.parse(data), avatar: ava, fullname: f_name};
+      setUser(user_new);
       getPosts();
     }
-  },[]
-  );
-  
-  async function getPosts() {
-        try{
-          const response = await axiosAPI.get(`/api/posts/home/${user.username}`);
-          setPosts(response.data);
-          console.log(response.data);
-        }
-        catch(err){
-          console.error(err);
-        }
-  }
+    else if (user.username === "") {
+      navigate(ROUTES.LOGIN);
+    }
+    else {
+      getPosts();
+    }
+  }, []);
+  // useEffect(() => {
+  //   if(user.username === ""){
+  //     navigate(ROUTES.LOGIN);
+  //   }
+  //   else{
+  //     getPosts();
+  //   }
+  // },[]);
 
-  return (
-    <div className='bg-gray-background'>
-        <div className='grid grid-cols-5 gap-12 max-w-screen-2xl'>
-            <Sidebar onCreatePost={() => getPosts()}/>
-            <Timeline posts={posts} onCreateComment={() => getPosts()}/>
-            <Suggestions/>
-        </div>
-    </div>
-  )
-}
+    async function getPosts() {
+      try{
+        const response = await axiosAPI.get(`/api/posts/home/${user.username}`);
+        setPosts(response.data);
+        console.log(response.data);
+      }
+      catch(err){
+        console.error(err);
+      }
+    }
+    return (
+      <div className='bg-gray-background'>
+          <div className='grid grid-cols-5 gap-12 max-w-screen-2xl'>
+              <Sidebar onCreatePost={() => getPosts()}/>
+              <Timeline posts={posts} onCreateComment={() => getPosts()}/>
+              <Suggestions/>
+          </div>
+      </div>
+    )
+  }

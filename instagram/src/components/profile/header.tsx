@@ -4,6 +4,9 @@ import AvatarModal from "./avatarModal";
 import Skeleton from "react-loading-skeleton";
 import { userType } from "../../pages/pageType";
 import FollowModal from "./followModal";
+import {Route, useNavigate } from 'react-router-dom';
+import * as ROUTES from "../../constants/routes"
+
 export default function Header({
   isUserSelf,
   postCount,
@@ -14,6 +17,7 @@ export default function Header({
   followers,
   following,
 }: {
+  
   isUserSelf: boolean;
   postCount: number;
   avatar: string;
@@ -25,6 +29,7 @@ export default function Header({
 }) {
   const [isAvatarOpen, setAvatarOpen] = useState(false);
   const [isUserOpen, setUserOpen] = useState(false);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
   const [followerModalOpen, setFollowerModalOpen] = useState(false);
   const [followingModalOpen, setFollowingModalOpen] = useState(false);
@@ -70,6 +75,7 @@ export default function Header({
                 <button
                   className=" bg-gray-100 font-bold text-sm rounded w-28 h-8"
                   type="button"
+                  onClick={()=>navigate(ROUTES.SETTING)}
                 >
                   Edit Profile
                 </button>

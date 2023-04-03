@@ -5,7 +5,7 @@ import axiosAPI from "../../config/axiosConfig"
 import { useParams } from "react-router-dom";
 import UserContext from "../../contexts/user-context";
 
-export default function UserModal({
+export default function AvatarModal({
   isOpen,
   isUserSelf,
   onClose,
@@ -19,7 +19,7 @@ export default function UserModal({
   const cancelButtonRef = useRef(null);
   // const [imgs, setImgs] = useState<string[]>([]);
   const [imgFile, setImgFile] = useState<File>();
-  const { username } = useParams();
+  // const { username } = useParams();
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -35,8 +35,8 @@ export default function UserModal({
 
   async function updateAvatar() {
     const formData = new FormData();
-    if (username !== undefined)
-      formData.append("username", username);
+    if (user.username !== undefined)
+      formData.append("username", user.username);
     if (imgFile) {
       formData.append("avatar", imgFile);
     }
