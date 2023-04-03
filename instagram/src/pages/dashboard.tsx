@@ -28,6 +28,7 @@ export default function Dashboard() {
 
       let user_new = {username: JSON.parse(data), avatar: ava, fullname: f_name};
       setUser(user_new);
+      user.username = user_new.username;
       getPosts();
     }
     else if (user.username === "") {
