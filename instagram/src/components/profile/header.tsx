@@ -71,7 +71,7 @@ export default function Header({
           <div className="container flex items-center">
             <p className="text-2xl mr-4">{username}</p>
             {isUserSelf ? (
-              <>
+              <div data-testid="edit-profile">
                 <button
                   className=" bg-gray-100 font-bold text-sm rounded w-28 h-8"
                   type="button"
@@ -108,7 +108,7 @@ export default function Header({
                     strokeWidth="2"
                   ></path>
                 </svg>
-              </>
+              </div>
             ) : (
               <>
                 <button
@@ -146,6 +146,7 @@ export default function Header({
               <span className="font-bold">{postCount}</span> posts
             </p>
             <p
+              data-testid="test-handleClickFollower"
               className="mr-10 cursor-pointer"
               onClick={handleClickFollower}
             >
