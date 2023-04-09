@@ -6,9 +6,9 @@ import PostSkeleton from "./post/postSkeleton";
 export default function Timeline(props: timelineType) {
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    if (props.posts.length > 0) {
-      setLoading(false);
-    }
+      if(props.posts !== undefined){
+        setLoading(false);
+      }
   }, [props.posts]);
 
   return (
@@ -19,7 +19,7 @@ export default function Timeline(props: timelineType) {
           <PostSkeleton />
         </div>
       ) : (
-        props.posts.map((post: postType, inx: number) => (
+       props.posts && props.posts.map((post: postType, inx: number) => (
           <Post
             key={post.id}
             username={post.username}

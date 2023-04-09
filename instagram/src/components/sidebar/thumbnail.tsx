@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import { thumbnailType } from "./sidebarType";
 
 export default function Thumbnail(props: thumbnailType) {
-  const firstMedia = useRef<any>();
-  const lastMedia = useRef<any>();
+  const firstMedia = React.useRef<any>();
+  const lastMedia = React.useRef<any>();
 
   const handleScrollToFirstMedia = () => {
     firstMedia.current.scrollIntoView({
