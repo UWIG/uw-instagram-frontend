@@ -28,7 +28,6 @@ export default function Sidebar(props: sidebarType) {
         const data = window.localStorage.getItem("username");
         const avartar = window.localStorage.getItem("avartar");
         const fullname = window.localStorage.getItem("fullname");
-        // const expiry = window.localStorage.getItem("expiry");
         if (data !== null) {
             var ava = "";
             if (avartar !== null) {
@@ -41,17 +40,11 @@ export default function Sidebar(props: sidebarType) {
 
             let user_new = {username: JSON.parse(data), avatar: ava, fullname: f_name};
             setUser(user_new);
-            // user.username = JSON.parse(data);
-            // user.avatar = ava;
-            // user.fullname = f_name;
-            // user.avatar = user_new.avatar;
-            // user.fullname = user_new.fullname;
+            user.avatar = user_new.avatar;
           }
       }, []);
       
       useEffect(() => {
-        // const now = new Date();
-        // const ttl = 1800 * 1000;
         if (user.username != "") {
             window.localStorage.setItem("username", JSON.stringify(user.username));
             window.localStorage.setItem("avartar", JSON.stringify(user.avatar));
