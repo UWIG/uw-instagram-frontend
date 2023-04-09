@@ -32,13 +32,13 @@ export default function NotificationBlock(props:{data:notificationData,currentUs
         
         {isRead ? 
             (
-                <div className="flex flex-row w-full hover:bg-slate-100 p-1 pl-5 align-middle">
+                <div data-testid="isRead" className="flex flex-row w-full hover:bg-slate-100 p-1 pl-5 align-middle">
                     <div className="text-lg font-medium align-middle"><Link className="text-blue-500" to={`/p/${data.username_from}`}>{data.username_from}</Link> is following you.</div>
                 </div>
             )
             :
             (
-                <div className="flex flex-row w-full hover:bg-slate-100 p-1 pl-5 align-middle cursor-pointer" onClick={handleClicked}>
+                <div data-testid="unRead" className="flex flex-row w-full hover:bg-slate-100 p-1 pl-5 align-middle cursor-pointer" onClick={handleClicked}>
                      <div className="text-lg font-medium align-middle"><Link className="text-blue-500" to={`/p/${data.username_from}`}>{data.username_from}</Link> is following you.</div>
                      <span className="inline-block w-2 h-2 mr-2 bg-red-600 rounded-full align-middle"></span>
                 </div>

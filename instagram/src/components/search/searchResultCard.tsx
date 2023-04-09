@@ -76,9 +76,9 @@ export default function SearchResultCard(props:SearchCardProps){
                     :(
                         <>
                             {isFollowed ? (
-                                <button className="w-2/6 border-transparent bg-transparent text-gray-500 text-sm font-semibold" onClick={handleFollowingClicked}>Following</button> 
+                                <button data-testid="following" className="w-2/6 border-transparent bg-transparent text-gray-500 text-sm font-semibold" onClick={handleFollowingClicked}>Following</button> 
                             ):(
-                                <button className="w-2/6 border-transparent bg-transparent text-blue-600 text-sm font-semibold" onClick={handleFollowClicked}>Follow</button>
+                                <button data-testid="follow" className="w-2/6 border-transparent bg-transparent text-blue-600 text-sm font-semibold" onClick={handleFollowClicked}>Follow</button>
                             )}
                         </>
 
