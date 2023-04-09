@@ -52,7 +52,10 @@ export default function UserProfile(props: any) {
     getUserPosts();
     if (user.username === username) {
       setIsUserSelf(true);
+    }else{
+      setIsUserSelf(false);
     }
+    console.log(user.username)
   }, [username]);
 
   return (

@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react";
 // import {screen} from "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
+import axiosAPI from "../../config/axiosConfig"
+
 
 import Header from "../../../components/profile/header";
 import { BrowserRouter } from "react-router-dom";
@@ -47,7 +49,11 @@ const users = [
   },
 ];
 
+jest.mock("../../config/axiosConfig")
 test("editProfile", async () => {
+  axiosAPI.post.mockResolvedValueOnce({
+    data:{res:{data:"abc"}}
+  })
   render(
     <BrowserRouter>
       <Header
@@ -62,8 +68,6 @@ test("editProfile", async () => {
       />
     </BrowserRouter>
   );
-
-  //   const editProfile = screen.getByTestId("edit-profile");
 
   const test_navigateSetting = screen.getByTestId("test-navigateSetting");
   await userEvent.click(test_navigateSetting);
@@ -87,12 +91,17 @@ test("editProfile", async () => {
   await userEvent.click(test_handleClickFollowing);
   userEvent.keyboard("{esc}");
 
-  //   expect(editProfile).toBeInTheDocument();
-
-  expect(1).toBe(1);
 });
 
 test("editProfile2", async () => {
+  axiosAPI.post.mockResolvedValueOnce({
+    data:{res:{data:"abc"}}
+  })
+  axiosAPI.post.mockRejectedValueOnce(new Error('Some random error'));
+  axiosAPI.post.mockResolvedValueOnce({
+    data:{res:{data:"abc"}}
+  })
+  axiosAPI.post.mockRejectedValueOnce(new Error('Some random error'));
   render(
     <BrowserRouter>
       <Header
@@ -108,7 +117,6 @@ test("editProfile2", async () => {
     </BrowserRouter>
   );
 
-  //   const editProfile = screen.getByTestId("edit-profile");
   const test_handleClickFollower = screen.getByTestId(
     "test-handleClickFollower"
   );
@@ -117,35 +125,44 @@ test("editProfile2", async () => {
   const test_setUserOpen = screen.getByTestId("test-setUserOpen");
   await userEvent.click(test_setUserOpen);
 
-  //   expect(editProfile).toBeInTheDocument();
+  const test_Following = screen.getByTestId(
+    "test-Following"
+  );
+  await userEvent.click(test_Following);
+  await userEvent.click(test_Following);
+  await userEvent.click(test_Following);
+  await userEvent.click(test_Following);
 
-  expect(1).toBe(1);
 });
 
-
 test("editProfile3", async () => {
-    render(
-      <BrowserRouter>
-        <Header
-          isUserSelf={false}
-          postCount={3}
-          username={"alex"}
-          fullname="abc"
-          setAvatar={() => {}}
-          avatar={""}
-          followers={null}
-          following={null}
-        />
-      </BrowserRouter>
-    );
+  axiosAPI.post.mockResolvedValueOnce({
+    data:{res:{data:"abc"}}
+  })
+  render(
+    <BrowserRouter>
+      <Header
+        isUserSelf={false}
+        postCount={3}
+        username={"alex"}
+        fullname="abc"
+        setAvatar={() => {}}
+        avatar={""}
+        followers={null}
+        following={null}
+      />
+    </BrowserRouter>
+  );
 
-    const test_handleClickFollower = screen.getByTestId(
-        "test-handleClickFollower"
-      );
-      await userEvent.click(test_handleClickFollower);
-    
-      const test_handleClickFollowing = screen.getByTestId(
-        "test-handleClickFollowing"
-      );
-      await userEvent.click(test_handleClickFollowing);
-})
+  const test_handleClickFollower = screen.getByTestId(
+    "test-handleClickFollower"
+  );
+  await userEvent.click(test_handleClickFollower);
+
+  const test_handleClickFollowing = screen.getByTestId(
+    "test-handleClickFollowing"
+  );
+  await userEvent.click(test_handleClickFollowing);
+
+  
+});

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import UserModal from "./userModal";
 import AvatarModal from "./avatarModal";
 import Skeleton from "react-loading-skeleton";
@@ -6,6 +6,8 @@ import { userType } from "../../pages/pageType";
 import FollowModal from "./followModal";
 import { Route, useNavigate } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
+import UserContext from "../../contexts/user-context";
+import axiosAPI from "../../config/axiosConfig";
 
 export default function Header({
   isUserSelf,
@@ -32,10 +34,19 @@ export default function Header({
   const [loading, setLoading] = useState<boolean>(true);
   const [followerModalOpen, setFollowerModalOpen] = useState(false);
   const [followingModalOpen, setFollowingModalOpen] = useState(false);
+  const { user } = useContext(UserContext);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   useEffect(() => {
     if (avatar !== "") {
       setLoading(false);
+    }
+    if (!isUserSelf) {
+      followers.forEach((follower) => {
+        if (follower.username === user.username) {
+          setIsFollowing(true);
+        }
+      });
     }
   }, [avatar]);
 
@@ -48,6 +59,36 @@ export default function Header({
   const handleClickFollowing = () => {
     if (following !== null && following.length > 0) {
       setFollowingModalOpen(true);
+    }
+  };
+
+  const handleFollowRequest = async () => {
+    let setFollowPair = {
+      currentUserName: user.username,
+      targetUserName: username,
+    };
+    if (isFollowing) {
+      await axiosAPI
+        .post("/cancelFollow", setFollowPair)
+        .then(function (response) {
+          let res = response.data;
+          console.log("result of cancelFollow: " + res);
+          setIsFollowing(false);
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
+    } else {
+      await axiosAPI
+        .post("/setFollow", setFollowPair)
+        .then(function (response) {
+          let res = response.data;
+          console.log("result of setFollow: " + res);
+          setIsFollowing(true);
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
     }
   };
 
@@ -114,10 +155,14 @@ export default function Header({
             ) : (
               <>
                 <button
-                  className=" bg-gray-100 font-bold text-sm rounded w-20 h-8"
+                  className={`${
+                    isFollowing ? "bg-gray-100" : "bg-sky-400 hover:bg-sky-600"
+                  }  font-bold text-sm rounded w-20 h-8`}
                   type="button"
+                  data-testid="test-Following"
+                  onClick={handleFollowRequest}
                 >
-                  Follow
+                  {isFollowing ? "Following" : "Follow"}
                 </button>
                 <button
                   className=" bg-gray-100 font-bold text-sm rounded w-20 h-8 ml-2"

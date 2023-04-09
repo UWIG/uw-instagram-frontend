@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen} from "@testing-library/react";
 // import {screen} from "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
+import axiosAPI from "../../config/axiosConfig"
 
 import AvatarModal from "../../../components/profile/avatarModal";
-import { BrowserRouter } from "react-router-dom";
 global.IntersectionObserver = class IntersectionObserver {
   constructor() {}
 
@@ -20,7 +20,37 @@ global.IntersectionObserver = class IntersectionObserver {
   }
 };
 
+
+jest.mock("../../config/axiosConfig")
 test("avatar modal test", async () => {
+  axiosAPI.post.mockResolvedValueOnce({
+    data:{res:{data:"abc"}}
+  })
+
+  render(
+    <AvatarModal
+      isUserSelf={true}
+      isOpen={true}
+      onClose={() => {}}
+      setAvatar={() => {}}
+    />
+  );
+
+  const test_upload = screen.getByTestId("test-upload");
+
+  const file = new File(["hello"], "hello.png", { type: "image/png" });
+
+  await userEvent.upload(test_upload, file);
+
+  expect(test_upload.files[0]).toStrictEqual(file);
+
+});
+
+test("avatar modal test 2", async () => {
+  axiosAPI.post.mockResolvedValueOnce({
+    data:{res:{data:"abc"}}
+  })
+
   render(
     <AvatarModal
       isUserSelf={false}
@@ -32,5 +62,11 @@ test("avatar modal test", async () => {
 
   const test_upload = screen.getByTestId("test-upload");
 
-  await userEvent.upload(test_upload);
+  const file = new File(["hello"], "hello.png", { type: "image/png" });
+
+  await userEvent.upload(test_upload, file);
+
+  expect(test_upload.files[0]).toStrictEqual(file);
+
 });
+
