@@ -5,6 +5,7 @@ export default function Media(props:mediaType) {
       {props.type === "image" ? (
         <img
           className="absolute h-full w-full object-cover"
+          alt=""
           src={"data:image/png;base64," + props.data}
         />
       ) : (

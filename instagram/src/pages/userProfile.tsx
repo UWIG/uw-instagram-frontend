@@ -52,17 +52,18 @@ export default function UserProfile(props: any) {
     getUserPosts();
     if (user.username === username) {
       setIsUserSelf(true);
+    }else{
+      setIsUserSelf(false);
     }
+    console.log(user.username)
   }, [username]);
 
   return (
     <>
-      <div className="bg-gray-background h-full ">
-        <div className="grid grid-cols-5 gap-12 pr-10 ">
-          <div className="col-span-1 ">
-            <Sidebar onCreatePost={() => getUserPosts()} />
-          </div>
-          <div className="container col-span-4 flex flex-col pt-5">
+      <div className="bg-gray-background">
+        <div className="grid grid-cols-5 gap-12 max-w-screen-2xl">
+          <Sidebar onCreatePost={() => getUserPosts()} />
+          <div className="container col-span-4 flex flex-col pt-5 ">
             <Header
               isUserSelf={isUserSelf}
               postCount={postNum}
@@ -78,7 +79,7 @@ export default function UserProfile(props: any) {
               isProfilePage={true}
               posts={posts}
               onCreateComment={getUserPosts}
-              onClickSave = {() => getSavedPosts()}
+              onClickSave={() => getSavedPosts()}
             />
           </div>
         </div>
