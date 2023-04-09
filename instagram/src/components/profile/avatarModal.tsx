@@ -95,6 +95,7 @@ export default function AvatarModal({
                       Upload Photo
                     </span>
                     <input
+                      data-testid="test-upload"
                       type="file"
                       className="absolute w-full opacity-0 -z-10"
                       onChange={HandleFileChange}

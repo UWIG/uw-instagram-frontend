@@ -4,6 +4,12 @@ export type loginType ={
     onLogin: any;
 }
 
+export type recommendedUserType = {
+    username: string,
+    fullname:string,
+    avatar: media,
+}
+
 export type userType = {
     username: string,
     fullname:string,

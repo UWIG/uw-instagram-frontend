@@ -9,8 +9,8 @@ export default function Comments(props:postComments) {
         return (
           <div key={comment.id}>
               <p className='mb-1'>
-                  <span className='mr-1 font-bold'>{comment.username}</span>
-                  <span>{comment.comment}</span>
+                  <span data-testid={"name"+comment.id} className='mr-1 font-bold'>{comment.username}</span>
+                  <span data-testid={"comment"+comment.id} >{comment.comment}</span>
               </p>
           </div>
         )

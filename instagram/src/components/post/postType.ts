@@ -41,6 +41,7 @@ export type postType = {
     whether_liked: boolean,
     whether_followed_post_user: boolean,
     whether_saved:boolean,
+    open:boolean,
   }
 
 export type postHeader = {

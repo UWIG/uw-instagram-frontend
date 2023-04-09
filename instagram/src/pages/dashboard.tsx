@@ -7,11 +7,14 @@ import axiosAPI from "../config/axiosConfig"
 import UserContext from '../contexts/user-context'
 import * as ROUTES from '../constants/routes';
 import { postType } from '../components/post/postType';
+import { recommendedUserType} from './pageType';
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const {user, setUser} = useContext(UserContext);
   const [posts, setPosts] = useState<postType[]>([]);
+  const [recommendedUsers, setRecommendedUsers] = useState<recommendedUserType[]>([]);
+
   useEffect(() => {
     const data = window.localStorage.getItem("username");
     const avartar = window.localStorage.getItem("avartar");
@@ -50,7 +53,8 @@ export default function Dashboard() {
     async function getPosts() {
       try{
         const response = await axiosAPI.get(`/api/posts/home/${user.username}`);
-        setPosts(response.data);
+        setPosts(response.data.postList);
+        setRecommendedUsers(response.data.recomment_follow_list);
         console.log(response.data);
       }
       catch(err){
@@ -62,7 +66,7 @@ export default function Dashboard() {
           <div className='grid grid-cols-5 gap-12 max-w-screen-2xl'>
               <Sidebar onCreatePost={() => getPosts()}/>
               <Timeline posts={posts} onCreateComment={() => getPosts()}/>
-              <Suggestions/>
+              <Suggestions recommendedUsers={recommendedUsers}/>
           </div>
       </div>
     )

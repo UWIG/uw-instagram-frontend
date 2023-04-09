@@ -3,7 +3,7 @@ import Skeleton from "react-loading-skeleton";
 
 export default function PostSkeleton() {
   return (
-    <div>
+    <div data-testid="skeleton" >
       <div className="rounded col-span-4 border bg-white border-gray-primary mb-12">
         <div className="flex h-4 p-4 py-8">
           <div className="flex items-center justify-end">

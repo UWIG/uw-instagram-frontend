@@ -4,8 +4,8 @@ import AvatarModal from "./avatarModal";
 import Skeleton from "react-loading-skeleton";
 import { userType } from "../../pages/pageType";
 import FollowModal from "./followModal";
-import {Route, useNavigate } from 'react-router-dom';
-import * as ROUTES from "../../constants/routes"
+import { Route, useNavigate } from "react-router-dom";
+import * as ROUTES from "../../constants/routes";
 
 export default function Header({
   isUserSelf,
@@ -17,7 +17,6 @@ export default function Header({
   followers,
   following,
 }: {
-  
   isUserSelf: boolean;
   postCount: number;
   avatar: string;
@@ -41,16 +40,16 @@ export default function Header({
   }, [avatar]);
 
   const handleClickFollower = () => {
-    if(followers !== null && followers.length > 0){
-      setFollowerModalOpen(true)
+    if (followers !== null && followers.length > 0) {
+      setFollowerModalOpen(true);
     }
-  }
+  };
 
   const handleClickFollowing = () => {
-    if(following !== null && following.length > 0){
-      setFollowingModalOpen(true)
+    if (following !== null && following.length > 0) {
+      setFollowingModalOpen(true);
     }
-  }
+  };
 
   return (
     <>
@@ -60,6 +59,7 @@ export default function Header({
             <Skeleton circle height={160} width={160} />
           ) : (
             <img
+              data-testid="test-setAvatarOpen"
               className="rounded-full h-40 w-40 flex cursor-pointer"
               src={avatar}
               alt="profile pic"
@@ -71,11 +71,12 @@ export default function Header({
           <div className="container flex items-center">
             <p className="text-2xl mr-4">{username}</p>
             {isUserSelf ? (
-              <div data-testid="edit-profile">
+              <div data-testid="edit-profile" className="flex">
                 <button
+                  data-testid="test-navigateSetting"
                   className=" bg-gray-100 font-bold text-sm rounded w-28 h-8"
                   type="button"
-                  onClick={()=>navigate(ROUTES.SETTING)}
+                  onClick={() => navigate(ROUTES.SETTING)}
                 >
                   Edit Profile
                 </button>
@@ -88,6 +89,7 @@ export default function Header({
                   viewBox="0 0 24 24"
                   width="24"
                   className="ml-2 cursor-pointer"
+                  data-testid="test-setUserOpen"
                   onClick={() => setUserOpen(true)}
                 >
                   <circle
@@ -132,6 +134,7 @@ export default function Header({
                   viewBox="0 0 24 24"
                   width="32"
                   className="ml-2 cursor-pointer"
+                  data-testid="test-setUserOpen"
                   onClick={() => setUserOpen(true)}
                 >
                   <circle cx="12" cy="12" r="1.5"></circle>
@@ -156,6 +159,7 @@ export default function Header({
               <span className="text-blue">follower</span>
             </p>
             <p
+              data-testid="test-handleClickFollowing"
               className="mr-10 cursor-pointer"
               onClick={handleClickFollowing}
             >
@@ -181,18 +185,26 @@ export default function Header({
         setAvatar={setAvatar}
         onClose={() => setAvatarOpen(false)}
       ></AvatarModal>
-      <FollowModal
-        open={followerModalOpen}
-        onClose={() => setFollowerModalOpen(false)}
-        users = {followers}
-        followingType={false}
-      />
-      <FollowModal
-        open={followingModalOpen}
-        followingType={true}
-        onClose={() => setFollowingModalOpen(false)}
-        users = {following}
-      />
+      {followers ? (
+        <FollowModal
+          open={followerModalOpen}
+          onClose={() => setFollowerModalOpen(false)}
+          users={followers}
+          followingType={false}
+        />
+      ) : (
+        <></>
+      )}
+      {following ? (
+        <FollowModal
+          open={followingModalOpen}
+          followingType={true}
+          onClose={() => setFollowingModalOpen(false)}
+          users={following}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 }
