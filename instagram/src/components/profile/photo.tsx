@@ -15,7 +15,7 @@ export default function Photo({
 
   return (
     <div className="relative bg-black pb-[100%] col-span-1" key={post.id}>
-      <div onClick={() => setOpen(true)}>
+      <div data-testid={"test-openMedia"} onClick={() => setOpen(true)}>
         <Media type={media.type} data={media.data} controls={false} />
       </div>
       <div className="absolute bottom-0 left-0  z-10 w-full justify-evenly items-center h-full bg-neutral-800/50 group-hover:flex hidden">

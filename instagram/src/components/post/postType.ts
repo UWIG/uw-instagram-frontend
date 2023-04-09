@@ -1,3 +1,5 @@
+import { EmojiClickData} from "emoji-picker-react";
+
 export type postComment = {
     id:string,
     username:string,
@@ -41,6 +43,7 @@ export type postType = {
     whether_liked: boolean,
     whether_followed_post_user: boolean,
     whether_saved:boolean,
+    open:boolean,
   }
 
 export type postHeader = {

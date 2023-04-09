@@ -23,12 +23,14 @@ export default function Header(props: postHeader) {
             console.log("result of setFollow: "+res);
             if(res === "successful"){
                 setFollowed(true);
+            }else{
+              console.log("unsuccessful");
             }
         })
         .catch(function(err){
             console.error(err);
         }); 
-        await axiosAPI.post("/api/notification/add/follow",notificationPair).then().catch(function(err){
+        await axiosAPI.post("/api/notification/add/follow",notificationPair).catch(function(err){
           console.error(err);
       }); 
     };
@@ -46,6 +48,7 @@ export default function Header(props: postHeader) {
           <span
             className="text-sm font-bold text-blue-medium ml-3 custom-blue cursor-pointer"
             onClick={handleFollowClicked}
+            data-testid="follow"
           >
             Follow
           </span>
@@ -56,6 +59,7 @@ export default function Header(props: postHeader) {
           <> 
           <span
             className="items-center cursor-pointer"
+            data-testid="delete-button"
             onClick={() => setOpen(true)}
           >
             <svg

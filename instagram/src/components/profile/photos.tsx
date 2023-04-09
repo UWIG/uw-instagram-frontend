@@ -16,7 +16,6 @@ export default function Photos({
   onCreateComment: () => {};
   onClickSave: any;
 }) {
-  // var photos: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   return (
     <div className="h-full border-t border-gray-primary mt-12 pt-4">
@@ -26,10 +25,10 @@ export default function Photos({
             aria-label=""
             color="rgb(38, 38, 38)"
             fill="rgb(38, 38, 38)"
-            height="12"
+            height="16"
             role="img"
             viewBox="0 0 24 24"
-            width="12"
+            width="16"
           >
             <rect
               fill="none"
@@ -87,7 +86,7 @@ export default function Photos({
               y2="14.985"
             ></line>
           </svg>
-          <span className="mr-10">POSTS</span>
+          <span className="mr-10 ml-1">POSTS</span>
         </div>
         <div className="flex items-center justify-center flex-row cursor-pointer">
           {isUserSelf ? (
@@ -96,10 +95,10 @@ export default function Photos({
                 aria-label=""
                 color="rgb(142, 142, 142)"
                 fill="rgb(142, 142, 142)"
-                height="12"
+                height="16"
                 role="img"
                 viewBox="0 0 24 24"
-                width="12"
+                width="16"
               >
                 <polygon
                   fill="none"
@@ -110,7 +109,7 @@ export default function Photos({
                   strokeWidth="2"
                 ></polygon>
               </svg>
-              <span className="mr-10">SAVED</span>
+              <span className="mr-10 ml-1">SAVED</span>
             </div>
           ) : (
             <></>
@@ -121,10 +120,10 @@ export default function Photos({
             aria-label=""
             color="rgb(142, 142, 142)"
             fill="rgb(142, 142, 142)"
-            height="12"
+            height="16"
             role="img"
             viewBox="0 0 24 24"
-            width="12"
+            width="16"
           >
             <path
               d="M10.201 3.797 12 1.997l1.799 1.8a1.59 1.59 0 0 0 1.124.465h5.259A1.818 1.818 0 0 1 22 6.08v14.104a1.818 1.818 0 0 1-1.818 1.818H3.818A1.818 1.818 0 0 1 2 20.184V6.08a1.818 1.818 0 0 1 1.818-1.818h5.26a1.59 1.59 0 0 0 1.123-.465Z"
@@ -153,7 +152,7 @@ export default function Photos({
               strokeWidth="2"
             ></circle>
           </svg>
-          <span>TAGGED</span>
+          <span className="ml-1">TAGGED</span>
         </div>
       </div>
 
@@ -163,7 +162,7 @@ export default function Photos({
             <p>Share Photos</p>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-8 mt-4 mb-12 auto-rows-[minmax(0,_300px)]">
+          <div className="grid grid-cols-3 gap-8 mt-4 mb-12">
             { posts.map((post) => (
                   <Photo key={post.id} post={post} onCreateComment={onCreateComment} />
                 ))}

@@ -37,8 +37,8 @@ export default function ModalForm(props: modelFormType) {
           <p className="text-sm font-bold ml-3">{user.username}</p>
         </div>
         <div className="highLite">
-          <div className="highLite_colors pt-3 focus:outline-none" ref={textDisplayRef} data-text="Write a caption..." contentEditable={false}></div>
-          <div className="highLite_editable pt-3 focus:outline-none" contentEditable={true}  ref={textEdiableRef}></div>
+          <div className="highLite_colors pt-3 focus:outline-none" ref={textDisplayRef} data-text="Write a caption..." contentEditable={false} data-testid="text-display"></div>
+          <div className="highLite_editable pt-3 focus:outline-none" contentEditable={true}  ref={textEdiableRef} data-testid="text-edit"></div>
         </div>
       </div>
     </div>

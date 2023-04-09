@@ -125,6 +125,7 @@ export default function Modal(props: modalType) {
                           </span>
                           {media.length > 0 && (
                             <button
+                              data-testid="next-button"
                               style={{ color: "rgb(0, 149, 246)" }}
                               className="absolute right-3 cursor-pointer text-sm z-10 cursor-pointer bg-slate-50/[.7] rounded-full px-2 py-0.5 font-bold"
                               onClick={handleClick}
@@ -151,11 +152,7 @@ export default function Modal(props: modalType) {
                                     controls={true}
                                     className="absolute h-full w-full object-cover"
                                   >
-                                    <source
-                                      src={
-                                        media[mediaIdx]
-                                      }
-                                    />
+                                    <source src={media[mediaIdx]} />
                                   </video>
                                 )}
 
@@ -231,6 +228,7 @@ export default function Modal(props: modalType) {
                                   Select from computer
                                   <input
                                     type="file"
+                                    data-testid="file-upload"
                                     className="absolute top-0 left-0 opacity-0 w-full h-full"
                                     onChange={handleFileChange}
                                     accept="image/*, video/*"

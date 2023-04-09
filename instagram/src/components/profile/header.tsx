@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import UserModal from "./userModal";
 import AvatarModal from "./avatarModal";
 import Skeleton from "react-loading-skeleton";
 import { userType } from "../../pages/pageType";
 import FollowModal from "./followModal";
-import {Route, useNavigate } from 'react-router-dom';
-import * as ROUTES from "../../constants/routes"
+import { Route, useNavigate } from "react-router-dom";
+import * as ROUTES from "../../constants/routes";
+import UserContext from "../../contexts/user-context";
+import axiosAPI from "../../config/axiosConfig";
 
 export default function Header({
   isUserSelf,
@@ -17,7 +19,6 @@ export default function Header({
   followers,
   following,
 }: {
-  
   isUserSelf: boolean;
   postCount: number;
   avatar: string;
@@ -33,24 +34,63 @@ export default function Header({
   const [loading, setLoading] = useState<boolean>(true);
   const [followerModalOpen, setFollowerModalOpen] = useState(false);
   const [followingModalOpen, setFollowingModalOpen] = useState(false);
+  const { user } = useContext(UserContext);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   useEffect(() => {
     if (avatar !== "") {
       setLoading(false);
     }
+    if (!isUserSelf) {
+      followers.forEach((follower) => {
+        if (follower.username === user.username) {
+          setIsFollowing(true);
+        }
+      });
+    }
   }, [avatar]);
 
   const handleClickFollower = () => {
-    if(followers !== null && followers.length > 0){
-      setFollowerModalOpen(true)
+    if (followers !== null && followers.length > 0) {
+      setFollowerModalOpen(true);
     }
-  }
+  };
 
   const handleClickFollowing = () => {
-    if(following !== null && following.length > 0){
-      setFollowingModalOpen(true)
+    if (following !== null && following.length > 0) {
+      setFollowingModalOpen(true);
     }
-  }
+  };
+
+  const handleFollowRequest = async () => {
+    let setFollowPair = {
+      currentUserName: user.username,
+      targetUserName: username,
+    };
+    if (isFollowing) {
+      await axiosAPI
+        .post("/cancelFollow", setFollowPair)
+        .then(function (response) {
+          let res = response.data;
+          console.log("result of cancelFollow: " + res);
+          setIsFollowing(false);
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
+    } else {
+      await axiosAPI
+        .post("/setFollow", setFollowPair)
+        .then(function (response) {
+          let res = response.data;
+          console.log("result of setFollow: " + res);
+          setIsFollowing(true);
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
+    }
+  };
 
   return (
     <>
@@ -60,6 +100,7 @@ export default function Header({
             <Skeleton circle height={160} width={160} />
           ) : (
             <img
+              data-testid="test-setAvatarOpen"
               className="rounded-full h-40 w-40 flex cursor-pointer"
               src={avatar}
               alt="profile pic"
@@ -71,11 +112,12 @@ export default function Header({
           <div className="container flex items-center">
             <p className="text-2xl mr-4">{username}</p>
             {isUserSelf ? (
-              <>
+              <div data-testid="edit-profile" className="flex">
                 <button
+                  data-testid="test-navigateSetting"
                   className=" bg-gray-100 font-bold text-sm rounded w-28 h-8"
                   type="button"
-                  onClick={()=>navigate(ROUTES.SETTING)}
+                  onClick={() => navigate(ROUTES.SETTING)}
                 >
                   Edit Profile
                 </button>
@@ -88,6 +130,7 @@ export default function Header({
                   viewBox="0 0 24 24"
                   width="24"
                   className="ml-2 cursor-pointer"
+                  data-testid="test-setUserOpen"
                   onClick={() => setUserOpen(true)}
                 >
                   <circle
@@ -108,14 +151,18 @@ export default function Header({
                     strokeWidth="2"
                   ></path>
                 </svg>
-              </>
+              </div>
             ) : (
               <>
                 <button
-                  className=" bg-gray-100 font-bold text-sm rounded w-20 h-8"
+                  className={`${
+                    isFollowing ? "bg-gray-100" : "bg-sky-400 hover:bg-sky-600"
+                  }  font-bold text-sm rounded w-20 h-8`}
                   type="button"
+                  data-testid="test-Following"
+                  onClick={handleFollowRequest}
                 >
-                  Follow
+                  {isFollowing ? "Following" : "Follow"}
                 </button>
                 <button
                   className=" bg-gray-100 font-bold text-sm rounded w-20 h-8 ml-2"
@@ -132,6 +179,7 @@ export default function Header({
                   viewBox="0 0 24 24"
                   width="32"
                   className="ml-2 cursor-pointer"
+                  data-testid="test-setUserOpen"
                   onClick={() => setUserOpen(true)}
                 >
                   <circle cx="12" cy="12" r="1.5"></circle>
@@ -146,6 +194,7 @@ export default function Header({
               <span className="font-bold">{postCount}</span> posts
             </p>
             <p
+              data-testid="test-handleClickFollower"
               className="mr-10 cursor-pointer"
               onClick={handleClickFollower}
             >
@@ -155,6 +204,7 @@ export default function Header({
               <span className="text-blue">follower</span>
             </p>
             <p
+              data-testid="test-handleClickFollowing"
               className="mr-10 cursor-pointer"
               onClick={handleClickFollowing}
             >
@@ -180,18 +230,26 @@ export default function Header({
         setAvatar={setAvatar}
         onClose={() => setAvatarOpen(false)}
       ></AvatarModal>
-      <FollowModal
-        open={followerModalOpen}
-        onClose={() => setFollowerModalOpen(false)}
-        users = {followers}
-        followingType={false}
-      />
-      <FollowModal
-        open={followingModalOpen}
-        followingType={true}
-        onClose={() => setFollowingModalOpen(false)}
-        users = {following}
-      />
+      {followers ? (
+        <FollowModal
+          open={followerModalOpen}
+          onClose={() => setFollowerModalOpen(false)}
+          users={followers}
+          followingType={false}
+        />
+      ) : (
+        <></>
+      )}
+      {following ? (
+        <FollowModal
+          open={followingModalOpen}
+          followingType={true}
+          onClose={() => setFollowingModalOpen(false)}
+          users={following}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 }

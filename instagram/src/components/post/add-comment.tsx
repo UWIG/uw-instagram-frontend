@@ -3,7 +3,7 @@ import { postAddComment } from "./postType";
 import axiosAPI from "../../config/axiosConfig";
 import UserContext from "../../contexts/user-context";
 import ModalEmoji from "./modal-emoji";
-
+import { EmojiClickData } from "emoji-picker-react";
 export default function AddComment(props: postAddComment) {
   const [comment, setComment] = useState("");
   const { user } = useContext(UserContext);
@@ -29,15 +29,15 @@ export default function AddComment(props: postAddComment) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    addComment();
     setComment("");
+    addComment();
   };
 
   async function addComment() {
     const response = await axiosAPI
       .post("/api/posts", newComment)
       .catch(function (err) {
-        console.error(err);
+        console.log(err);
       });
     props.onCreateComment();
   }
@@ -78,6 +78,7 @@ export default function AddComment(props: postAddComment) {
           <div onClick={() => setShowEmoji(true)}>
             <svg
               aria-label="Emoji"
+              data-testid="emoji"
               className="x1lliihq x1n2onr6"
               color="rgb(199, 199, 199)"
               fill="rgb(199, 199, 199)"

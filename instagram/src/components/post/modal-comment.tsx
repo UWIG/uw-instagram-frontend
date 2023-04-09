@@ -16,9 +16,10 @@ export default function ModalComment(props: postModalComment) {
             <p
               className="flex items-center cursor-pointer"
               onClick={() => setShowReply(!showReply)}
+              data-testid="reply-button"
             >
               <span className="border-b-[1px] border-solid border-gray ml-12 w-6 inline"></span>
-              <span className="text-xs ml-3 text-gray font-bold ">
+              <span className="text-xs ml-3 text-gray font-bold " data-testid="reply-text">
                 {showReply ? "Hide replies" : "View replies"} (
                 {props.comment.replies.length})
               </span>

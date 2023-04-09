@@ -9,11 +9,11 @@ import { postType } from './postType'
 import Modal from './modal'
 
 export default function Post(props:postType) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(props.open);
 
   return (
     <div>
-        <div className="rounded col-span-4 border bg-white border-gray-primary mb-12">
+        <div className="rounded col-span-4 border bg-white border-gray-primary mb-12" data-testid={"post" + props.id}  >
         <Header username = {props.username} avatar={props.avatar} time_created={props.time_created} whether_followed_post_user={props.whether_followed_post_user}/>
         <Image mediaList={props.mediaList} caption="images" />
         <Actions post_id={props.id} whether_liked={props.whether_liked} whether_saved={props.whether_saved} likes={props.likes} onComment={() => setOpen(true)}/>

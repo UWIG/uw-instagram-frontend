@@ -7,7 +7,6 @@ import Sidebar from "../components/sidebar/sidebar";
 import { useParams } from "react-router-dom";
 import UserContext from "../contexts/user-context";
 import { userType } from "./pageType";
-import { tr } from "date-fns/locale";
 
 export default function UserProfile(props: any) {
   const { username } = useParams();
@@ -18,6 +17,7 @@ export default function UserProfile(props: any) {
   const [followers, setFollowers] = useState<userType[]>([]);
   const [following, setFollowing] = useState<userType[]>([]);
   const { user } = useContext(UserContext);
+  const [postNum, setPostNum] = useState(0);
 
   async function getUserPosts() {
     try {
@@ -27,6 +27,7 @@ export default function UserProfile(props: any) {
       else setAvatar("/images/avatars/default_avatar.jpg");
       setFullname(response.data.fullname);
       setPosts(response.data.posts);
+      setPostNum(response.data.posts !== null ? response.data.posts.length : 0);
       setFollowers(response.data.followers);
       setFollowing(response.data.following);
       console.log(response.data);
@@ -51,20 +52,21 @@ export default function UserProfile(props: any) {
     getUserPosts();
     if (user.username === username) {
       setIsUserSelf(true);
+    }else{
+      setIsUserSelf(false);
     }
+    console.log(user.username)
   }, [username]);
 
   return (
     <>
-      <div className="bg-gray-background h-full">
+      <div className="bg-gray-background">
         <div className="grid grid-cols-5 gap-12 max-w-screen-2xl">
-          <div className="col-span-1">
-            <Sidebar onCreatePost={() => getUserPosts()} />
-          </div>
-          <div className="container col-span-4 flex flex-col">
+          <Sidebar onCreatePost={() => getUserPosts()} />
+          <div className="container col-span-4 flex flex-col pt-5 ">
             <Header
               isUserSelf={isUserSelf}
-              postCount={posts !== null ? posts.length : 0}
+              postCount={postNum}
               username={username}
               avatar={avatar}
               fullname={fullname}
@@ -77,7 +79,7 @@ export default function UserProfile(props: any) {
               isProfilePage={true}
               posts={posts}
               onCreateComment={getUserPosts}
-              onClickSave = {() => getSavedPosts()}
+              onClickSave={() => getSavedPosts()}
             />
           </div>
         </div>
