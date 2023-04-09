@@ -29,6 +29,19 @@ const reply = {
     setCommentId:() => {},
 }
 
+const replyWithoutCommentId = {
+    comment: { 
+        id:"",
+        username:"alex",
+        comment:"text comment",
+        avatar:{},
+        time_created:new Date().toDateString(),
+        replies: []
+    },
+    setReplyUser: () => {},
+    setCommentId:() => {},
+}
+
 test("Click like button", async () => {
     render(<ModalCommentReply {...reply} />);
     const likeButton = screen.queryByTestId("like-button");
@@ -41,4 +54,11 @@ test("Click reply button", async () => {
     const replyButton = screen.queryByTestId("reply");
     await userEvent.click(replyButton);
     expect(1).toBe(1);
+})
+
+test("test comment id is not undefined", async () => {
+    render(<ModalCommentReply {...replyWithoutCommentId} />);
+    const replyButton = screen.queryByTestId("reply");
+    await userEvent.click(replyButton);
+    expect(replyButton).toBeInTheDocument();
 })

@@ -23,12 +23,14 @@ export default function Header(props: postHeader) {
             console.log("result of setFollow: "+res);
             if(res === "successful"){
                 setFollowed(true);
+            }else{
+              console.log("unsuccessful");
             }
         })
         .catch(function(err){
             console.error(err);
         }); 
-        await axiosAPI.post("/api/notification/add/follow",notificationPair).then().catch(function(err){
+        await axiosAPI.post("/api/notification/add/follow",notificationPair).catch(function(err){
           console.error(err);
       }); 
     };

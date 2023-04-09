@@ -29,9 +29,9 @@ export default function SuggestedProfile(props: {recommendedUser: recommendedUse
             <img className="rounded-full w-8 h-8 flex mr-3" src={avatar} alt="jjsd" />
             <p className="font-bold text-sm">{props.recommendedUser.username}</p>
         </div>
-        <div>
+        <div >
           {
-            isFollowing ? <button className="text-xs font-bold custom-black" type='button' disabled>Following</button> : <button className="text-xs font-bold text-blue-medium custom-blue" type='button' onClick={handleFollowRequest}>Follow</button>
+            isFollowing ? <button data-testid="following" className="text-xs font-bold custom-black" type='button' disabled>Following</button> : <button data-testid="follow" className="text-xs font-bold text-blue-medium custom-blue" type='button' onClick={handleFollowRequest}>Follow</button>
           }
         </div>
 

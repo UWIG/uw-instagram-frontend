@@ -12,7 +12,7 @@ import { recommendedUserType} from './pageType';
 export default function Dashboard() {
   const navigate = useNavigate();
   const {user, setUser} = useContext(UserContext);
-  const [posts, setPosts] = useState<postType[]>([]);
+  const [posts, setPosts] = useState<postType[]>();
   const [recommendedUsers, setRecommendedUsers] = useState<recommendedUserType[]>([]);
 
   useEffect(() => {

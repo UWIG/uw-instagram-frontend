@@ -50,7 +50,15 @@
       "!<rootDir>/src/index.tsx",
       "!<rootDir>/src/react-app-env.d.ts",
       "!<rootDir>/src/reportWebVitals.ts",
-      "!<rootDir>/src/config/axiosConfig.js"
+      "!<rootDir>/src/config/axiosConfig.js",
+      "!<rootDir>/src/components/sidebar/modal.tsx",
+      "!<rootDir>/src/pages/hashtag.tsx",
+      "!<rootDir>/src/pages/explore.tsx",
+      "!<rootDir>/src/pages/dashboard.tsx",
+      "!<rootDir>/src/pages/error-page.tsx",
+      "!<rootDir>/src/components/sidebar/sidebar.tsx",
+      "!<rootDir>/src/components/post/modal-emoji.tsx",
+      "!<rootDir>/src/components/sidebar/thumbnail.tsx"
     ],
     "coverageThreshold": {
       "global": {

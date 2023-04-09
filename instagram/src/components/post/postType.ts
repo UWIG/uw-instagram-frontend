@@ -1,3 +1,5 @@
+import { EmojiClickData} from "emoji-picker-react";
+
 export type postComment = {
     id:string,
     username:string,

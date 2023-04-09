@@ -152,11 +152,7 @@ export default function Modal(props: modalType) {
                                     controls={true}
                                     className="absolute h-full w-full object-cover"
                                   >
-                                    <source
-                                      src={
-                                        media[mediaIdx]
-                                      }
-                                    />
+                                    <source src={media[mediaIdx]} />
                                   </video>
                                 )}
 
@@ -232,6 +228,7 @@ export default function Modal(props: modalType) {
                                   Select from computer
                                   <input
                                     type="file"
+                                    data-testid="file-upload"
                                     className="absolute top-0 left-0 opacity-0 w-full h-full"
                                     onChange={handleFileChange}
                                     accept="image/*, video/*"

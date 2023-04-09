@@ -32,11 +32,11 @@ export default function Explore() {
 
   return (
     <div className="bg-gray-background h-full">
-      <div className="grid grid-cols-5 gap-12 max-w-screen-2xl">
+      <div className="grid grid-cols-5 gap-12 pr-10">
         <div className="col-span-1">
           <Sidebar onCreatePost={() => {}} />
         </div>
-        <div className="container col-span-4 flex flex-col mt-10 ">
+        <div className="container col-span-4 flex flex-col pt-5 ">
           <div className="grid grid-cols-4 gap-12 max-w-screen-2xl px-16">
             <div className="col-span-1">
               {loading ? (
