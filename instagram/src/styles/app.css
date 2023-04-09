@@ -1192,12 +1192,6 @@ video {
 .pl-5 {
   padding-left: 1.25rem;
 }
-.pr-10 {
-  padding-right: 2.5rem;
-}
-.pt-5 {
-  padding-top: 1.25rem;
-}
 .pl-2 {
   padding-left: 0.5rem;
 }
@@ -1561,11 +1555,6 @@ video {
   .hover\:bg-sky-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(3 105 161 / var(--tw-bg-opacity));
-}
-
-  .hover\:bg-sky-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(2 132 199 / var(--tw-bg-opacity));
 }
 
   .focus\:outline-none:focus {
