@@ -3,6 +3,8 @@ import {render, screen} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter as Router } from "react-router-dom";
 import ModalDelete from "../../../components/post/modal-delete";
+import axiosAPI from "../../config/axiosConfig";
+
 beforeEach(() => {
   jest.spyOn(console, 'error')
   // @ts-ignore jest.spyOn adds this functionallity
@@ -38,6 +40,8 @@ const data = {
     onClose: () => {},
 }
 
+jest.mock("../../config/axiosConfig");
+
 test("click cancel to close the modal", async () => {
     render(<ModalDelete {...data} />);
     const cancel = screen.queryByTestId("cancel");
@@ -48,10 +52,21 @@ test("click cancel to close the modal", async () => {
     expect(deleteButtonAfterClick).toBeInTheDocument();
 })
 
-test("Click delete button ", async () => {
+test("Click delete button successfully ", async () => {
+  axiosAPI.delete.mockResolvedValueOnce({
+    data: {}
+  });
     render(<ModalDelete {...data} />);
     const deleteButton = screen.queryByTestId("delete");
     await userEvent.click(deleteButton);
-    expect(1).toBe(1);
+    expect(deleteButton).toBeInTheDocument();
+})
+
+test("Click delete button with error ", async () => {
+  axiosAPI.delete.mockRejectedValueOnce(new Error('Some random error'));
+  render(<ModalDelete {...data} />);
+  const deleteButton = screen.queryByTestId("delete");
+  await userEvent.click(deleteButton);
+  expect(deleteButton).toBeInTheDocument();
 })
 

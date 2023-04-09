@@ -14,7 +14,7 @@ afterEach(() => {
     console.error.mockRestore()
   })
   
-const mediaList = [{id:"0", filename:"test1.jpg", type:"image", data:"data1"},{id:"1", filename:"test2.jpg", type:"image", data:"data2"}]
+const mediaList = [{id:"0", filename:"test1.jpg", type:"image", data:"data1"},{id:"1", filename:"test2.mp4", type:"video", data:"data2"}]
 
 test("Not show minus button for the first image", async () => {
     render(<Image mediaList={mediaList}/>);

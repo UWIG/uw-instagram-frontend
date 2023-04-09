@@ -3,7 +3,7 @@ import { postAddComment } from "./postType";
 import axiosAPI from "../../config/axiosConfig";
 import UserContext from "../../contexts/user-context";
 import ModalEmoji from "./modal-emoji";
-
+import { EmojiClickData } from "emoji-picker-react";
 export default function AddComment(props: postAddComment) {
   const [comment, setComment] = useState("");
   const { user } = useContext(UserContext);

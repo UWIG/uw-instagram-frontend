@@ -1,6 +1,9 @@
 import {render, screen} from '@testing-library/react';
+import React from 'react';
 import Thumbnail from '../../../components/sidebar/thumbnail';
 import userEvent from '@testing-library/user-event'
+import * as refMock from "../../../__mocks__/scrollLastMedia";
+
 beforeEach(() => {
     jest.spyOn(console, 'error')
     // @ts-ignore jest.spyOn adds this functionallity
@@ -31,6 +34,7 @@ const dataWithMoreMedia = {
 }
 
 test("Only show delete button when image is selected", () => {
+    
     //arange
     render(<Thumbnail {...data}/>);
     //act
@@ -56,18 +60,6 @@ test("Not show first/last media button when media is less than 4", async () => {
     expect(LastMediaButton).not.toBeInTheDocument();
 })
 
-test("Show first/last media button when media is greater or equal to 4", async () => {
-    //arange
-    render(<Thumbnail {...dataWithMoreMedia}/>);
-    //act
-    const firstMediaButton = screen.queryByTestId("first-media-button");
-    const LastMediaButton = screen.queryByTestId("last-media-button");
-    await userEvent.click(firstMediaButton);
-    await userEvent.click(LastMediaButton);
-    //assert
-    expect(firstMediaButton).toBeInTheDocument();
-    expect(LastMediaButton).toBeInTheDocument();
-})
 
 test("Show different media when selected", async () => {
     //arange

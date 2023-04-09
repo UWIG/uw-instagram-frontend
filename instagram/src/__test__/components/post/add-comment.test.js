@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import AddComment from '../../../components/post/add-comment';
 import userEvent from "@testing-library/user-event"
-
+import axiosAPI from "../../config/axiosConfig";
 global.IntersectionObserver = class IntersectionObserver {
     constructor() {}
   
@@ -58,8 +58,9 @@ test("show emoji", async () => {
     expect(emojiModal).toBeInTheDocument();
 });
 
-
+jest.mock("../../config/axiosConfig");
 test("test submit button", async () => {
+    axiosAPI.post.mockRejectedValueOnce(new Error('Some random error'))
     render(<AddComment id="0" username="alex" avatar="..." replyUser='bob' commentId='1' onCreateComment={() => {}}/>);
 
     const postButton = screen.queryByTestId("post-button");

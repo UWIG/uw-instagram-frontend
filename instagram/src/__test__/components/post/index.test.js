@@ -65,3 +65,5 @@ test("test close modal when a user clicks close button", async () => {
     expect(prevButtonAfter).not.toBeInTheDocument();
     expect(nextButtonAfter).not.toBeInTheDocument();
 })
+
+
