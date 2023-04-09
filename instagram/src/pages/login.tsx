@@ -27,14 +27,17 @@ export default function Login(props: loginType) {
             if(response.data.avatar!==null){
                 user.avatar = "data:image/png;base64, "+response.data.avatar.data;
             }
+            else {
+                console.log("avatar is null");
+            }
             props.onLogin(user);
             navigate(ROUTES.DASHBOARD);
         }
         catch (error: any) {
-            console.error(error);
+            // console.error(error);
             // Show a message indicating incorrect login credentials to the user
             setError('Incorrect login credentials. Please try again.');
-            console.log(error.response.data);
+            // console.log(error.response.data);
             // if (error.response && error.response.data) {
             //     setError(error.response.data);
             // } else {
@@ -60,7 +63,7 @@ export default function Login(props: loginType) {
                     <h1 className="flex justify-center w-full">
                         <img src="/images/watig_logo.png" alt="UW_IG" className="mt-2 w-full mb-4"/>
                     </h1>
-                    {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
+                    {error && <p className="mb-4 text-xs text-red-primary" data-testid="warning">{error}</p>}
 
                     <form method="POST">
                         <input
@@ -84,6 +87,7 @@ export default function Login(props: loginType) {
                         <button onClick={handleLogin}
                             disabled={isInvalid}
                             type="submit"
+                            data-testid="login-button"
                             style={{ "backgroundColor": "rgb(0, 149, 246)" }}
                             className={`text-white w-full rounded h-8 font-bold
                             ${isInvalid && 'opacity-50'}`}
