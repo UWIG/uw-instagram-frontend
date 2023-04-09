@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { userItemType } from "../../pages/pageType";
 import UserContext from "../../contexts/user-context";
 import axiosAPI from "../../config/axiosConfig";
@@ -7,39 +7,47 @@ export default function UserItem(props: userItemType) {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [removed, setRemoved] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(props.following);
+  const [isFollowing, setIsFollowing] = useState<Boolean>(false);
+
+  useEffect(() => {
+    props.currentFollowing.forEach((element) => {
+      if(element.username === props.username){
+        setIsFollowing(true);
+      }
+    });
+  }, []);
 
   const handleFollowRequest = async () => {
     let setFollowPair = {
-        currentUserName: user.username,
-        targetUserName: props.username,
-      };
-      await axiosAPI
-        .post("/setFollow", setFollowPair)
-        .then(function (response) {
-          let res = response.data;
-          console.log("result of setFollow: " + res);
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
-  }
+      currentUserName: user.username,
+      targetUserName: props.username,
+    };
+    await axiosAPI
+      .post("/setFollow", setFollowPair)
+      .then(function (response) {
+        let res = response.data;
+        console.log("result of setFollow: " + res);
+      })
+      .catch(function (err) {
+        console.error(err);
+      });
+  };
 
   const handleUnfollowRequest = async () => {
     let cancelFollowPair = {
-        currentUserName: user.username,
-        targetUserName: props.username,
-      };
-      await axiosAPI
-        .post("/cancelFollow", cancelFollowPair)
-        .then(function (response) {
-          let res = response.data;
-          console.log("result of cancelFollow: " + res);
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
-  }
+      currentUserName: user.username,
+      targetUserName: props.username,
+    };
+    await axiosAPI
+      .post("/cancelFollow", cancelFollowPair)
+      .then(function (response) {
+        let res = response.data;
+        console.log("result of cancelFollow: " + res);
+      })
+      .catch(function (err) {
+        console.error(err);
+      });
+  };
 
   const handleClickRemove = async () => {
     handleUnfollowRequest();
@@ -61,11 +69,13 @@ export default function UserItem(props: userItemType) {
   };
 
   const handleNavigate = () => {
-      props.onClose();
-      navigate(`/p/${props.username}`);
-  }
-  
-  const avatar = props.avatar ? "data:image/png;base64," + props.avatar.data : "/images/avatars/default_avatar.jpg";
+    props.onClose();
+    navigate(`/p/${props.username}`);
+  };
+
+  const avatar = props.avatar
+    ? "data:image/png;base64," + props.avatar.data
+    : "/images/avatars/default_avatar.jpg";
 
   return (
     <div className="flex justify-between px-6 py-4">
@@ -80,6 +90,7 @@ export default function UserItem(props: userItemType) {
             <span onClick={handleNavigate}>{props.username}</span>{" "}
             {!props.followingType && !isFollowing && (
               <span
+                data-testid="test-handleClickFollow"
                 className="custom-blue ml-2 cursor-pointer"
                 onClick={handleClickFollow}
               >

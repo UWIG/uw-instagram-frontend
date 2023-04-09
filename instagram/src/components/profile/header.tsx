@@ -18,6 +18,7 @@ export default function Header({
   setAvatar,
   followers,
   following,
+  currentFollowing
 }: {
   isUserSelf: boolean;
   postCount: number;
@@ -27,6 +28,7 @@ export default function Header({
   setAvatar: (avatar: string) => void;
   followers: userType[];
   following: userType[];
+  currentFollowing: userType[];
 }) {
   const [isAvatarOpen, setAvatarOpen] = useState(false);
   const [isUserOpen, setUserOpen] = useState(false);
@@ -37,11 +39,12 @@ export default function Header({
   const { user } = useContext(UserContext);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
-  useEffect(() => {
+  useEffect(() => {   
     if (avatar !== "") {
       setLoading(false);
     }
     if (!isUserSelf) {
+      setIsFollowing(false);
       followers.forEach((follower) => {
         if (follower.username === user.username) {
           setIsFollowing(true);
@@ -235,6 +238,7 @@ export default function Header({
           open={followerModalOpen}
           onClose={() => setFollowerModalOpen(false)}
           users={followers}
+          currentFollowing={currentFollowing}
           followingType={false}
         />
       ) : (
@@ -246,6 +250,7 @@ export default function Header({
           followingType={true}
           onClose={() => setFollowingModalOpen(false)}
           users={following}
+          currentFollowing={currentFollowing}
         />
       ) : (
         <></>

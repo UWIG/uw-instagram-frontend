@@ -39,4 +39,9 @@ const post = {
 
 test("photos component test", async () => {
   render(<Photo post={post} onCreateComment={() => {}} />);
+  const test_openMedia = screen.getByTestId(
+    "test-openMedia"
+  );
+  await userEvent.click(test_openMedia);
+  userEvent.keyboard("{esc}");
 });

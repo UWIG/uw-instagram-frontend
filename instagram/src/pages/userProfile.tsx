@@ -16,7 +16,9 @@ export default function UserProfile(props: any) {
   const [posts, setPosts] = useState<postType[]>([]);
   const [followers, setFollowers] = useState<userType[]>([]);
   const [following, setFollowing] = useState<userType[]>([]);
-  const { user } = useContext(UserContext);
+  const [currentFollowing, setCurrentFollowing] = useState<userType[]>([]);
+
+  const { user, setUser } = useContext(UserContext);
   const [postNum, setPostNum] = useState(0);
 
   async function getUserPosts() {
@@ -30,6 +32,9 @@ export default function UserProfile(props: any) {
       setPostNum(response.data.posts !== null ? response.data.posts.length : 0);
       setFollowers(response.data.followers);
       setFollowing(response.data.following);
+      if (user.username === username) {
+        setCurrentFollowing(response.data.following)
+      }
       console.log(response.data);
     } catch (err) {
       console.error(err);
@@ -52,10 +57,10 @@ export default function UserProfile(props: any) {
     getUserPosts();
     if (user.username === username) {
       setIsUserSelf(true);
-    }else{
+    } else {
       setIsUserSelf(false);
     }
-    console.log(user.username)
+    console.log(user.username);
   }, [username]);
 
   return (
@@ -73,6 +78,7 @@ export default function UserProfile(props: any) {
               setAvatar={setAvatar}
               followers={followers}
               following={following}
+              currentFollowing={currentFollowing}
             />
             <Photos
               isUserSelf={isUserSelf}
