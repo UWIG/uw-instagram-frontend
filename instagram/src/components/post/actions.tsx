@@ -72,6 +72,7 @@ export default function Actions(props: postActions) {
           <svg
             onClick={() => props.onComment && props.onComment()}
             aria-label="Comment"
+            data-testid="comment-button"
             className="mr-2 w-8 select-none cursor-pointer"
             color="#262626"
             fill="#262626"
@@ -120,6 +121,7 @@ export default function Actions(props: postActions) {
         <svg
           onClick={handleClickSave}
           aria-label="Save"
+          data-testid="save-button"
           className={`mr-2 w-8 select-none cursor-pointer focus:outline-none ${
             toggleSaved ? "fill-black text-black-primary" : "text-black-light"
           }`}

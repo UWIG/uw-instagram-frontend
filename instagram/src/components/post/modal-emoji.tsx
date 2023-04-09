@@ -55,7 +55,7 @@ export default function ModalEmoji(props: postEmoji) {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="absolute transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8  sm:max-w-lg" style={{left:`${left + 300}px`}}>
-                <div className="bg-gray-50 sm:flex sm:flex-row-reverse">
+                <div className="bg-gray-50 sm:flex sm:flex-row-reverse" data-testid="emoji-modal">
                   <EmojiPicker onEmojiClick={onClickEmoji} />
                 </div>
               </Dialog.Panel>

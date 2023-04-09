@@ -4,7 +4,7 @@ import * as ROUTES from "../constants/routes"
 export default function NotFoundPage() {
     const navigate = useNavigate();
     return (
-        <div>
+        <div data-testid="not-found" >
             <div className="main">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="470" height="290" viewBox="0 0 470 290">
                     <defs>
@@ -50,7 +50,7 @@ export default function NotFoundPage() {
                 </svg>
             </div>
             <div className="w-full text-center">
-            <button className="text-gray w-10 rounded h-8 font-bold" onClick={() => navigate(ROUTES.DASHBOARD)}>
+            <button data-testid="home" className="text-gray w-10 rounded h-8 font-bold" onClick={() => navigate(ROUTES.DASHBOARD)}>
                 Home
             </button>
             </div>

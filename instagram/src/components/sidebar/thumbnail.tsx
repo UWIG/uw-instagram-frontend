@@ -33,6 +33,7 @@ export default function Thumbnail(props: thumbnailType) {
               {props.mediaType[idx] === "image" ? (
                 <img
                   onClick={() => props.setMediaIdx(idx)}
+                  data-testid={"image" + idx}
                   ref={
                     idx === 0
                       ? firstMedia
@@ -48,6 +49,7 @@ export default function Thumbnail(props: thumbnailType) {
                   controls={false}
                   className="h-full object-cover max-w-none"
                   onClick={() => props.setMediaIdx(idx)}
+                  data-testid={"video" + idx}
                   ref={
                     idx === 0
                       ? firstMedia
@@ -61,6 +63,7 @@ export default function Thumbnail(props: thumbnailType) {
               )}
               {idx === props.mediaIdx && (
                 <button
+                  data-testid={"thumbnail-delete-button" + idx}
                   onClick={props.handleDelete}
                   className="absolute top-1 right-1 text-sm z-10 text-white cursor-pointer bg-[#1a1a1acc] rounded-full px-1 py-1"
                 >
@@ -104,6 +107,7 @@ export default function Thumbnail(props: thumbnailType) {
       </div>
       {props.media.length > 4 && (
         <button
+          data-testid="first-media-button"
           className="absolute top-[40%] left-[12%] text-sm z-10 text-black cursor-pointer bg-white rounded-full px-2 py-0.5 font-bold"
           onClick={handleScrollToFirstMedia}
         >
@@ -112,6 +116,7 @@ export default function Thumbnail(props: thumbnailType) {
       )}
       {props.media.length > 4 && (
         <button
+          data-testid="last-media-button"
           className="absolute top-[40%] right-[8%] text-sm z-10 text-black cursor-pointer bg-white rounded-full px-2 py-0.5 font-bold"
           onClick={handleScrollToLastMedia}
         >

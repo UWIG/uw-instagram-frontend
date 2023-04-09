@@ -56,11 +56,13 @@ export default function ModalDelete(props: modalDelete) {
                   <div
                     className="text-red-500 font-bold px-4 py-3 sm:px-6 border-b-[1px] solid border-color-gray"
                     onClick={onHandleDelete}
+                    data-testid="delete"
                   >
                     Delete
                   </div>
                   <div
                     className="px-4 py-3 sm:px-6"
+                    data-testid="cancel"
                     onClick={() => props.setOpen(false)}
                   >
                     Cancel

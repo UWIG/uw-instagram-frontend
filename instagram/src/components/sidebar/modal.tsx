@@ -125,6 +125,7 @@ export default function Modal(props: modalType) {
                           </span>
                           {media.length > 0 && (
                             <button
+                              data-testid="next-button"
                               style={{ color: "rgb(0, 149, 246)" }}
                               className="absolute right-3 cursor-pointer text-sm z-10 cursor-pointer bg-slate-50/[.7] rounded-full px-2 py-0.5 font-bold"
                               onClick={handleClick}

@@ -71,7 +71,7 @@ export default function Header({
           <div className="container flex items-center">
             <p className="text-2xl mr-4">{username}</p>
             {isUserSelf ? (
-              <div data-testid="edit-profile">
+              <div data-testid="edit-profile" className="flex">
                 <button
                   className=" bg-gray-100 font-bold text-sm rounded w-28 h-8"
                   type="button"
