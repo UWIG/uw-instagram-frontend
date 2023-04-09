@@ -21,9 +21,9 @@ afterEach(cleanup);
 test("click like button once", async () => {
     render(<Actions likes = {actionIds} whether_liked={false} whether_saved={false} post_id="" />);
 
-//     const likeButton = screen.getByTestId("like-button");
-//     await userEvent.click(likeButton);
-//     const numLikes = screen.getByTestId("num-likes");
+    const likeButton = screen.getByTestId("like-button");
+    await userEvent.click(likeButton);
+    const numLikes = screen.getByTestId("num-likes");
     
     expect(numLikes).toHaveTextContent('1 likes');
 })
@@ -31,10 +31,10 @@ test("click like button once", async () => {
 test("click like button twice", async () => {
     render(<Actions likes = {null} whether_liked={false} whether_saved={false} post_id="" />);
 
-//     const likeButton = screen.getByTestId("like-button");
-//     await userEvent.click(likeButton);
-//     await userEvent.click(likeButton);
-//     const numLikes = screen.getByTestId("num-likes");
+    const likeButton = screen.getByTestId("like-button");
+    await userEvent.click(likeButton);
+    await userEvent.click(likeButton);
+    const numLikes = screen.getByTestId("num-likes");
 
     expect(numLikes).toHaveTextContent('0 likes');
 })
@@ -66,5 +66,4 @@ test("click comment button", async () => {
     await userEvent.click(saveButton);
 
     expect(1).toBe(1);
-    
 })
