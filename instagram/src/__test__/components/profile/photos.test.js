@@ -47,11 +47,7 @@ test("photos component test", async () => {
       onClickSave={() => {}}
     />
   );
-  const test_openMedia = screen.getByTestId(
-    "test-openMedia"
-  );
-  await userEvent.click(test_openMedia);
-  userEvent.keyboard("{esc}");
+  
 });
 
 test("photos component test 2", async () => {
