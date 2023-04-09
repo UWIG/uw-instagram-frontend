@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { userItemType } from "../../pages/pageType";
 import UserContext from "../../contexts/user-context";
 import axiosAPI from "../../config/axiosConfig";
@@ -7,7 +7,15 @@ export default function UserItem(props: userItemType) {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [removed, setRemoved] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(props.following);
+  const [isFollowing, setIsFollowing] = useState<Boolean>(false);
+
+  useEffect(() => {
+    props.currentFollowing.forEach((element) => {
+      if(element.username === props.username){
+        setIsFollowing(true);
+      }
+    });
+  }, []);
 
   const handleFollowRequest = async () => {
     let setFollowPair = {
