@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, useNavigate} from 'react-router
 import * as ROUTES from './constants/routes'
 import UserContext from './contexts/user-context';
 import Hashtag from './pages/hashtag';
+import Explore from './pages/explore';
 
 interface userType {
   username: string,
@@ -33,6 +34,7 @@ function App() {
           <Route path={ROUTES.PROFILE} element={<UserProfile/>} errorElement={<ErrorPage/>} />
           <Route path={ROUTES.SETTING} element={<Setting/>} errorElement={<ErrorPage/>} />
           <Route path={ROUTES.HASHTAG} element={<Hashtag/>} errorElement={<ErrorPage/>} />
+          <Route path={ROUTES.EXPLORE} element={<Explore/>} errorElement={<ErrorPage/>} />
           <Route path='*' element={<NotFoundPage/>} />
         </Routes>
       </Suspense>

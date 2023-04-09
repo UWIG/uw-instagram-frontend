@@ -53,9 +53,9 @@ export default function Modal(props:postModal) {
                     <div className="mt-3 text-center sm:mt-0 sm:text-left">
                       <div className="relative bg-black pb-[100%]">
                         <Media type={media.type} data={media.data} controls={true} />
-                        {mediaIdx > 0 &&  <button className='absolute top-1/2 left-[5%] text-sm z-10 text-white cursor-pointer bg-[#1a1a1acc]  rounded-full px-2 py-0.5 font-bold' 
+                        {mediaIdx > 0 &&  <button data-testid="prev"  className='absolute top-1/2 left-[5%] text-sm z-10 text-white cursor-pointer bg-[#1a1a1acc]  rounded-full px-2 py-0.5 font-bold' 
                         onClick={() => {setMediaIdx(mediaIdx - 1)}}>&#10094;</button>}
-                        {mediaIdx < props.mediaList.length - 1 && <button className='absolute top-1/2 right-[5%] text-sm z-10 text-white cursor-pointer bg-[#1a1a1acc] rounded-full px-2 py-0.5 font-bold'
+                        {mediaIdx < props.mediaList.length - 1 && <button data-testid="next" className='absolute top-1/2 right-[5%] text-sm z-10 text-white cursor-pointer bg-[#1a1a1acc] rounded-full px-2 py-0.5 font-bold'
                         onClick={() => {setMediaIdx(mediaIdx + 1)}}>&#10095;</button>}
                             <p className="text-sm text-gray-500">
                           Are you sure you want to deactivate your account? All of your data will be permanently

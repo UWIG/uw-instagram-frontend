@@ -7,7 +7,6 @@ import Sidebar from "../components/sidebar/sidebar";
 import { useParams } from "react-router-dom";
 import UserContext from "../contexts/user-context";
 import { userType } from "./pageType";
-import { tr } from "date-fns/locale";
 
 export default function UserProfile(props: any) {
   const { username } = useParams();
@@ -58,12 +57,12 @@ export default function UserProfile(props: any) {
 
   return (
     <>
-      <div className="bg-gray-background h-full">
-        <div className="grid grid-cols-5 gap-12 max-w-screen-2xl">
-          <div className="col-span-1">
+      <div className="bg-gray-background h-full ">
+        <div className="grid grid-cols-5 gap-12 pr-10 ">
+          <div className="col-span-1 ">
             <Sidebar onCreatePost={() => getUserPosts()} />
           </div>
-          <div className="container col-span-4 flex flex-col">
+          <div className="container col-span-4 flex flex-col pt-5">
             <Header
               isUserSelf={isUserSelf}
               postCount={postNum}

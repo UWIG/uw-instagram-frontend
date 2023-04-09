@@ -46,6 +46,7 @@ export default function Header(props: postHeader) {
           <span
             className="text-sm font-bold text-blue-medium ml-3 custom-blue cursor-pointer"
             onClick={handleFollowClicked}
+            data-testid="follow"
           >
             Follow
           </span>
@@ -56,6 +57,7 @@ export default function Header(props: postHeader) {
           <> 
           <span
             className="items-center cursor-pointer"
+            data-testid="delete-button"
             onClick={() => setOpen(true)}
           >
             <svg

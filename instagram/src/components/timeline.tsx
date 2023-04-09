@@ -12,7 +12,7 @@ export default function Timeline(props: timelineType) {
   }, [props.posts]);
 
   return (
-    <div className="container col-span-2 mx-20 z-1 mt-10">
+    <div className="container col-span-2 mx-20 z-1 mt-10" data-testid="timeline" >
       {loading ? (
         <div>
           <PostSkeleton />
@@ -34,6 +34,7 @@ export default function Timeline(props: timelineType) {
             whether_saved={post.whether_saved}
             whether_followed_post_user={post.whether_followed_post_user}
             onCreateComment={props.onCreateComment}
+            open={false}
           />
         ))
       )}

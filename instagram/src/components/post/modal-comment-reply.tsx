@@ -37,6 +37,7 @@ export default function ModalCommentReply(props: postModalCommentReply) {
             <span
               className="text-xs ml-3 text-gray font-bold cursor-pointer"
               onClick={handleClickReply}
+              data-testid={"reply"} 
             >
               Reply
             </span>
@@ -45,7 +46,6 @@ export default function ModalCommentReply(props: postModalCommentReply) {
       </div>
       <div
         className="flex items-center"
-        onClick={() => setToggleLiked(!toggleLiked)}
       >
         <svg
           aria-label="like"
