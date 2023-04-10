@@ -28,10 +28,7 @@ export default function ChangePassword() {
       console.log(oldPwd);
       console.log(newPwd);
 
-      await axiosAPI({
-        method: "post",
-        url: `/user/changePwd/${user.username}`,
-        data: formData,
+      await axiosAPI.post(`/user/changePwd/${user.username}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       }).then((res) => {
         console.log(res);
@@ -131,6 +128,7 @@ export default function ChangePassword() {
             </div>
             <div>
               <svg
+                data-testid="test-setIsAlert"
                 className="fill-current h-6 w-6 text-red-500 float-right"
                 role="button"
                 xmlns="http://www.w3.org/2000/svg"

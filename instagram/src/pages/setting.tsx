@@ -17,14 +17,14 @@ export default function Profile(props: any) {
     }
   }
 
-  async function getPosts() {}
+  // async function getPosts() {}
 
   return (
     <>
       <div className="bg-gray-background">
         <div className="grid grid-cols-5 gap-12 max-w-screen-2xl">
           <div className="col-span-1">
-            <Sidebar onCreatePost={() => getPosts()} />
+            <Sidebar onCreatePost={() => {}} />
           </div>
           <div className="col-span-4 grid grid-cols-5 mt-10 mb-10">
             <div className="col-start-2 col-span-4 border grid grid-cols-11">
