@@ -17,15 +17,48 @@ test("test a following search result user card", async ()=>{
           data: "successful",
         },
     });
+
+    axiosAPI.post.mockResolvedValueOnce({
+      response: {
+        data:null,
+      },
+    });
     
     render(<Router><SearchResultCard result={result} currentUser="alex"/></Router>);
     const following = screen.getByTestId("following");
     await userEvent.click(following);
-    
+
     const button = screen.getByRole("button");
     expect(button).toHaveTextContent("Follow")
 });
 
+test("test a follow search result user card", async ()=>{
+  const result = {       
+          userName : "xie",
+          avatarURL:null,
+          isFollowing:false        
+  };
+
+  
+  axiosAPI.post.mockResolvedValueOnce({
+      response: {
+        data: "successful",
+      },
+  });
+
+  axiosAPI.post.mockResolvedValueOnce({
+    response: {
+      data:null,
+    },
+  });
+  
+  render(<Router><SearchResultCard result={result} currentUser="alex"/></Router>);
+  const follow = screen.getByTestId("follow");
+  await userEvent.click(follow);
+
+  const button = screen.getByRole("button");
+  expect(1).toBe(1);
+});
 
 
 
@@ -42,9 +75,55 @@ test("test a failed search result user card2", async ()=>{
           data: "failed",
         },
       });
+
+    axiosAPI.post.mockResolvedValueOnce({
+      response: {
+        data:null,
+      },
+    });
     
     render(<Router><SearchResultCard result={result} currentUser="alex"/></Router>);
     const follow = screen.getByTestId("following");
     await userEvent.click(follow);
     expect(1).toBe(1);
+});
+
+test("test a error follow search result user card", async ()=>{
+  const result = {       
+          userName : "xie",
+          avatarURL:null,
+          isFollowing:false        
+  };
+
+  
+  axiosAPI.post.mockRejectedValueOnce(new Error("Some random error"));
+
+  axiosAPI.post.mockRejectedValueOnce(new Error("Some random error"));
+  
+  render(<Router><SearchResultCard result={result} currentUser="alex"/></Router>);
+  const follow = screen.getByTestId("follow");
+  await userEvent.click(follow);
+
+  const button = screen.getByRole("button");
+  expect(1).toBe(1);
+});
+
+test("test a error following search result user card", async ()=>{
+  const result = {       
+          userName : "xie",
+          avatarURL:null,
+          isFollowing:true        
+  };
+
+  
+  axiosAPI.post.mockRejectedValueOnce(new Error("Some random error"));
+
+  axiosAPI.post.mockRejectedValueOnce(new Error("Some random error"));
+  
+  render(<Router><SearchResultCard result={result} currentUser="alex"/></Router>);
+  const following = screen.getByTestId("following");
+  await userEvent.click(following);
+
+  const button = screen.getByRole("button");
+  expect(1).toBe(1);
 });
