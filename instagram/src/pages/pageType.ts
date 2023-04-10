@@ -25,6 +25,7 @@ export type userItemType = {
     following:boolean,
     followingType: boolean,
     onClose:()=>void,
+    currentFollowing:userType[]
 }
 
 

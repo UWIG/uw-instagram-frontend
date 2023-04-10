@@ -111,6 +111,7 @@ export default function SwitchModal({
                             aria-label="Enter your email address"
                             type="text"
                             placeholder="Email address"
+                            data-testid="email-address"
                             className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
                             border-gray-primary rounded mb-2"
                             onChange={({ target}) => setEmailAddress(target.value)}

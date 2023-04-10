@@ -9,11 +9,13 @@ export default function FollowModal({
   onClose,
   followingType,
   users,
+  currentFollowing,
 }: {
   open: boolean;
   onClose: () => void;
   followingType:boolean,
   users: userType[],
+  currentFollowing: userType[]
 }) {
   const cancelButtonRef = useRef(null);
 
@@ -53,7 +55,7 @@ export default function FollowModal({
                   <div className="font-bold text-center border-b-2 items-center py-3">
                     <span>{followingType ? "Following" : "Followers"}</span>
                   </div>
-                  {users.map((user,inx) =>  <UserItem key={inx} {...user} followingType={followingType} onClose={onClose} />)}
+                  {users.map((user,inx) =>  <UserItem key={inx} {...user} followingType={followingType} currentFollowing={currentFollowing} onClose={onClose} />)}
                 </div>
               </Dialog.Panel>
             </Transition.Child>

@@ -36,8 +36,8 @@ test("Test timeline", async () => {
     expect(timeline).toBeInTheDocument();
 })
 
-test("Test timeline", async () => {
-    render(<Router><Timeline posts={[]} onCreateComment={() => {}}/></Router>);
+test("Test timeline with undefined posts", async () => {
+    render(<Router><Timeline onCreateComment={() => {}}/></Router>);
     const timeline = screen.queryByTestId("timeline");
     expect(timeline).toBeInTheDocument();
 })

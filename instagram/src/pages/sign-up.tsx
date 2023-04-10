@@ -38,7 +38,7 @@ export default function SignUp() {
             navigate(ROUTES.LOGIN);
         }
         catch (error: any){
-            console.error(error);
+            // console.error(error);
             setMessage('')
             // Show a message indicating incorrect login credentials to the user
             if (error.response && error.response.data) {
@@ -65,13 +65,14 @@ export default function SignUp() {
                     <h1 className="flex justify-center w-full">
                         <img src="/images/watig_logo.png" alt="Instagram" className="mt-2 w-full mb-4"/>
                     </h1>
-                    {error && <p className="mb-4 text-xs text-red-600">{error}</p>}
+                    {error && <p className="mb-4 text-xs text-red-600" data-testid="warning">{error}</p>}
 
                     <form onSubmit={handleSignup} method="POST">
                         <input
                             aria-label="Enter your username"
                             type="text"
                             placeholder="Username"
+                            data-testid="userid"
                             className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border
                             border-gray-primary rounded mb-2"
                             onChange={({ target}) => setUsername(target.value)}

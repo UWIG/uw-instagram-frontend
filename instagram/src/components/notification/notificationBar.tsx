@@ -70,7 +70,7 @@ export default function NotificationBar(props:{currentUser:string}){
                 <p className="font-medium text-2xl font-sans">Notification</p>
             </div> 
 
-            <div className="overflow-y-scroll w-full border-t-2 pt-6 border-slate-150">
+            <div data-testid="notification-list" className="overflow-y-scroll w-full border-t-2 pt-6 border-slate-150">
                 {infos.map((info)=>{
                     return (
                         <NotificationBlock data={info} currentUser={currentUser} isRead={info.whether_read} handleChange={handleChangeRead}/>                  

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 // import {screen} from "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
-
+import { BrowserRouter as Router } from "react-router-dom";
 import Photo from "../../../components/profile/photo";
 global.IntersectionObserver = class IntersectionObserver {
   constructor() {}
@@ -38,5 +38,10 @@ const post = {
 };
 
 test("photos component test", async () => {
-  render(<Photo post={post} onCreateComment={() => {}} />);
+  render(<Router><Photo post={post} onCreateComment={() => {}} /></Router>);
+  const test_openMedia = screen.getByTestId(
+    "test-openMedia"
+  );
+  await userEvent.click(test_openMedia);
+  userEvent.keyboard("{esc}");
 });

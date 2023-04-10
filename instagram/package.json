@@ -56,7 +56,9 @@
       "!<rootDir>/src/pages/explore.tsx",
       "!<rootDir>/src/pages/dashboard.tsx",
       "!<rootDir>/src/pages/error-page.tsx",
+      "!<rootDir>/src/pages/userProfile.tsx",
       "!<rootDir>/src/components/sidebar/sidebar.tsx",
+      "!<rootDir>/src/components/sidebar/SwitchModal.tsx",
       "!<rootDir>/src/components/post/modal-emoji.tsx",
       "!<rootDir>/src/components/sidebar/thumbnail.tsx"
     ],
