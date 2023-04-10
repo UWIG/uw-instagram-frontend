@@ -40,6 +40,7 @@ test("test a following search result user card", async ()=>{
     expect(button).toHaveTextContent("Follow");
 });
 
+
 test("test a follow search result user card", async ()=>{
   const result = {       
           userName : "xie",

@@ -28,14 +28,14 @@ export default function ModalComments(props: postModalComments) {
 
   return (
     <div className="p-4 py-8 h-[95%] overflow-y-auto" data-testid="comments" >
-      <div className="flex items-center">
-        <img className="rounded-full h-8 w-8 flex wr-3" src={imgsrc} alt="" />
-        <div>
+      <div className="flex">
+        <img className="rounded-full h-9 w-8 flex wr-3 pt-1" src={imgsrc} alt="" />
+        <div className='pl-3'>
           <p>
-            <span className="text-sm font-bold ml-3">{props.username}</span>
+            <span className="text-sm font-bold">{props.username}</span>
             <span className="text-sm ml-3">{caption}</span>
           </p>
-          <p><span className="text-xs text-gray ml-3" >{formatDistanceToNowStrict(new Date(props.time_created))}</span></p>
+          <p><span className="text-xs text-gray" >{formatDistanceToNowStrict(new Date(props.time_created))}</span></p>
         </div>
       </div>
       {props.comments && props.comments.map((comment) => {

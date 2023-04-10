@@ -31,3 +31,15 @@ test("setting page test", async () => {
   await userEvent.click(test_setOptionEdit);
 
 });
+
+test("sidebar test", async () => {
+
+  render(<BrowserRouter><Setting /></BrowserRouter>);
+
+  const test_setOptionChange = screen.getByTestId("test-setOptionChange");
+  await userEvent.click(test_setOptionChange);
+
+  const test_setOptionEdit = screen.getByTestId("test-setOptionEdit");
+  await userEvent.click(test_setOptionEdit);
+
+});

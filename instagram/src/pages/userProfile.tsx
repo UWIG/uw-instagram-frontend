@@ -66,7 +66,7 @@ export default function UserProfile(props: any) {
   return (
     <>
       <div className="bg-gray-background">
-        <div className="grid grid-cols-5 gap-12 max-w-screen-2xl">
+        <div className="grid grid-cols-5 gap-12 pr-10 ">
           <Sidebar onCreatePost={() => getUserPosts()} />
           <div className="container col-span-4 flex flex-col pt-5 ">
             <Header

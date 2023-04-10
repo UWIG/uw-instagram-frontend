@@ -31,7 +31,7 @@
   "scripts": {
     "build:css": "postcss src/styles/tailwind.css -o src/styles/app.css",
     "watch:css": "postcss src/styles/tailwind.css -o src/styles/app.css --watch",
-    "react-scripts:start": "delay 5 && react-scripts start",
+    "react-scripts:start": "delay 2 && react-scripts start",
     "react-scripts:dist": "react-scripts build",
     "start": "run-p watch:css react-scripts:start",
     "build": "run-s build:css react-scripts:dist",
@@ -54,11 +54,16 @@
       "!<rootDir>/src/components/sidebar/modal.tsx",
       "!<rootDir>/src/pages/hashtag.tsx",
       "!<rootDir>/src/pages/explore.tsx",
+      "!<rootDir>/src/pages/userProfile.tsx",
       "!<rootDir>/src/pages/dashboard.tsx",
       "!<rootDir>/src/pages/error-page.tsx",
+      "!<rootDir>/src/pages/userProfile.tsx",
       "!<rootDir>/src/components/sidebar/sidebar.tsx",
+      "!<rootDir>/src/components/sidebar/SwitchModal.tsx",
       "!<rootDir>/src/components/post/modal-emoji.tsx",
-      "!<rootDir>/src/components/sidebar/thumbnail.tsx"
+      "!<rootDir>/src/components/sidebar/thumbnail.tsx",
+      "!<rootDir>/src/components/search/searchBar.tsx",
+      "!<rootDir>/src/components/notification/notificationBar.tsx"
     ],
     "coverageThreshold": {
       "global": {

@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 // import {screen} from "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
 import axiosAPI from "../../config/axiosConfig";
-
+import UserContext from "../../../contexts/user-context";
 import Header from "../../../components/profile/header";
 import { BrowserRouter } from "react-router-dom";
 global.IntersectionObserver = class IntersectionObserver {
@@ -136,8 +136,34 @@ test("editProfile3", async () => {
   axiosAPI.post.mockResolvedValueOnce({
     data: { res: { data: "abc" } },
   });
+  const user = { username: "alex", avatar: "", fullname: "" };
   render(
-    <BrowserRouter>
+      <UserContext.Provider value={{ user: user, setUser: () => {} }}>
+         <BrowserRouter>
+      <Header
+        isUserSelf={false}
+        postCount={3}
+        username={"alex"}
+        fullname="abc"
+        setAvatar={() => {}}
+        avatar={""}
+        followers={users}
+        following={users}
+        currentFollowing={users}
+      />
+    </BrowserRouter>
+      </UserContext.Provider>
+  );
+});
+
+test("editProfile4", async () => {
+  axiosAPI.post.mockResolvedValueOnce({
+    data: { res: { data: "abc" } },
+  });
+  const user = { username: "alex", avatar: "", fullname: "" };
+  render(
+      <UserContext.Provider value={{ user: user, setUser: () => {} }}>
+         <BrowserRouter>
       <Header
         isUserSelf={false}
         postCount={3}
@@ -150,6 +176,7 @@ test("editProfile3", async () => {
         currentFollowing={users}
       />
     </BrowserRouter>
+      </UserContext.Provider>
   );
 
   const test_handleClickFollower = screen.getByTestId(

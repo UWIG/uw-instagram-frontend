@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import axiosAPI from "../../config/axiosConfig";
 
 import AvatarModal from "../../../components/profile/avatarModal";
+import UserContext from "../../../contexts/user-context";
 global.IntersectionObserver = class IntersectionObserver {
   constructor() {}
 

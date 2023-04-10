@@ -75,7 +75,7 @@ export default function Modal(props: modalType) {
           console.error(err);
         });
       handleOnClose();
-      props.onCreatePost();
+      props.onCreatePost && props.onCreatePost();
     }
   }
 

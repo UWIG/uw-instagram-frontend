@@ -15,7 +15,7 @@ export default function Comments(props:postComments) {
           </div>
         )
       })}
-      <p className="text-sm text-gray mb-1 cursor-pointer" onClick={props.onExpandComments}>View all {props.comments?.length} comments</p>
+      <p className="text-sm text-gray mb-1 cursor-pointer" data-testid="expand-comment" onClick={props.onExpandComments}>View all {props.comments?.length} comments</p>
     </div>
   )
 }
