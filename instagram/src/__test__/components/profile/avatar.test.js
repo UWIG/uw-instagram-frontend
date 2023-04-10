@@ -1,7 +1,7 @@
-import { render, screen} from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 // import {screen} from "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
-import axiosAPI from "../../config/axiosConfig"
+import axiosAPI from "../../config/axiosConfig";
 
 import AvatarModal from "../../../components/profile/avatarModal";
 global.IntersectionObserver = class IntersectionObserver {
@@ -20,12 +20,11 @@ global.IntersectionObserver = class IntersectionObserver {
   }
 };
 
-
-jest.mock("../../config/axiosConfig")
+jest.mock("../../config/axiosConfig");
 test("avatar modal test", async () => {
   axiosAPI.post.mockResolvedValueOnce({
-    data:{res:{data:"abc"}}
-  })
+    data: { res: { data: "abc" } },
+  });
 
   render(
     <AvatarModal
@@ -43,13 +42,12 @@ test("avatar modal test", async () => {
   await userEvent.upload(test_upload, file);
 
   expect(test_upload.files[0]).toStrictEqual(file);
-
 });
 
 test("avatar modal test 2", async () => {
   axiosAPI.post.mockResolvedValueOnce({
-    data:{res:{data:"abc"}}
-  })
+    data: { res: { data: "abc" } },
+  });
 
   render(
     <AvatarModal
@@ -67,6 +65,4 @@ test("avatar modal test 2", async () => {
   await userEvent.upload(test_upload, file);
 
   expect(test_upload.files[0]).toStrictEqual(file);
-
 });
-
