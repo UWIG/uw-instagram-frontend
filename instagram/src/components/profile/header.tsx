@@ -45,11 +45,13 @@ export default function Header({
     }
     if (!isUserSelf) {
       setIsFollowing(false);
-      followers.forEach((follower) => {
-        if (follower.username === user.username) {
-          setIsFollowing(true);
-        }
-      });
+      if(followers !== null){
+        followers.forEach((follower) => {
+          if (follower.username === user.username) {
+            setIsFollowing(true);
+          }
+        });
+      }
     }
   }, [avatar]);
 
@@ -233,7 +235,7 @@ export default function Header({
         setAvatar={setAvatar}
         onClose={() => setAvatarOpen(false)}
       ></AvatarModal>
-      {followers ? (
+      {followers && (
         <FollowModal
           open={followerModalOpen}
           onClose={() => setFollowerModalOpen(false)}
@@ -241,10 +243,8 @@ export default function Header({
           currentFollowing={currentFollowing}
           followingType={false}
         />
-      ) : (
-        <></>
       )}
-      {following ? (
+      {following && (
         <FollowModal
           open={followingModalOpen}
           followingType={true}
@@ -252,8 +252,6 @@ export default function Header({
           users={following}
           currentFollowing={currentFollowing}
         />
-      ) : (
-        <></>
       )}
     </>
   );

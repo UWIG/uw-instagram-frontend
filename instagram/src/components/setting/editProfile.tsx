@@ -23,22 +23,25 @@ export default function EditProfile() {
 
   async function getUser() {
     try {
-      await axiosAPI({
-        method: "get",
-        url: `/${user.username}`,
-      }).then((res) => {
-        console.log(res.data);
-        if (res.data.avatar !== null)
-          setAvatar("data:image/png;base64, " + res.data.avatar.data);
-        else setAvatar("/images/avatars/default_avatar.jpg");
-        setName(res.data.fullname);
-        setUsername(res.data.username);
-        setEmail(res.data.email);
-        if (res.data.phoneNumber === null) setPhone("");
-        else setPhone(res.data.phoneNumber);
-        if (res.data.gender === null) setGender("privacy");
-        else setGender(res.data.gender);
-      });
+      await axiosAPI
+        .get(`/${user.username}`, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.avatar !== null) {
+            setAvatar("data:image/png;base64, " + res.data.avatar.data);
+          } else {
+            setAvatar("/images/avatars/default_avatar.jpg");
+          }
+          setName(res.data.fullname);
+          setUsername(res.data.username);
+          setEmail(res.data.email);
+          if (res.data.phoneNumber === null) setPhone("");
+          else setPhone(res.data.phoneNumber);
+          if (res.data.gender === null) setGender("privacy");
+          else setGender(res.data.gender);
+        });
     } catch (err) {
       console.error(err);
     }
@@ -51,20 +54,19 @@ export default function EditProfile() {
     formData.append("email", email);
     formData.append("phone", phone);
     formData.append("gender", gender);
-    await axiosAPI({
-      method: "post",
-      url: `/user/update/${user.username}`,
-      data: formData,
-      headers: { "Content-Type": "multipart/form-data" },
-    }).then((res) => {
-      console.log(res);
-      setIsAlert(true);
-      setUser({
-        ...user,
-        username: username,
+    await axiosAPI
+      .post(`/user/update/${user.username}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {
+        console.log(res);
+        setIsAlert(true);
+        setUser({
+          ...user,
+          username: username,
+        });
+        console.log(user);
       });
-      console.log(user);
-    });
   }
 
   return (
@@ -87,6 +89,7 @@ export default function EditProfile() {
           <div className="col-span-3 grid grid-flow-row">
             <span>{user.username}</span>
             <span
+              data-testid="test-setAvatarOpen"
               onClick={() => setAvatarOpen(true)}
               className="  text-blue-600 cursor-pointer"
             >
@@ -99,6 +102,7 @@ export default function EditProfile() {
             Name
           </span>
           <input
+            data-testid="test-setName"
             type={"text"}
             defaultValue={name}
             onChange={(event) => setName(event.target.value)}
@@ -113,7 +117,6 @@ export default function EditProfile() {
             type={"text"}
             defaultValue={username}
             disabled={true}
-            onChange={(event) => setUsername(event.target.value)}
             className="  col-span-3 border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 border"
           />
         </div>
@@ -122,6 +125,7 @@ export default function EditProfile() {
             Email
           </span>
           <input
+            data-testid="test-setEmail"
             type={"text"}
             defaultValue={email}
             onChange={(event) => setEmail(event.target.value)}
@@ -133,6 +137,7 @@ export default function EditProfile() {
             Phone number
           </span>
           <input
+          data-testid="test-setPhone"
             type={"text"}
             defaultValue={phone}
             onChange={(event) => setPhone(event.target.value)}
@@ -145,7 +150,7 @@ export default function EditProfile() {
           </span>
           <div className="col-span-5">
             <div className="radio ">
-              <label>
+              <label data-testid="test-setGenderMale">
                 <input
                   type="radio"
                   value="male"
@@ -156,7 +161,7 @@ export default function EditProfile() {
               </label>
             </div>
             <div className="radio">
-              <label>
+              <label data-testid="test-setGenderFemale">
                 <input
                   type="radio"
                   value="female"
@@ -167,7 +172,7 @@ export default function EditProfile() {
               </label>
             </div>
             <div className="radio">
-              <label>
+              <label data-testid="test-setGenderPrivacy">
                 <input
                   type="radio"
                   value="privacy"
@@ -213,6 +218,7 @@ export default function EditProfile() {
             </div>
             <div>
               <svg
+                data-testid="test-setIsAlert"
                 className="fill-current h-6 w-6 text-red-500 float-right"
                 role="button"
                 xmlns="http://www.w3.org/2000/svg"

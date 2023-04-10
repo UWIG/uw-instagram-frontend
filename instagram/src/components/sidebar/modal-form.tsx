@@ -8,21 +8,14 @@ export default function ModalForm(props: modelFormType) {
   const textEdiableRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(textEdiableRef.current !== null){
-        textEdiableRef.current.addEventListener("input", () => handleKeyUp())
-    }
+    textEdiableRef.current !== null && textEdiableRef.current.addEventListener("input", () => handleKeyUp())
   },[]);
   
 
   const handleKeyUp = () => {
-    if (textDisplayRef.current !== null && textEdiableRef.current !== null) {
-      textDisplayRef.current.innerHTML = textEdiableRef.current.innerHTML.replace(
-        /#\p{L}+/gu,
-        "<span class='hashtag'>$&</span>"
-      );
-      props.setCaption(textEdiableRef.current.innerText);
-      props.setHashtags(textEdiableRef.current.innerHTML.match(/#\p{L}+/gu));
-    }
+    textDisplayRef.current !== null && textEdiableRef.current !== null && (textDisplayRef.current.innerHTML = textEdiableRef.current.innerHTML.replace(/#\p{L}+/gu, "<span class='hashtag'>$&</span>"));
+    textEdiableRef.current !== null && props.setCaption(textEdiableRef.current.innerText);
+    textEdiableRef.current !== null && props.setHashtags(textEdiableRef.current.innerHTML.match(/#\p{L}+/gu));
   };
 
   return (

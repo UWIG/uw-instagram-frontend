@@ -35,11 +35,8 @@ export default function AvatarModal({
 
   async function updateAvatar() {
     const formData = new FormData();
-    if (user.username !== undefined)
-      formData.append("username", user.username);
-    if (imgFile) {
-      formData.append("avatar", imgFile);
-    }
+    user.username !== undefined && formData.append("username", user.username);
+    imgFile !== undefined && formData.append("avatar", imgFile);
     await axiosAPI.post("/user/changeAva", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     }).then((res) => {

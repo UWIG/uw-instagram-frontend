@@ -1,11 +1,11 @@
 export type modalType = {
     open: boolean,
     onClose: () => void,
-    onCreatePost: () => void,
+    onCreatePost?: () => void,
 }
 
 export type sidebarType = {
-    onCreatePost: () => void,
+    onCreatePost?: () => void,
 }
 
 export type thumbnailType = {
