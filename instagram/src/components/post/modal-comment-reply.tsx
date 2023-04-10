@@ -20,15 +20,15 @@ export default function ModalCommentReply(props: postModalCommentReply) {
   };
   return (
     <div className={`items-center flex justify-between ${props.commentId !== undefined ? "mt-4" : "mt-8"}`}>
-      <div className="flex items-center">
-        <img className="rounded-full h-8 w-8 wr-3" src={commentAvatar} alt="" />
-        <div>
+      <div className="flex">
+        <img className="rounded-full h-9 w-8 wr-3 pt-1" src={commentAvatar} alt="" />
+        <div className="pl-3">
           <p>
-            <span className="text-sm font-bold ml-3">{props.comment.username}</span>
+            <span className="text-sm font-bold">{props.comment.username}</span>
             <span className="text-sm ml-3">{props.comment.comment}</span>
           </p>
           <p>
-            <span className="text-xs text-gray ml-3 cursor-pointer">
+            <span className="text-xs text-gray cursor-pointer">
               {formatDistanceToNowStrict(new Date(props.comment.time_created))}
             </span>
             <span className="text-xs ml-3 text-gray font-bold cursor-pointer">

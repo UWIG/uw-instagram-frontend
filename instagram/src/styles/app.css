@@ -714,6 +714,9 @@ video {
 .mb-6 {
   margin-bottom: 1.5rem;
 }
+.mt-1 {
+  margin-top: 0.25rem;
+}
 .block {
   display: block;
 }
@@ -779,6 +782,12 @@ video {
 }
 .h-1\/5 {
   height: 20%;
+}
+.h-1 {
+  height: 0.25rem;
+}
+.h-9 {
+  height: 2.25rem;
 }
 .max-h-full {
   max-height: 100%;
@@ -1254,6 +1263,12 @@ video {
 }
 .pt-10 {
   padding-top: 2.5rem;
+}
+.pl-1 {
+  padding-left: 0.25rem;
+}
+.pl-10 {
+  padding-left: 2.5rem;
 }
 .text-left {
   text-align: left;
