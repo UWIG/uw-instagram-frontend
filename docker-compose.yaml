@@ -1,0 +1,48 @@
+version: "1.0"
+
+services:
+  frontend:
+    build: ./instagram
+    container_name: client
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
+    networks:
+      - react-spring
+    depends_on:
+      - backend
+
+  backend:
+    build: ./uw-instagram-backend/project
+    container_name: server
+    restart: always
+    ports:
+      - '8080:8080'
+    networks:
+      - spring-redis
+      - react-spring
+    depends_on:
+      - redis
+
+  redis:
+    container_name: redis
+    hostname: redis
+    restart: always
+    image: redis:alpine3.17
+    networks:
+      - spring-redis
+    volumes:
+      - redis_data:/data
+    expose:
+      - 6379
+
+networks:
+  react-spring:
+  spring-redis:
+
+volumes:
+  redis_data:
+
+
+
