@@ -1,4 +1,4 @@
-import { render, screen,fireEvent } from "@testing-library/react";
+import { render, screen,fireEvent,waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter as Router } from "react-router-dom";
 import axiosAPI from "../../config/axiosConfig";
@@ -29,13 +29,14 @@ const setSearchBarBuffer = (bufferString)=>{
 test("Load and display searchBar", async () => {
     render(<SearchBar contentBuffer={""} handleReturnBuffer={setSearchBarBuffer} currentUser={"alex"}/>);
 
-    const input = screen.getByPlaceholderText('Search');
-    fireEvent.change(input, { target: { value: 'xielin' } });
-
-    axiosAPI.post.mockResolvedValueOnce({ data: {testSearchResult1} });
-
+    axiosAPI.post.mockResolvedValueOnce({ data: testSearchResult1 });
+    const inputBox = screen.getByPlaceholderText("Search");
+    fireEvent.change(inputBox,{target:{value:"xie"}});
    //expect(axiosAPI.post).toHaveBeenCalledWith("/search/alex");
-    expect(1).toBe(1);
+   await waitFor(() => {
+    expect(screen.getByText('xie')).toBeInTheDocument();
+    });
+    //expect(1).toBe(1);
 });
 
 
