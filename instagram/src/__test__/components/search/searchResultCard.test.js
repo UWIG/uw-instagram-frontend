@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter as Router } from "react-router-dom";
 import axiosAPI from "../../config/axiosConfig";
@@ -20,16 +20,16 @@ test("test a following search result user card", async ()=>{
 
     axiosAPI.post.mockResolvedValueOnce({
       response: {
-        data:null,
+        data:"successful",
       },
     });
     
     render(<Router><SearchResultCard result={result} currentUser="alex"/></Router>);
-    const following = screen.getByTestId("following");
-    await userEvent.click(following);
 
+    
     const button = screen.getByRole("button");
-    expect(button).toHaveTextContent("Follow")
+    await userEvent.click(button);
+    expect(button).toHaveTextContent("Follow");
 });
 
 test("test a follow search result user card", async ()=>{
@@ -53,10 +53,8 @@ test("test a follow search result user card", async ()=>{
   });
   
   render(<Router><SearchResultCard result={result} currentUser="alex"/></Router>);
-  const follow = screen.getByTestId("follow");
-  await userEvent.click(follow);
-
   const button = screen.getByRole("button");
+  await userEvent.click(button);
   expect(1).toBe(1);
 });
 
