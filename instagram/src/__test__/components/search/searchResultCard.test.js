@@ -13,15 +13,11 @@ test("test a following search result user card", async ()=>{
 
     
     axiosAPI.post.mockResolvedValueOnce({
-        response: {
           data: "successful",
-        },
     });
 
     axiosAPI.post.mockResolvedValueOnce({
-      response: {
         data:"successful",
-      },
     });
     
     render(<Router><SearchResultCard result={result} currentUser="alex"/></Router>);
@@ -32,6 +28,7 @@ test("test a following search result user card", async ()=>{
     expect(button).toHaveTextContent("Follow");
 });
 
+
 test("test a follow search result user card", async ()=>{
   const result = {       
           userName : "xie",
@@ -41,15 +38,11 @@ test("test a follow search result user card", async ()=>{
 
   
   axiosAPI.post.mockResolvedValueOnce({
-      response: {
         data: "successful",
-      },
   });
 
   axiosAPI.post.mockResolvedValueOnce({
-    response: {
       data:null,
-    },
   });
   
   render(<Router><SearchResultCard result={result} currentUser="alex"/></Router>);
@@ -69,15 +62,11 @@ test("test a failed search result user card2", async ()=>{
     };
 
     axiosAPI.post.mockResolvedValueOnce({
-        response: {
           data: "failed",
-        },
       });
 
     axiosAPI.post.mockResolvedValueOnce({
-      response: {
         data:null,
-      },
     });
     
     render(<Router><SearchResultCard result={result} currentUser="alex"/></Router>);
