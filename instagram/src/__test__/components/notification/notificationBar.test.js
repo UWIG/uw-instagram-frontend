@@ -34,7 +34,7 @@ test("notification bar is created correctly",async ()=>{
      * 
      */
     
-    axiosAPI.post.mockResolvedValueOnce({
+    axiosAPI.get.mockResolvedValueOnce({
         response: {
           data:[]
         }
