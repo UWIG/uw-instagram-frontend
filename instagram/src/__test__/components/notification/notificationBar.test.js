@@ -7,7 +7,7 @@ jest.mock("../../config/axiosConfig");
 
 test("notification bar is created correctly",async ()=>{
     axiosAPI.get.mockResolvedValueOnce({
-        response: {
+        
           data:[{
             idString:"abcdevvfg",
             type:"follow",
@@ -28,14 +28,14 @@ test("notification bar is created correctly",async ()=>{
             postId:null
 
           }],
-        },
+        
     });
   
     
     axiosAPI.post.mockResolvedValueOnce({
-        response: {
+        
           data:[]
-        }
+        
        });
     
     render(<Router><NotificationBar currentUser="alex"/></Router>);
