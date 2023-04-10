@@ -18,12 +18,9 @@ export default function NotificationBlock(props:{data:notificationData,currentUs
     const [isRead,setIsRead]=useState(props.isRead);
     
 
-    const handleClicked= ()=>{
-        if(!isRead){
-            setIsRead(true);
-            props.handleChange(data.notificationId);
-        }
-        
+    const handleClicked= ()=>{        
+        setIsRead(true);
+        props.handleChange(data.notificationId);
     };
 
     return (

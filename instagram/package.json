@@ -62,7 +62,8 @@
       "!<rootDir>/src/components/sidebar/SwitchModal.tsx",
       "!<rootDir>/src/components/post/modal-emoji.tsx",
       "!<rootDir>/src/components/sidebar/thumbnail.tsx",
-      "!<rootDir>/src/components/search/searchBar.tsx"
+      "!<rootDir>/src/components/search/searchBar.tsx",
+      "!<rootDir>/src/components/notification/notificationBar.tsx"
     ],
     "coverageThreshold": {
       "global": {

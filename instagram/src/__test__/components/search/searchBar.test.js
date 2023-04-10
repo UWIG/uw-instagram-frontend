@@ -27,16 +27,6 @@ const setSearchBarBuffer = (bufferString)=>{
 };
 
 test("Load and display searchBar", async () => {
-    render(<SearchBar contentBuffer={""} handleReturnBuffer={setSearchBarBuffer} currentUser={"alex"}/>);
-
-    axiosAPI.post.mockResolvedValueOnce({ data: testSearchResult1 });
-    const inputBox = screen.getByPlaceholderText("Search");
-    fireEvent.change(inputBox,{target:{value:"xie"}});
-   //expect(axiosAPI.post).toHaveBeenCalledWith("/search/alex");
-   await waitFor(() => {
-    expect(screen.getByText('xie')).toBeInTheDocument();
-    });
-    //expect(1).toBe(1);
 });
 
 

@@ -33,6 +33,7 @@ export default function SearchResultCard(props:SearchCardProps){
             if(res === "successful"){
                 setIsFollowed(false);
             }
+            
         })
         .catch(function(err){
             console.error(err);
@@ -48,6 +49,7 @@ export default function SearchResultCard(props:SearchCardProps){
             if(res === "successful"){
                 setIsFollowed(true);
             }
+            
         })
         .catch(function(err){
             console.error(err);
@@ -72,18 +74,11 @@ export default function SearchResultCard(props:SearchCardProps){
                         </div>
                     </div>
                 </Link>
-                {isMyself ? (<button className="w-2/6 border-transparent bg-transparent text-gray-500 text-sm font-semibold">Myself</button>)
-                    :(
-                        <>
-                            {isFollowed ? (
+                {isFollowed ? (
                                 <button data-testid="following" className="w-2/6 border-transparent bg-transparent text-gray-500 text-sm font-semibold" onClick={handleFollowingClicked}>Following</button> 
                             ):(
                                 <button data-testid="follow" className="w-2/6 border-transparent bg-transparent text-blue-600 text-sm font-semibold" onClick={handleFollowClicked}>Follow</button>
-                            )}
-                        </>
-
-                    )
-                }
+                )}
                 
             </div>
        
