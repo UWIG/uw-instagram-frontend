@@ -6,11 +6,10 @@ import NotificationBar from "../../../components/notification/notificationBar";
 jest.mock("../../config/axiosConfig");
 
 test("notification bar is created correctly",async ()=>{
-    /**
-     * axiosAPI.post.mockResolvedValueOnce({
+    axiosAPI.get.mockResolvedValueOnce({
         response: {
           data:[{
-            idString:"abcdefg",
+            idString:"abcdevvfg",
             type:"follow",
             username_from:"xielin",
             username_to:"alex",
@@ -20,10 +19,10 @@ test("notification bar is created correctly",async ()=>{
 
           },
           {
-            idString:"abcdefg",
+            idString:"abcdefaag",
             type:"follow",
-            username_from:"xielin",
-            username_to:"alex",
+            username_from:"xielin2",
+            username_to:"alex2",
             whether_read:false,
             comment:null,
             postId:null
@@ -31,14 +30,14 @@ test("notification bar is created correctly",async ()=>{
           }],
         },
     });
-     * 
-     */
+  
     
     axiosAPI.get.mockResolvedValueOnce({
         response: {
           data:[]
         }
-        });
+       });
+    
     render(<Router><NotificationBar currentUser="alex"/></Router>);
     const notiList = screen.getByTestId("notification-list");
     expect(1).toBe(1);
