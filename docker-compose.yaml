@@ -2,7 +2,7 @@ version: "1.0"
 
 services:
   frontend:
-    build: ./client
+    build: ./instagram
     container_name: client
     ports:
       - '3000:3000'
@@ -14,7 +14,7 @@ services:
       - backend
 
   backend:
-    build: ./server
+    build: ./uw-instagram-backend/project
     container_name: server
     restart: always
     ports:
