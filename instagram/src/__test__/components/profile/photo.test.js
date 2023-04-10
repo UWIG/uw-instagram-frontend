@@ -43,5 +43,5 @@ test("photos component test", async () => {
     "test-openMedia"
   );
   await userEvent.click(test_openMedia);
-  userEvent.keyboard("{esc}");
+  await userEvent.keyboard('{Escape}')
 });

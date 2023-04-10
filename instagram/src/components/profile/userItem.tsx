@@ -11,7 +11,7 @@ export default function UserItem(props: userItemType) {
 
   useEffect(() => {
     props.currentFollowing.forEach((element) => {
-      if(element.username === props.username){
+      if (element.username === props.username) {
         setIsFollowing(true);
       }
     });
@@ -81,6 +81,7 @@ export default function UserItem(props: userItemType) {
     <div className="flex justify-between px-6 py-4">
       <div className="flex items-center">
         <img
+          data-testid="test-handleNavigate"
           className="rounded-full h-10 w-10 mr-3 object-cover"
           src={avatar}
           onClick={handleNavigate}
@@ -104,6 +105,7 @@ export default function UserItem(props: userItemType) {
       <div>
         {props.followingType ? (
           <button
+            data-testid="test-handleClickEvent"
             className={`font-bold px-4 py-2 rounded-lg ${
               isFollowing
                 ? "custom-background-gray"
@@ -115,6 +117,7 @@ export default function UserItem(props: userItemType) {
           </button>
         ) : (
           <button
+            data-testid="test-handleClickRemove"
             className="font-bold px-2 py-2 custom-background-gray rounded-lg"
             onClick={handleClickRemove}
             disabled={removed}

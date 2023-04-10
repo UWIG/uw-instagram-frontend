@@ -1,8 +1,7 @@
 import { render, screen } from "@testing-library/react";
 // import {screen} from "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event";
-import axiosAPI from "../../config/axiosConfig"
-
+import axiosAPI from "../../config/axiosConfig";
 
 import Header from "../../../components/profile/header";
 import { BrowserRouter } from "react-router-dom";
@@ -32,8 +31,8 @@ const users = [
       data: "avatardata",
       type: "avatartype",
     },
-    following: "true",
-    followingType: "true",
+    following: false,
+    followingType: false,
   },
   {
     username: "alex",
@@ -44,16 +43,16 @@ const users = [
       data: "avatardata",
       type: "avatartype",
     },
-    following: "true",
-    followingType: "true",
+    following: false,
+    followingType: true,
   },
 ];
 
-jest.mock("../../config/axiosConfig")
+jest.mock("../../config/axiosConfig");
 test("editProfile", async () => {
   axiosAPI.post.mockResolvedValueOnce({
-    data:{res:{data:"abc"}}
-  })
+    data: {},
+  });
   render(
     <BrowserRouter>
       <Header
@@ -65,10 +64,10 @@ test("editProfile", async () => {
         avatar={"sbc"}
         followers={users}
         following={users}
+        currentFollowing={users}
       />
     </BrowserRouter>
   );
-
   const test_navigateSetting = screen.getByTestId("test-navigateSetting");
   await userEvent.click(test_navigateSetting);
 
@@ -89,19 +88,19 @@ test("editProfile", async () => {
   await userEvent.click(test_setUserOpen);
 
   await userEvent.click(test_handleClickFollowing);
-  userEvent.keyboard("{esc}");
 
+  userEvent.keyboard("{esc}");
 });
 
 test("editProfile2", async () => {
   axiosAPI.post.mockResolvedValueOnce({
-    data:{res:{data:"abc"}}
-  })
-  axiosAPI.post.mockRejectedValueOnce(new Error('Some random error'));
+    data: {},
+  });
+  axiosAPI.post.mockRejectedValueOnce(new Error("Some random error"));
   axiosAPI.post.mockResolvedValueOnce({
-    data:{res:{data:"abc"}}
-  })
-  axiosAPI.post.mockRejectedValueOnce(new Error('Some random error'));
+    data: {},
+  });
+  axiosAPI.post.mockRejectedValueOnce(new Error("Some random error"));
   render(
     <BrowserRouter>
       <Header
@@ -113,6 +112,7 @@ test("editProfile2", async () => {
         avatar={""}
         followers={users}
         following={users}
+        currentFollowing={users}
       />
     </BrowserRouter>
   );
@@ -125,20 +125,17 @@ test("editProfile2", async () => {
   const test_setUserOpen = screen.getByTestId("test-setUserOpen");
   await userEvent.click(test_setUserOpen);
 
-  const test_Following = screen.getByTestId(
-    "test-Following"
-  );
+  const test_Following = screen.getByTestId("test-Following");
   await userEvent.click(test_Following);
   await userEvent.click(test_Following);
   await userEvent.click(test_Following);
   await userEvent.click(test_Following);
-
 });
 
 test("editProfile3", async () => {
   axiosAPI.post.mockResolvedValueOnce({
-    data:{res:{data:"abc"}}
-  })
+    data: { res: { data: "abc" } },
+  });
   render(
     <BrowserRouter>
       <Header
@@ -150,6 +147,7 @@ test("editProfile3", async () => {
         avatar={""}
         followers={null}
         following={null}
+        currentFollowing={users}
       />
     </BrowserRouter>
   );
@@ -163,6 +161,4 @@ test("editProfile3", async () => {
     "test-handleClickFollowing"
   );
   await userEvent.click(test_handleClickFollowing);
-
-  
 });
