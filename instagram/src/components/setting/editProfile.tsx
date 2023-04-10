@@ -14,7 +14,7 @@ export default function EditProfile() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("privacy");
-  const [isAlert, setIsAlert] = useState<Boolean>(false); 
+  const [isAlert, setIsAlert] = useState<Boolean>(false);
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -181,6 +181,7 @@ export default function EditProfile() {
         </div>
         <div className="mt-5 flex">
           <button
+            data-testid="test-updateUser"
             className=" h-8 w-28 mx-auto bg-sky-500 hover:bg-sky-700 rounded-full text-sm font-medium text-slate-200"
             onClick={() => updateUser()}
           >
@@ -216,7 +217,9 @@ export default function EditProfile() {
                 role="button"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
-                onClick={()=>{setIsAlert(false)}}
+                onClick={() => {
+                  setIsAlert(false);
+                }}
               >
                 <title>Close</title>
                 <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />

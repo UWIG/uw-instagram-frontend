@@ -1,5 +1,4 @@
 import { lazy, useReducer, useEffect, useState, useContext } from "react";
-import { Route, useNavigate } from "react-router-dom";
 import axios from "axios";
 import EditProfile from "../components/setting/editProfile";
 import ChangePassword from "../components/setting/changePassword";
@@ -8,8 +7,6 @@ import UserContext from "../contexts/user-context";
 
 export default function Profile(props: any) {
   const [option, setOption] = useState("edit");
-  // const { user } = useContext(UserContext);
-  const user = "alex";
 
   function switchOption() {
     switch (option) {
@@ -17,10 +14,6 @@ export default function Profile(props: any) {
         return <EditProfile />;
       case "change":
         return <ChangePassword />;
-      case "email":
-        return "email";
-      default:
-        return "";
     }
   }
 
@@ -45,6 +38,7 @@ export default function Profile(props: any) {
                 </div>
                 <div className="row-span-5 border-t">
                   <label
+                    data-testid="test-setOptionEdit"
                     className="cursor-pointer inline-block h-10 w-full"
                     onClick={() => setOption("edit")}
                   >
@@ -60,6 +54,7 @@ export default function Profile(props: any) {
                   </label>
 
                   <label
+                    data-testid="test-setOptionChange"
                     className="cursor-pointer inline-block h-10 w-full"
                     onClick={() => setOption("change")}
                   >
@@ -74,7 +69,7 @@ export default function Profile(props: any) {
                     </div>
                   </label>
 
-                  <label
+                  {/* <label
                     className="cursor-pointer inline-block h-10 w-full"
                     onClick={() => setOption("email")}
                   >
@@ -84,10 +79,10 @@ export default function Profile(props: any) {
                       className="peer/email hidden"
                       checked={option === "email"}
                     />
-                    {/* <div className="flex pl-5 h-full w-full peer-checked/email:font-medium peer-checked/email:border-l-2 peer-checked/email:border-l-black border-l-2 border-l-transparent hover:bg-gray-100 hover:border-l-2 hover:border-l-gray-200">
+                    <div className="flex pl-5 h-full w-full peer-checked/email:font-medium peer-checked/email:border-l-2 peer-checked/email:border-l-black border-l-2 border-l-transparent hover:bg-gray-100 hover:border-l-2 hover:border-l-gray-200">
                       <p className="my-auto">Email notifications</p>
-                    </div> */}
-                  </label>
+                    </div>
+                  </label> */}
                 </div>
               </div>
               <div className="col-span-8">{switchOption()}</div>

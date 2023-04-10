@@ -35,13 +35,13 @@ export default function ChangePassword() {
         headers: { "Content-Type": "multipart/form-data" },
       }).then((res) => {
         console.log(res);
-        if(res.data.sign === 1){
+        if (res.data.sign === 1) {
           setIsAlert(true);
           setIsOldPwdRight(true);
           setOldPwd("");
           setNewPwd("");
           setNewPwdConf("");
-        }else{
+        } else {
           setIsOldPwdRight(false);
         }
       });
@@ -56,6 +56,7 @@ export default function ChangePassword() {
             Old password
           </span>
           <input
+            data-testid="test-setOldPwd"
             type={"password"}
             defaultValue={oldPwd}
             onChange={(event) => setOldPwd(event.target.value)}
@@ -67,6 +68,7 @@ export default function ChangePassword() {
             New password
           </span>
           <input
+            data-testid="test-setNewPwd"
             type={"password"}
             defaultValue={newPwd}
             onChange={(event) => setNewPwd(event.target.value)}
@@ -78,6 +80,7 @@ export default function ChangePassword() {
             Confirm new password
           </span>
           <input
+            data-testid="test-setNewPwdConf"
             type={"password"}
             defaultValue={newPwdConf}
             onChange={(event) => setNewPwdConf(event.target.value)}
@@ -97,6 +100,7 @@ export default function ChangePassword() {
 
         <div className="mt-5 flex">
           <button
+            data-testid="test-changePwd"
             className=" h-8 w-28 mx-auto bg-sky-500 hover:bg-sky-700 rounded-full text-sm font-medium text-slate-200"
             onClick={() => changePwd()}
           >
